@@ -74,3 +74,6 @@ html[data-theme=dark] .organisation-logo[data-logo="hodlhodl"]{content:url('/ass
  .hero .regional-visual{grid-column:2;grid-row:3 / 5;align-self:center;margin:0;min-width:0}
  .hero .regional-visual svg{height:auto;min-height:240px;max-height:290px;width:100%;overflow:visible}
 }
+
+.organisation-logo[data-logo="wavespace"]{display:block;width:210px;max-width:100%;height:auto;flex-shrink:1;min-width:0;filter:none}
+html[data-theme=dark] .organisation-logo[data-logo="wavespace"]{content:url('/assets/directory-logos/wavespace-dark.png');filter:none}

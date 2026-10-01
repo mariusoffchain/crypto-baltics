@@ -117,7 +117,9 @@
   "wavespace": {
     "src": "assets/directory-logos/wavespace.png",
     "source": "https://www.wave.space/",
-    "original": "https://cdn.prod.website-files.com/667823d9b944eb95404be544/69a5f095608a2c8d68dd0596_WORD%20LOGO%20(Light%20Back).png"
+    "original": "https://cdn.prod.website-files.com/667823d9b944eb95404be544/69a5f095608a2c8d68dd0596_WORD%20LOGO%20(Light%20Back).png",
+    "darkOriginal": "https://cdn.prod.website-files.com/667823d9b944eb95404be544/67617da73f11b16a912302e6_footer%20logo%20wave.space.png",
+    "treatment": "Official light and dark assets, no monochrome filter"
   },
   "hodlhodl": {
     "src": "assets/directory-logos/hodlhodl.svg",
