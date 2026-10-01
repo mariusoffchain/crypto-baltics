@@ -37,6 +37,7 @@ const files = [
   "atlas-editions.css",
   "navigation.css",
   "navigation.js",
+  "external-links.js",
   "about.css",
   "about.js",
   "LICENSE",
