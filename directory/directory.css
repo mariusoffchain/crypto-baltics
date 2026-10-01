@@ -23,3 +23,10 @@ html[data-theme=dark] .organisation-logo:not(.monochrome){filter:drop-shadow(0 0
 @media(max-width:700px){.map-page #main{height:calc(100dvh - 76px)}}
 
 .organisation-logo.reverse-logo{filter:invert(1);mix-blend-mode:multiply}html[data-theme=dark] .organisation-logo.reverse-logo{filter:none;mix-blend-mode:screen}
+
+/* Approved identity: plain Baltic map and Space Grotesk wordmark. */
+@font-face{font-family:CryptoSpace;src:url('/assets/SpaceGrotesk.woff2') format('woff2');font-weight:100 900;font-display:swap}
+.nav .wordmark,.footer .wordmark{display:inline-flex;align-items:center;gap:10px;font-family:CryptoSpace,system-ui,sans-serif;font-weight:600;font-size:25px;letter-spacing:-1px;line-height:1.1;flex-shrink:0;text-decoration:none}
+.wordmark img{display:block;width:30px;height:38px;object-fit:contain;flex:none}
+.wordmark span{color:inherit}.footer .wordmark-middle{gap:8px}
+@media(max-width:600px){.nav .wordmark{font-size:21px;gap:8px}.nav .wordmark img{width:26px;height:33px}}
