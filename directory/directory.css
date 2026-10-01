@@ -56,3 +56,21 @@ html[data-theme=dark] .organisation-logo[data-logo="lbaa"]{filter:brightness(1.9
 .featured-communities{grid-template-columns:repeat(2,minmax(0,1fr))}
 html[data-theme=dark] .organisation-logo[data-logo="hodlhodl"]{content:url('/assets/directory-logos/hodlhodl-dark.svg')}
 @media(max-width:700px){.featured-communities{grid-template-columns:1fr}.approach-layout aside{display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 10px;padding-bottom:14px;font-size:12px;line-height:1.5}.approach-layout aside .author-name{flex-basis:100%}.approach-layout aside strong{display:inline;font-size:13px}.approach-layout aside p{margin:0}.approach-layout aside .author-origin{display:none}.approach-layout aside small{font-size:11px}}
+
+/* Mobile hero: bring the map alongside actions, immediately after the introduction. */
+.cta-mobile-label{display:none}
+@media(max-width:700px){
+ .hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px 8px;padding-top:18px;padding-bottom:26px;align-items:center}
+ .hero-copy{display:contents}
+ .hero h1{grid-column:1/-1;margin:0;font-size:clamp(35px,8.7vw,44px);letter-spacing:-1.8px}
+ .hero-copy>p{grid-column:1/-1;margin:0;font-size:16px}
+ .hero .cta{grid-column:1;grid-row:3;display:flex;flex-direction:column;align-items:flex-start;gap:16px;margin:0;align-self:end}
+ .hero .cta .button{gap:12px;padding:12px 16px}
+ .cta-desktop-label{display:none}.cta-mobile-label{display:inline}
+ .hero .cta .text-link{font-size:12px;line-height:1.6;max-width:135px}
+ .hero .hero-stats{grid-column:1;grid-row:4;margin:0;gap:10px;flex-wrap:wrap;align-self:start;font-size:10px}
+ .hero-stats span{flex-basis:calc(50% - 10px)}
+ .hero-stats b{font-size:19px}
+ .hero .regional-visual{grid-column:2;grid-row:3 / 5;align-self:center;margin:0;min-width:0}
+ .hero .regional-visual svg{height:auto;min-height:240px;max-height:290px;width:100%;overflow:visible}
+}
