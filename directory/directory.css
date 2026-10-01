@@ -30,3 +30,17 @@ html[data-theme=dark] .organisation-logo:not(.monochrome){filter:drop-shadow(0 0
 .wordmark img{display:block;width:30px;height:38px;object-fit:contain;flex:none}
 .wordmark span{color:inherit}.footer .wordmark-middle{gap:8px}
 @media(max-width:600px){.nav .wordmark{font-size:21px;gap:8px}.nav .wordmark img{width:26px;height:33px}}
+
+/* Hero map shares the logo palette in both themes. */
+.hero .regional-visual{border:0;border-radius:0;background:none;padding:0;max-width:500px;width:100%;justify-self:center}
+.hero .regional-visual svg{display:block;width:100%;height:440px;margin:0}
+.hero .regional-visual .shape.ee{fill:#4891d1}
+.hero .regional-visual .shape.lv{fill:#a94c56}
+.hero .regional-visual .shape.lt{fill:#e3b744}
+@media(min-width:901px){.hero{grid-template-columns:1.1fr 1fr;gap:48px;padding-top:50px;padding-bottom:50px}}
+@media(max-width:900px){.hero .regional-visual svg{height:350px}}
+@media(max-width:480px){.hero .regional-visual svg{height:310px}}
+
+.hero .country-shapes{mask:url(#country-cutout)}
+.hero .capital-labels text{paint-order:stroke;stroke:var(--bg);stroke-width:3px;stroke-linejoin:round}
+.hero .capital-labels circle{stroke:var(--bg);stroke-width:1.5px}
