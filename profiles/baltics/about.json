@@ -1,0 +1,45 @@
+{
+  "en": {
+    "title": "About Crypto Baltics",
+    "description": "Explore crypto communities, conferences and companies in Estonia, Latvia and Lithuania.",
+    "shortTagline": "Crypto communities and events across the Baltics",
+    "aboutLabel": "About",
+    "heading": "Crypto across the Baltics, in person",
+    "intro": "Find communities, conferences and companies in Estonia, Latvia and Lithuania. This local content preview uses the shared site engine; visual identity comes next.",
+    "contributeHeading": "Make the map yours",
+    "contributeText": "Suggest a local community, event or correction.",
+    "backLabel": "Back to map",
+    "sections": [
+      {
+        "heading": "Explore the ecosystem",
+        "paragraphs": [
+          "Start with the sourced directory of communities, companies and conferences. Older groups and uncertain dates are marked separately."
+        ],
+        "links": [
+          {
+            "label": "Open the directory",
+            "url": "/ecosystem/"
+          }
+        ]
+      },
+      {
+        "heading": "Know what the map shows",
+        "paragraphs": [
+          "The inherited map currently shows Bitcoin-accepting places from BTC Map. It does not assert acceptance of Solana, Monero or other assets."
+        ]
+      },
+      {
+        "heading": "Local communities, independent voices",
+        "paragraphs": [
+          "Groups retain their own identities. A directory listing does not imply a partnership or endorsement."
+        ]
+      },
+      {
+        "heading": "Built on a shared foundation",
+        "paragraphs": [
+          "This draft reuses the Bitcoin Baltics interface. The logo, colours and final domain have not yet been chosen."
+        ]
+      }
+    ]
+  }
+}

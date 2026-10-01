@@ -1,0 +1,1545 @@
+import { renderInitiatives, countryIcon } from "./navigation.js";
+import { COUNTRY } from "./country-config.js";
+import {
+  API,
+  filterPlaces,
+  placeCountry,
+  inScope,
+  countryAddress,
+  dateKey,
+  eventGroups,
+  safeURL,
+  ics,
+} from "./domain.js";
+const $ = (s) => document.querySelector(s);
+const TXT = {
+  en: {
+    search: "Search a place…",
+    lithuania: "Lithuania",
+    merchants: "Accepting Bitcoin",
+    events: "Events",
+    calendar: "Meetups",
+    conferences: "Conferences",
+    timezone: "Vilnius time",
+    addPlace: "Add a place",
+    refresh: "Refresh",
+    loading: "Loading BTC Map…",
+    cached: "Saved data",
+    live: "BTC Map",
+    offline: "BTC Map is unavailable. Saved data shown.",
+    noData: "Unable to load places. Please retry.",
+    noUpcoming: "The next event has not been announced yet.",
+    noEvents: "No events on this date.",
+    recent: "Recent meetups",
+    noMatch: "No matching places",
+    pastEvent: "Past event",
+    upcomingEvent: "Upcoming event",
+    viewMap: "Show on map",
+    addCalendar: "Add to calendar",
+    eventPage: "Community page",
+    verified: "Last verified",
+    unverified: "No verification date",
+    website: "Website",
+    hours: "Opening hours",
+    btcmap: "View on BTC Map",
+    acceptance: "Listed on BTC Map. Confirm payment options with the venue.",
+    mapUnavailable:
+      "The basemap could not load. Check your connection and reload.",
+    socialPending: "Community link not yet available",
+    results: "Matching places",
+    about: "Lithuania BTC community",
+    retryMap: "Reload map",
+    confSite: "Conference website",
+    eventWebsite: "Event website",
+    eventLinksHeading: "Event links",
+    meetupEvent: "Meetup event",
+    eventPageLabel: "Event page",
+    walksHeading: "Walks",
+    meetupsHeading: "Meetups",
+    openLocation: "Open location (new window)",
+  },
+  lt: {
+    search: "Ieškoti vietos...",
+    lithuania: "Lietuva",
+    merchants: "Priima Bitcoin",
+    events: "Renginiai",
+    calendar: "Susitikimai",
+    conferences: "Konferencijos",
+    timezone: "Lietuvos laiku",
+    addPlace: "Pridėti vietą",
+    refresh: "Atnaujinti",
+    loading: "Įkeliami BTC Map duomenys...",
+    cached: "Išsaugoti duomenys",
+    live: "BTC Map",
+    offline: "BTC Map nepasiekiamas. Rodomi išsaugoti duomenys.",
+    noData: "Vietų įkelti nepavyko. Bandyk dar kartą.",
+    noUpcoming: "Kitas renginys dar nepaskelbtas.",
+    noEvents: "Šią dieną renginių nėra.",
+    recent: "Ankstesni susitikimai",
+    noMatch: "Vietų nerasta",
+    pastEvent: "Praėjęs renginys",
+    upcomingEvent: "Artėjantis renginys",
+    viewMap: "Rodyti žemėlapyje",
+    addCalendar: "Įtraukti į kalendorių",
+    eventPage: "Bendruomenės puslapis",
+    verified: "Paskutinį kartą patikrinta",
+    unverified: "Patikrinimo data nenurodyta",
+    website: "Svetainė",
+    hours: "Darbo laikas",
+    btcmap: "Atverti BTC Map",
+    acceptance:
+      "Vieta įtraukta į BTC Map. Dėl atsiskaitymo pasiteirauk vietoje.",
+    mapUnavailable:
+      "Žemėlapio pagrindo įkelti nepavyko. Patikrink ryšį ir įkelk puslapį iš naujo.",
+    socialPending: "Bendruomenės nuoroda dar nepateikta",
+    results: "Rastos vietos",
+    about: "Lithuania BTC bendruomenė",
+    retryMap: "Įkelti žemėlapį iš naujo",
+    confSite: "Konferencijos svetainė",
+    eventWebsite: "Renginio svetainė",
+    eventLinksHeading: "Renginio nuorodos",
+    meetupEvent: "Renginio puslapis „Meetup“",
+    eventPageLabel: "Renginio puslapis",
+    walksHeading: "Pasivaikščiojimai",
+    meetupsHeading: "Susitikimai",
+    openLocation: "Atverti vietą (naujame lange)",
+  },
+};
+let lang = "lt";
+try {
+  const urlLang = new URLSearchParams(location.search).get("lang");
+  lang =
+    urlLang === "lt" || urlLang === "en"
+      ? urlLang
+      : document.documentElement.dataset.language || "lt";
+} catch {}
+if (COUNTRY.languages?.length === 1) lang = COUNTRY.defaultLanguage;
+if (!TXT[lang]) lang = "lt";
+const t = (k) => TXT[lang][k] || k;
+const isDark = () => document.body.classList.contains("mode-dark");
+const mapStylePath = (dark) =>
+  dark ? "./data/map-style.json" : "./data/map-light.json";
+function folkIcon(kind) {
+  const n = document.createElement("span");
+  n.className = "folk-icon folk-" + kind;
+  n.setAttribute("aria-hidden", "true");
+  return n;
+}
+function renderAppearance() {
+  const b = $("#appearance");
+  b.replaceChildren(folkIcon(isDark() ? "sun" : "moon"));
+  b.setAttribute(
+    "aria-label",
+    lang === "lt"
+      ? isDark()
+        ? "Šviesus režimas"
+        : "Tamsus režimas"
+      : isDark()
+        ? "Switch to light mode"
+        : "Switch to dark mode",
+  );
+  b.title = b.getAttribute("aria-label");
+}
+const placeName = (p) =>
+  !p.name || p.name === "Unnamed"
+    ? lang === "lt"
+      ? "Vieta be pavadinimo"
+      : "Unnamed place"
+    : p.name;
+const locale = () => (lang === "lt" ? "lt-LT" : "en-GB");
+const fmt = (d, opts) =>
+  new Intl.DateTimeFormat(locale(), {
+    timeZone: COUNTRY.timezone,
+    ...opts,
+  }).format(new Date(d));
+const todayKey = dateKey(new Date());
+let [year, month] = todayKey.split("-").map(Number);
+month--;
+let selected = null,
+  places = [],
+  events = [],
+  boundary,
+  config = {},
+  map,
+  loaded = false,
+  merchantsVisible = true,
+  eventsVisible = true,
+  walksVisible = true,
+  conferencesVisible = true,
+  popup,
+  activeEvent = null,
+  merchantMarkers = [],
+  eventMarkers = [],
+  fetchedAt = null,
+  dataMode = "loading",
+  dataFailed = false,
+  requestSerial = 0,
+  mapFailure = false;
+let countryFilter = (COUNTRY.countries || []).some(
+  (c) => c.code === new URLSearchParams(location.search).get("country"),
+)
+  ? new URLSearchParams(location.search).get("country")
+  : "";
+const scopedEvents = () => events.filter((e) => inScope(e, countryFilter));
+const scopedPlaces = () => places.filter((p) => inScope(p, countryFilter));
+const addressLabel = (item) =>
+  countryAddress(item.address || "", item.country, COUNTRY.countries);
+function countryLine(item, tag = "p", cls = null) {
+  const line = el(tag, cls, addressLabel(item));
+  if (COUNTRY.regional && item.country) line.prepend(countryIcon(item.country));
+  return line;
+}
+function decorateCountryFilter(select) {
+  select.dataset.country = select.value;
+}
+function renderCountryFilters() {
+  if (!COUNTRY.countries) return;
+  for (const [target, id] of [
+    [document.querySelector(".map-toolbar"), "map-country"],
+    [document.querySelector("#event-list"), "events-country"],
+  ]) {
+    if (document.getElementById(id)) continue;
+    const select = el("select", "country-filter");
+    select.id = id;
+    select.setAttribute("aria-label", "Filter by country");
+    for (const c of [
+      { code: "", name: "All Baltics", flag: "" },
+      ...COUNTRY.countries,
+    ]) {
+      const option = el(
+        "option",
+        null,
+        c.name,
+      );
+      option.value = c.code;
+      select.append(option);
+    }
+    select.value = countryFilter;
+    decorateCountryFilter(select);
+    select.onchange = () => {
+      countryFilter = select.value;
+      const url = new URL(location.href);
+      countryFilter
+        ? url.searchParams.set("country", countryFilter)
+        : url.searchParams.delete("country");
+      history.replaceState(null, "", url);
+      selected = null;
+      popup?.remove();
+      document
+        .querySelectorAll(".country-filter")
+        .forEach((n) => { n.value = countryFilter; decorateCountryFilter(n); });
+      renderCalendar();
+      renderMerchantMarkers();
+      renderEventMarkers();
+      renderSearch();
+      resetLithuaniaView();
+    };
+    target.prepend(select);
+  }
+}
+function updateAboutLinks() {
+  document.querySelectorAll("[data-about-link]").forEach((a) => {
+    a.href =
+      (COUNTRY.regional || lang === "lt" ? "/about/" : "/en/about/") +
+      "?mode=" +
+      (isDark() ? "dark" : "light");
+    (a.querySelector("span") || a).textContent =
+      lang === "lt" ? "Apie" : "About";
+  });
+}
+function updateHomeLink() {
+  const url = new URL(location.href);
+  url.searchParams.delete("event");
+  $(".brand").href = url.pathname + url.search;
+}
+updateHomeLink();
+const dialog = $("#event-dialog");
+let downloadURL;
+let galleryDialog,
+  galleryImg,
+  galleryCloseBtn,
+  galleryPrev,
+  galleryNext,
+  galleryCount;
+let galleryIndex = 0;
+let galleryItems = [];
+let galleryCredit;
+function galleryAlt(item) {
+  return (item.alt && (item.alt[lang] || item.alt.en)) || "";
+}
+function updateGalleryLabels() {
+  if (!galleryDialog) return;
+  const label = lang === "lt" ? "Uždaryti" : "Close";
+  galleryCloseBtn.textContent = label;
+  galleryCloseBtn.setAttribute("aria-label", label);
+  galleryPrev.setAttribute(
+    "aria-label",
+    lang === "lt" ? "Ankstesnė nuotrauka" : "Previous photo",
+  );
+  galleryNext.setAttribute(
+    "aria-label",
+    lang === "lt" ? "Kita nuotrauka" : "Next photo",
+  );
+  galleryDialog.setAttribute(
+    "aria-label",
+    lang === "lt" ? "Nuotrauka" : "Photo",
+  );
+}
+function ensureGalleryDialog() {
+  if (galleryDialog) return galleryDialog;
+  galleryDialog = document.createElement("dialog");
+  galleryDialog.className = "gallery-dialog";
+  galleryCloseBtn = button(
+    "",
+    () => galleryDialog.close(),
+    "gallery-dialog-close",
+  );
+  galleryImg = document.createElement("img");
+  galleryImg.className = "gallery-dialog-img";
+  const stage = el("div", "gallery-dialog-stage");
+  stage.append(galleryImg);
+  galleryPrev = button(
+    "←",
+    () => showGalleryPhoto(galleryIndex - 1),
+    "gallery-dialog-arrow",
+  );
+  galleryNext = button(
+    "→",
+    () => showGalleryPhoto(galleryIndex + 1),
+    "gallery-dialog-arrow",
+  );
+  galleryCount = el("span", "gallery-dialog-count");
+  galleryCount.setAttribute("role", "status");
+  galleryCount.setAttribute("aria-live", "polite");
+  galleryCount.setAttribute("aria-atomic", "true");
+  const controls = el("div", "gallery-dialog-controls");
+  controls.append(galleryPrev, galleryCount, galleryNext);
+  galleryCredit = el("p", "gallery-credit");
+  galleryDialog.append(galleryCloseBtn, stage, controls, galleryCredit);
+  galleryDialog.addEventListener("keydown", (event) => {
+    if (event.altKey || event.ctrlKey || event.metaKey) return;
+    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+      event.preventDefault();
+      showGalleryPhoto(galleryIndex + (event.key === "ArrowRight" ? 1 : -1));
+    }
+  });
+  let touchStart = null;
+  stage.addEventListener(
+    "touchstart",
+    (event) => {
+      touchStart =
+        event.touches.length === 1
+          ? { x: event.touches[0].clientX, y: event.touches[0].clientY }
+          : null;
+    },
+    { passive: true },
+  );
+  stage.addEventListener(
+    "touchcancel",
+    () => {
+      touchStart = null;
+    },
+    { passive: true },
+  );
+  stage.addEventListener(
+    "touchend",
+    (event) => {
+      const start = touchStart;
+      touchStart = null;
+      if (!start || event.touches.length || event.changedTouches.length !== 1)
+        return;
+      const dx = event.changedTouches[0].clientX - start.x;
+      const dy = event.changedTouches[0].clientY - start.y;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5)
+        showGalleryPhoto(galleryIndex + (dx < 0 ? 1 : -1));
+    },
+    { passive: true },
+  );
+  galleryDialog.addEventListener("close", () => {
+    galleryImg.removeAttribute("src");
+    galleryImg.alt = "";
+  });
+  document.body.append(galleryDialog);
+  updateGalleryLabels();
+  return galleryDialog;
+}
+function showGalleryPhoto(index) {
+  const items = galleryItems;
+  if (!items.length) return;
+  galleryIndex = ((index % items.length) + items.length) % items.length;
+  const item = items[galleryIndex];
+  galleryImg.src = item.src;
+  galleryImg.alt = galleryAlt(item);
+  galleryImg.decoding = "async";
+  galleryCredit.replaceChildren();
+  if (item.country) galleryCredit.append(countryIcon(item.country));
+  galleryCredit.append(document.createTextNode(galleryAlt(item)));
+  if (item.credit && safeURL(item.source)) {
+    galleryCredit.append(document.createTextNode(" · "), link(item.credit, item.source));
+  }
+  galleryCount.textContent = `${galleryIndex + 1} / ${items.length}`;
+  galleryPrev.disabled = galleryNext.disabled = items.length < 2;
+}
+function openGalleryPhoto(item, items = config.gallery || []) {
+  galleryItems = items;
+  ensureGalleryDialog();
+  updateGalleryLabels();
+  showGalleryPhoto(Math.max(0, galleryItems.indexOf(item)));
+  if (!galleryDialog.open) galleryDialog.showModal();
+}
+function renderGallery(container) {
+  const items = (config.gallery || []).filter(
+    (p) => container.id === "community-gallery" || inScope(p, countryFilter),
+  );
+  if (!items.length) return;
+  container.append(
+    el("h3", "list-heading", lang === "lt" ? "Nuotraukos" : "Photos"),
+  );
+  const grid = el("div", "gallery-grid");
+  items.forEach((item, i) => {
+    const alt = galleryAlt(item);
+    const b = button("", () => openGalleryPhoto(item, items), "gallery-thumb");
+    b.setAttribute(
+      "aria-label",
+      alt || (lang === "lt" ? "Nuotrauka" : "Photo") + " " + (i + 1),
+    );
+    const img = document.createElement("img");
+    img.src = item.thumbSrc || item.src;
+    img.decoding = "async";
+    // Editorial crop applies only to the mosaic; the lightbox keeps the original.
+    if (item.thumbnail) {
+      const clamp = (value, fallback, min, max) =>
+        Number.isFinite(value) ? Math.min(max, Math.max(min, value)) : fallback;
+      const [x, y] = item.thumbnail.position || [];
+      const position = `${clamp(x, 50, 0, 100)}% ${clamp(y, 50, 0, 100)}%`;
+      img.style.objectPosition = position;
+      img.style.transformOrigin = position;
+      img.style.transform = `scale(${clamp(item.thumbnail.zoom, 1, 1, 3)})`;
+    }
+    img.alt = "";
+    img.loading = "lazy";
+    img.width = 300;
+    img.height = 300;
+    b.append(img);
+    if (COUNTRY.regional && item.country) {
+      const caption = el("span", "gallery-country", item.country + (item.kind === "artwork" ? " · Event artwork" : ""));
+      caption.prepend(countryIcon(item.country));
+      b.append(caption);
+    }
+    grid.append(b);
+  });
+  container.append(grid);
+}
+function el(tag, cls, text) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text !== undefined) {
+    const parts = String(text).split(/(\bZolak\b)/gi);
+    for (const part of parts) {
+      if (/^zolak$/i.test(part)) {
+        const logo = document.createElement("img");
+        logo.src = "assets/zolak-official.svg";
+        logo.alt = "";
+        logo.className = "zolak-logo";
+        n.append(logo);
+      }
+      n.append(document.createTextNode(part));
+    }
+  }
+  return n;
+}
+function button(text, fn, cls) {
+  const n = el("button", cls, text);
+  n.type = "button";
+  n.addEventListener("click", fn);
+  return n;
+}
+function link(text, url) {
+  const a = el("a", null, text);
+  const safe = safeURL(url);
+  if (safe) {
+    a.href = safe;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+  }
+  return a;
+}
+const PIN_SVG =
+  '<path d="M12 21s7-7.58 7-12a7 7 0 1 0-14 0c0 4.42 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/>';
+const ARROW_SVG = '<path d="M7 17 17 7M9 7h8v8"/>';
+function svgIcon(paths, size = 15) {
+  const s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  s.setAttribute("viewBox", "0 0 24 24");
+  s.setAttribute("width", size);
+  s.setAttribute("height", size);
+  s.setAttribute("fill", "none");
+  s.setAttribute("stroke", "currentColor");
+  s.setAttribute("stroke-width", "1.7");
+  s.setAttribute("stroke-linecap", "round");
+  s.setAttribute("stroke-linejoin", "round");
+  s.innerHTML = paths;
+  return s;
+}
+function externalLink(url, ariaLabel) {
+  const safe = safeURL(url);
+  if (!safe) return null;
+  const a = el("a", "address-external-link");
+  a.href = safe;
+  a.target = "_blank";
+  a.rel = "noopener noreferrer";
+  a.setAttribute("aria-label", ariaLabel);
+  a.append(svgIcon(ARROW_SVG, 14));
+  return a;
+}
+const CITY_ONLY = /^(vilnius|kaunas|klaip[eė]da|[sš]iauliai|panev[eė][zž]ys)$/i;
+function meaningfulAddress(address) {
+  const v = (address || "").trim();
+  return !!v && !CITY_ONLY.test(v);
+}
+async function json(url, timeout = 15000) {
+  const c = new AbortController(),
+    timer = setTimeout(() => c.abort(), timeout);
+  try {
+    const r = await fetch(url, {
+      signal: c.signal,
+      credentials: "omit",
+      cache: "no-cache",
+    });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return await r.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+function renderSocials() {
+  renderInitiatives(config, lang);
+}
+function localizeMapControls() {
+  document
+    .querySelector(".maplibregl-canvas")
+    ?.setAttribute("aria-label", lang === "lt" ? "Žemėlapis" : "Map");
+  const zoomIn = document.querySelector(".maplibregl-ctrl-zoom-in"),
+    zoomOut = document.querySelector(".maplibregl-ctrl-zoom-out"),
+    attrib = document.querySelector(".maplibregl-ctrl-attrib-button");
+  const labels =
+    lang === "lt"
+      ? { in: "Priartinti", out: "Atitolinti", attrib: "Rodyti šaltinius" }
+      : { in: "Zoom in", out: "Zoom out", attrib: "Toggle attribution" };
+  if (zoomIn) {
+    zoomIn.title = labels.in;
+    zoomIn.setAttribute("aria-label", labels.in);
+  }
+  if (zoomOut) {
+    zoomOut.title = labels.out;
+    zoomOut.setAttribute("aria-label", labels.out);
+  }
+  if (attrib) {
+    attrib.title = labels.attrib;
+    attrib.setAttribute("aria-label", labels.attrib);
+  }
+}
+function renderLabels() {
+  renderAppearance();
+  $(".nav-links").setAttribute(
+    "aria-label",
+    lang === "lt" ? "Bendruomenė" : "Community",
+  );
+  $(".map-pane").setAttribute(
+    "aria-label",
+    lang === "lt" ? "Bitcoin žemėlapis" : "Bitcoin map",
+  );
+  $(".calendar-pane").setAttribute("aria-label", t("events"));
+  localizeMapControls();
+  $("#fit").setAttribute(
+    "aria-label",
+    COUNTRY.regional
+      ? "Reset selected country or Baltic view"
+      : lang === "lt"
+        ? "Atkurti Lietuvos vaizdą"
+        : "Reset Lithuania view",
+  );
+  $("#fit").title = $("#fit").getAttribute("aria-label");
+  document.documentElement.lang = lang;
+  document.title =
+    COUNTRY.pageTitle ||
+    COUNTRY.name +
+      (lang === "lt"
+        ? " | Bitcoin vietos ir renginiai Lietuvoje"
+        : " | Bitcoin map and events in Lithuania");
+  document
+    .querySelectorAll(".brand-description, .community-description")
+    .forEach((n) => {
+      n.textContent =
+        COUNTRY.tagline ||
+        (lang === "lt"
+          ? "Bitcoin vietos ir renginiai Lietuvoje"
+          : "Bitcoin places and events in Lithuania");
+    });
+  updateAboutLinks();
+  document.querySelector("meta[name=description]").content =
+    COUNTRY.description ||
+    (lang === "lt"
+      ? "Bitcoin priimančios vietos Lietuvoje, bendruomenės susitikimai ir pasivaikščiojimai."
+      : "Find places accepting Bitcoin in Lithuania, community meetups and Bitcoin walks.");
+  document
+    .querySelectorAll("[data-i18n]")
+    .forEach((n) => (n.textContent = t(n.dataset.i18n)));
+  $("#search").placeholder = t("search");
+  $("#search").setAttribute("aria-label", t("search"));
+  $("#language").hidden = COUNTRY.languages?.length === 1;
+  $("#language").textContent = lang === "lt" ? "EN" : "LT";
+  $("#language").setAttribute(
+    "aria-label",
+    lang === "lt" ? "Switch to English" : "Perjungti į lietuvių kalbą",
+  );
+  $(".dialog-close").setAttribute(
+    "aria-label",
+    lang === "lt" ? "Uždaryti" : "Close",
+  );
+  renderSocials();
+  renderCalendar();
+  renderSourceLink();
+  syncMobileLayout();
+  renderStatus();
+  renderSearch();
+  if (galleryDialog) {
+    if (galleryDialog.open) galleryDialog.close();
+    updateGalleryLabels();
+  }
+  if (activeEvent && dialog.open) showEvent(activeEvent);
+  if (popup) popup.remove();
+  if (loaded) {
+    renderMerchantMarkers();
+    renderEventMarkers();
+  }
+  if (mapFailure) showMapError();
+}
+function renderStatus() {
+  const n = $("#data-status");
+  n.hidden = !dataFailed;
+  if (!dataFailed) {
+    n.textContent = "";
+    return;
+  }
+  n.textContent = places.length
+    ? t("offline") +
+      (fetchedAt ? " · " + fmt(fetchedAt, { dateStyle: "short" }) : "")
+    : t("noData");
+  n.classList.add("data-warning");
+}
+function eventCard(e) {
+  if (e.status === "planned") {
+    const b = button("", () => showEvent(e), "event-card planned-event");
+    const copy = el("div", "event-copy");
+    copy.append(
+      el("h3", null, e.title[lang] || e.title.en),
+      el(
+        "p",
+        null,
+        lang === "lt" ? "Data bus paskelbta" : "Date to be announced",
+      ),
+    );
+    const date = el("div", "date-badge pending-date");
+    date.setAttribute("aria-hidden", "true");
+    if (COUNTRY.regional)
+      copy.append(countryLine(e, "p", "event-location"));
+    b.append(date, copy);
+    return b;
+  }
+  const b = button("", () => showEvent(e), "event-card");
+  const date = el("div", "date-badge");
+  date.append(
+    el("strong", null, fmt(e.start, { day: "2-digit" })),
+    el("span", null, fmt(e.start, { month: lang === "lt" ? "long" : "short" })),
+  );
+  const copy = el("div", "event-copy");
+  copy.append(
+    el("h3", null, e.title[lang] || e.title.en),
+    el(
+      "p",
+      null,
+      (e.dateOnly ? "" : fmt(e.start, { hour: "2-digit", minute: "2-digit" }) + " · ") + e.venue,
+    ),
+    el(
+      "p",
+      null,
+      fmt(e.start, { year: "numeric" }) +
+        " · " +
+        t(new Date(e.end) < new Date() ? "pastEvent" : "upcomingEvent"),
+    ),
+  );
+  if (COUNTRY.regional) copy.append(countryLine(e, "p", "event-location"));
+  b.append(date, copy);
+  return b;
+}
+
+function calendarEvents() {
+  return selected
+    ? scopedEvents()
+        .filter((e) => e.start && dateKey(e.start) === selected)
+        .sort((a, b) => new Date(a.start) - new Date(b.start))
+    : eventGroups(scopedEvents()).upcoming;
+}
+let paymentMethods = {};
+let sidebarView = "events";
+function renderSidebarTabs() {
+  let tabs = document.querySelector("#sidebar-tabs");
+  if (!tabs) {
+    tabs = el("div", "sidebar-tabs");
+    tabs.id = "sidebar-tabs";
+    tabs.setAttribute("role", "group");
+    for (const view of ["events", "places"]) {
+      const tab = button("", () => {
+        sidebarView = view;
+        renderCalendar();
+        $("#calendar-content").scrollTop = 0;
+      }, "sidebar-tab");
+      tab.dataset.sidebarView = view;
+      tab.setAttribute("aria-controls", "event-list");
+      tabs.append(tab);
+    }
+    $(".calendar-pane").insertBefore(tabs, $("#calendar-content"));
+  }
+  tabs.setAttribute("aria-label", lang === "lt" ? "Rodyti sąrašą" : "Choose list");
+  for (const tab of tabs.children) {
+    tab.textContent = t(tab.dataset.sidebarView === "events" ? "events" : "merchants");
+    tab.setAttribute("aria-pressed", String(tab.dataset.sidebarView === sidebarView));
+  }
+  $(".calendar-pane").setAttribute("aria-label", t(sidebarView === "events" ? "events" : "merchants"));
+}
+function renderPlacesList(list) {
+  const items = scopedPlaces().slice().sort((a,b) => placeName(a).localeCompare(placeName(b), locale()));
+  const section = el("section", "sidebar-places");
+  section.append(el("p", "sidebar-place-count", t("merchants") + " · " + items.length));
+  if (!items.length) section.append(el("p", "empty-state", t("noMatch")));
+  for (const p of items) {
+    const card = button("", () => {
+      if (!merchantsVisible) {
+        merchantsVisible = true;
+        $("#toggle-merchants").setAttribute("aria-pressed", "true");
+        renderMerchantMarkers();
+      }
+      if (matchMedia("(max-width:760px)").matches) setMobileView("map");
+      map?.flyTo({center:[p.lon,p.lat],zoom:16});
+      openPlace(p);
+    }, "sidebar-place");
+    const icon = el("span", "sidebar-place-icon", "₿");
+    icon.setAttribute("aria-hidden", "true");
+    const body = el("span", "sidebar-place-copy");
+    body.append(el("strong", null, placeName(p)));
+    body.append(countryLine(p, "span"));
+    const symbols = el("span", "sidebar-payment-icons");
+    symbols.append(icon);
+    if (paymentMethods[p.osm_id]?.lightning === true) {
+      const lightning = el("span", "sidebar-lightning");
+      lightning.setAttribute("role", "img");
+      lightning.setAttribute("aria-label", "Lightning");
+      lightning.title = lang === "lt" ? "Priima Lightning · OpenStreetMap" : "Accepts Lightning · OpenStreetMap";
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("viewBox", "0 0 24 24");
+      svg.setAttribute("aria-hidden", "true");
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("d", "M14 2 4 14h7l-1 8 10-12h-7Z");
+      svg.append(path);lightning.append(svg);symbols.append(lightning);
+    }
+    card.append(symbols, body);
+    section.append(card);
+  }
+  list.append(section);
+}
+
+function renderCalendar() {
+  renderSidebarTabs();
+  const groups = eventGroups(scopedEvents()),
+    list = $("#event-list");
+  list.replaceChildren();
+  renderCountryFilters();
+  if (sidebarView === "places") { renderPlacesList(list); return; }
+  const upcoming = el("section", "upcoming-events");
+  upcoming.append(
+    el(
+      "h3",
+      "list-heading",
+      lang === "lt" ? "Artimiausi renginiai" : "Upcoming events",
+    ),
+  );
+  upcoming.append(
+    ...groups.upcoming.map(eventCard),
+    ...groups.planned.map(eventCard),
+  );
+  if (!groups.upcoming.length && !groups.planned.length)
+    upcoming.append(el("p", "empty-state", t("noUpcoming")));
+  list.append(upcoming);
+  const gallery = el("div");
+  gallery.id = "desktop-gallery";
+  renderGallery(gallery);
+  list.append(gallery);
+  const mobileGallery = $("#community-gallery");
+  mobileGallery.replaceChildren();
+  renderGallery(mobileGallery);
+  if (groups.past.length) {
+    const past = el("section", "past-events");
+    const heading = el(
+      "h3",
+      "list-heading",
+      lang === "lt" ? "Praėję renginiai" : "Past events",
+    );
+    heading.id = "past-events-heading";
+    const track = el("div", "past-events-track");
+    track.setAttribute("role", "region");
+    track.setAttribute("aria-labelledby", heading.id);
+    track.tabIndex = 0;
+    track.append(...groups.past.map(eventCard));
+    past.append(heading, track);
+    list.append(past);
+  }
+}
+function showEvent(e) {
+  const pageURL = new URL(location.href);
+  pageURL.searchParams.set("event", e.id);
+  history.replaceState(null, "", pageURL);
+  activeEvent = e;
+  const target = $("#event-detail");
+  target.replaceChildren();
+  const h = el("h2", null, e.title[lang] || e.title.en);
+  h.id = "detail-title";
+  target.append(
+    el(
+      "span",
+      "badge",
+      e.status === "planned"
+        ? lang === "lt"
+          ? "Artėjantis renginys"
+          : "Upcoming event"
+        : t(new Date(e.end) < new Date() ? "pastEvent" : "upcomingEvent"),
+    ),
+    h,
+  );
+  if (safeURL(e.website)) {
+    const site = link(t("eventWebsite"), e.website);
+    site.className = "detail-website-link";
+    site.append(svgIcon(ARROW_SVG));
+    target.append(site);
+  }
+  const meta = el("div", "detail-meta");
+  if (e.status === "planned")
+    meta.append(
+      el(
+        "span",
+        null,
+        lang === "lt"
+          ? "Data ir vieta bus paskelbtos"
+          : "Date and location to be announced",
+      ),
+    );
+  else
+    meta.append(
+      el("span", null, fmt(e.start, { dateStyle: "full" }) + (dateKey(e.start) !== dateKey(e.end) ? " – " + fmt(e.end, { dateStyle: "full" }) : "")),
+      el(
+        "span",
+        null,
+        e.dateOnly ? "Time not specified" : fmt(e.start, { hour: "2-digit", minute: "2-digit" }) +
+          (lang === "lt" ? "-" : "–") +
+          fmt(e.end, { hour: "2-digit", minute: "2-digit" }),
+      ),
+    );
+  if (e.venue)
+    meta.append(
+      safeURL(e.venueWebsite)
+        ? link(e.venue, e.venueWebsite)
+        : el("span", null, e.venue),
+    );
+  target.append(meta);
+  if (e.image && /^assets\/event-covers\/[a-zA-Z0-9._-]+\.webp$/.test(e.image.src)) {
+    const figure = el("figure", "event-cover");
+    const img = el("img");
+    img.src = e.image.src;
+    img.alt = e.image.kind === "organiser" ? "Community visual" : (e.title[lang] || e.title.en);
+    img.width = e.image.width;
+    img.height = e.image.height;
+    img.decoding = "async";
+    img.addEventListener("error", () => figure.remove(), { once: true });
+    figure.append(img);
+    if (safeURL(e.image.source)) {
+      const caption = el("figcaption");
+      caption.append(link(lang === "lt" ? "Šaltinis" : (e.image.kind === "organiser" ? "Community visual · Source" : "Event visual · Source"), e.image.source));
+      figure.append(caption);
+    }
+    target.append(figure);
+  }
+
+  if (e.address || (COUNTRY.regional && e.country)) {
+    const row = el("div", "detail-address");
+    const pin = el("span", "address-icon");
+    pin.setAttribute("aria-hidden", "true");
+    pin.append(svgIcon(PIN_SVG));
+    row.append(pin);
+    // Prefer an explicit, verified location link; only fall back to a generated OpenStreetMap
+    // search when the address is a real street-level address (not just a city name) and not flagged uncertain.
+    const mapURL =
+      safeURL(e.locationSource) ||
+      (!e.addressUncertain && meaningfulAddress(e.address)
+        ? "https://www.openstreetmap.org/search?query=" +
+          encodeURIComponent(addressLabel(e))
+        : null);
+    if (mapURL) {
+      const chooser = el("dialog", "map-choice");
+      chooser.setAttribute(
+        "aria-label",
+        lang === "lt" ? "Atverti žemėlapyje" : "Open in maps",
+      );
+      chooser.append(
+        el("h3", null, lang === "lt" ? "Atverti žemėlapyje" : "Open in maps"),
+        countryLine(e),
+      );
+      const query = encodeURIComponent(addressLabel(e));
+      const choices = [
+        [
+          "Google Maps",
+          "https://www.google.com/maps/search/?api=1&query=" + query,
+        ],
+        ["Apple Maps", "https://maps.apple.com/?q=" + query],
+        ["Waze", "https://www.waze.com/ul?q=" + query],
+        ["OpenStreetMap", mapURL],
+      ];
+      for (const [name, url] of choices) {
+        const a = link(name, url);
+        a.append(svgIcon(ARROW_SVG));
+        a.addEventListener("click", () => chooser.close());
+        chooser.append(a);
+      }
+      chooser.append(
+        button(
+          lang === "lt" ? "Uždaryti" : "Close",
+          () => chooser.close(),
+          "map-choice-close",
+        ),
+      );
+      chooser.addEventListener("click", (ev) => {
+        if (ev.target === chooser) {
+          const r = chooser.getBoundingClientRect();
+          if (
+            ev.clientX < r.left ||
+            ev.clientX > r.right ||
+            ev.clientY < r.top ||
+            ev.clientY > r.bottom
+          )
+            chooser.close();
+        }
+      });
+      const addressLink = button(
+        addressLabel(e),
+        () => chooser.showModal(),
+        "detail-address-link",
+      );
+      if (COUNTRY.regional && e.country) addressLink.prepend(countryIcon(e.country));
+      addressLink.setAttribute("aria-haspopup", "dialog");
+      addressLink.append(svgIcon(ARROW_SVG, 14));
+      row.append(addressLink, chooser);
+    } else row.append(countryLine(e, "span"));
+    target.append(row);
+  }
+  target.append(el("p", null, e.description[lang] || e.description.en));
+  // Per-platform priority: this event first, then permanent community links.
+  const initiativeId =
+    e.initiative || (e.type === "walk" ? "walks" : "meetups");
+  const initiative = (config.initiatives || []).find(
+    (i) => i.id === initiativeId,
+  );
+  const candidates = [
+    ...(safeURL(e.url)
+      ? [
+          {
+            name: new URL(e.url).hostname.endsWith("meetup.com")
+              ? "Meetup"
+              : t("eventPageLabel"),
+            url: e.url,
+          },
+        ]
+      : []),
+    ...(e.links || []),
+    ...(initiative?.links || []).filter((x) => x.kind !== "event"),
+  ];
+  const platform = (url) => {
+    const host = new URL(url).hostname.replace(/^www\./, "");
+    if (host === "fb.me" || host === "facebook.com") return "facebook.com";
+    if (host === "twitter.com" || host === "x.com") return "x.com";
+    return host;
+  };
+  const used = new Set(
+    [e.website, e.venueWebsite].filter(safeURL).map(platform),
+  );
+  const links = [];
+  for (const item of candidates) {
+    if (!safeURL(item.url)) continue;
+    const key = platform(item.url);
+    if (used.has(key)) continue;
+    used.add(key);
+    links.push(item);
+  }
+  if (links.length) {
+    const sec = el("div", "detail-section");
+    const list = el("div", "detail-links-list");
+    for (const item of links) {
+      const a = link(item.name, item.url);
+      a.className = "detail-link";
+      list.append(a);
+    }
+    sec.append(list);
+    target.append(sec);
+  }
+  const actions = el("div", "detail-actions");
+  if (Number.isFinite(e.lat) && Number.isFinite(e.lon))
+    actions.append(
+      button(
+        t("viewMap"),
+        () => {
+          dialog.close();
+          setMobileView("map");
+          selected = e.start ? dateKey(e.start) : null;
+          renderCalendar();
+          if (map) {
+            map.resize();
+            map.flyTo({ center: [e.lon, e.lat], zoom: 16 });
+            renderEventMarkers();
+          }
+        },
+        "action-button",
+      ),
+    );
+  if (downloadURL) URL.revokeObjectURL(downloadURL);
+  if (e.status !== "planned" && e.start && !e.dateOnly) {
+    downloadURL = URL.createObjectURL(
+      new Blob([ics(e, lang)], { type: "text/calendar;charset=utf-8" }),
+    );
+    const a = el("a", null, t("addCalendar"));
+    a.href = downloadURL;
+    a.download = e.id + ".ics";
+    actions.append(a);
+  }
+  const shareStatus = el("span", "share-status");
+  shareStatus.setAttribute("role", "status");
+  actions.append(
+    button(
+      lang === "lt" ? "Kopijuoti nuorodą" : "Copy link",
+      async () => {
+        const url = new URL(location.href);
+        url.searchParams.set("event", e.id);
+        url.searchParams.delete("lang");
+        url.pathname = COUNTRY.regional ? "/" : lang === "en" ? "/en/" : "/";
+        url.searchParams.delete("edition");
+        url.searchParams.delete("mode");
+        try {
+          await navigator.clipboard.writeText(url.href);
+          shareStatus.textContent =
+            lang === "lt" ? "Nuoroda nukopijuota" : "Link copied";
+        } catch {
+          shareStatus.replaceChildren();
+          const field = el("input");
+          field.readOnly = true;
+          field.value = url.href;
+          field.setAttribute(
+            "aria-label",
+            lang === "lt" ? "Renginio nuoroda" : "Event link",
+          );
+          shareStatus.append(field);
+          field.select();
+        }
+      },
+      "action-button",
+    ),
+  );
+  target.append(actions, shareStatus);
+  const heading = el("header", "event-heading");
+  const body = el("div", "event-body");
+  const information = el("div", "event-information");
+  const artwork = target.querySelector(".event-cover");
+  const badge = target.querySelector(".badge");
+  if (badge) heading.append(badge);
+  heading.append(h);
+  for (const child of [...target.children]) {
+    if (child !== artwork && child !== actions && child !== shareStatus) information.append(child);
+  }
+  body.append(information);
+  if (artwork) body.append(artwork);
+  body.classList.toggle("has-artwork", Boolean(artwork));
+  target.replaceChildren(heading, body, actions, shareStatus);
+
+  if (!dialog.open) dialog.showModal();
+}
+function renderMerchantMarkers() {
+  merchantMarkers.forEach((m) => m.remove());
+  merchantMarkers = [];
+  if (!map || !loaded || !merchantsVisible) return;
+  for (const p of scopedPlaces()) {
+    const b = button(
+      "₿",
+      (ev) => {
+        ev.stopPropagation();
+        openPlace(p);
+      },
+      "merchant-marker",
+    );
+    b.setAttribute("aria-label", placeName(p));
+    b.title = placeName(p);
+    merchantMarkers.push(
+      new maplibregl.Marker({ element: b })
+        .setLngLat([p.lon, p.lat])
+        .addTo(map),
+    );
+  }
+}
+function renderEventMarkers() {
+  eventMarkers.forEach((m) => m.remove());
+  eventMarkers = [];
+  if (!map || !loaded) return;
+  const byLocation = new Map();
+  for (const e of calendarEvents()) {
+    const kind = e.type === "conference" ? "conference" : e.type === "walk" ? "walk" : "meetup";
+    if (!(kind === "conference" ? conferencesVisible : kind === "walk" ? walksVisible : eventsVisible)) continue;
+    if (!Number.isFinite(e.lat) || !Number.isFinite(e.lon)) continue;
+    const key =
+      kind + ":" + e.lon + "," + e.lat;
+    if (!byLocation.has(key)) byLocation.set(key, []);
+    byLocation.get(key).push(e);
+  }
+  for (const group of byLocation.values()) {
+    const e = group[0];
+    const b = button(
+      "",
+      () => {
+        if (group.length === 1) showEvent(e);
+        else {
+          activeEvent = null;
+          const n = $("#event-detail");
+          n.replaceChildren();
+          const h = el("h2", null, e.venue);
+          h.id = "detail-title";
+          n.append(h, ...group.map(eventCard));
+          dialog.showModal();
+        }
+      },
+      "event-marker",
+    );
+    const kind = e.type === "conference" ? "conference" : e.type === "walk" ? "walk" : "meetup";
+    b.classList.add(kind + "-marker");
+    b.append(folkIcon(kind));
+    b.title = group.map((x) => x.title[lang] || x.title.en).join(" · ");
+    b.setAttribute("aria-label", t("events") + " · " + e.venue);
+    eventMarkers.push(
+      new maplibregl.Marker({ element: b })
+        .setLngLat([e.lon, e.lat])
+        .addTo(map),
+    );
+  }
+}
+function openPlace(p) {
+  if (!map) return;
+  if (popup) popup.remove();
+  const root = el("div", "merchant-popup");
+  root.append(el("span", "badge", "BTC Map"), el("h2", null, placeName(p)));
+  if (p.address || p.country) root.append(countryLine(p));
+  root.append(
+    el(
+      "p",
+      "muted",
+      p.verified_at
+        ? t("verified") + " · " + fmt(p.verified_at, { dateStyle: "medium" })
+        : t("unverified"),
+    ),
+  );
+  if (p.opening_hours)
+    root.append(el("p", null, t("hours") + " · " + p.opening_hours));
+  root.append(el("p", "muted", t("acceptance")));
+  const actions = el("div", "detail-actions");
+  if (safeURL(p.website)) actions.append(link(t("website"), p.website));
+  actions.append(
+    link(
+      t("btcmap"),
+      "https://btcmap.org/merchant/" + encodeURIComponent(p.osm_id || p.id),
+    ),
+  );
+  root.append(actions);
+  popup = new maplibregl.Popup({ maxWidth: "300px", offset: 20 })
+    .setLngLat([p.lon, p.lat])
+    .setDOMContent(root)
+    .addTo(map);
+  const close = document.querySelector(".maplibregl-popup-close-button");
+  if (close)
+    close.setAttribute("aria-label", lang === "lt" ? "Uždaryti" : "Close");
+}
+function renderSearch() {
+  const q = $("#search").value.trim().toLocaleLowerCase();
+  const results = $("#search-results");
+  results.replaceChildren();
+  results.hidden = !q;
+  if (!q) return;
+  const matches = scopedPlaces()
+    .filter((p) =>
+      ((p.name || "") + " " + (p.address || ""))
+        .toLocaleLowerCase()
+        .includes(q),
+    )
+    .slice(0, 12);
+  if (!matches.length) results.append(el("p", "search-empty", t("noMatch")));
+  for (const p of matches) {
+    const b = button(
+      "",
+      () => {
+        results.hidden = true;
+        $("#search").value = "";
+        if (!merchantsVisible) {
+          merchantsVisible = true;
+          $("#toggle-merchants").setAttribute("aria-pressed", "true");
+          renderMerchantMarkers();
+        }
+        map?.flyTo({ center: [p.lon, p.lat], zoom: 16 });
+        openPlace(p);
+      },
+      "search-result",
+    );
+    b.append(
+      el("strong", null, placeName(p)),
+      countryLine(p, "span"),
+    );
+    results.append(b);
+  }
+}
+async function refreshPlaces() {
+  const serial = ++requestSerial;
+  try {
+    const data = await json(API);
+    const filtered = filterPlaces(data, boundary);
+    if (serial !== requestSerial) return;
+    places = filtered.map((p) => ({
+      ...p,
+      country: placeCountry(p, boundary),
+    }));
+    fetchedAt = new Date().toISOString();
+    dataMode = "live";
+    dataFailed = false;
+    try {
+      localStorage.setItem(
+        (COUNTRY.cachePrefix || "lt-btc") + "-places-v1",
+        JSON.stringify({ fetchedAt, places }),
+      );
+    } catch {}
+    renderStatus();
+    if (sidebarView === "places") renderCalendar();
+    renderMerchantMarkers();
+    renderSearch();
+  } catch (err) {
+    if (serial === requestSerial) {
+      dataFailed = true;
+      renderStatus();
+    }
+  }
+}
+function showMapError() {
+  mapFailure = true;
+  const n = $("#map-error");
+  n.hidden = false;
+  n.replaceChildren(
+    el("p", null, t("mapUnavailable")),
+    button(t("retryMap"), () => location.reload(), "action-button"),
+  );
+}
+function resetLithuaniaView(duration = 400) {
+  if (!map) return;
+  map.resize();
+  const mobile = matchMedia("(max-width:760px)").matches;
+  map.fitBounds(
+    COUNTRY.countries?.find((c) => c.code === countryFilter)?.bounds ||
+      COUNTRY.bounds,
+    {
+      padding: mobile
+        ? { top: COUNTRY.regional ? 112 : 64, bottom: 90, left: 12, right: 12 }
+        : 35,
+      bearing: 0,
+      pitch: 0,
+      duration,
+    },
+  );
+}
+async function initMap() {
+  if (!window.maplibregl) {
+    showMapError();
+    return;
+  }
+  try {
+    const style = await json(mapStylePath(isDark()));
+    map = new maplibregl.Map({
+      container: "map",
+      style,
+      center: COUNTRY.center,
+      zoom: 6.4,
+      minZoom: 4,
+      maxZoom: 19,
+      maxBounds: COUNTRY.navigationBounds,
+      attributionControl: false,
+    });
+    map.addControl(
+      new maplibregl.NavigationControl({ showCompass: false }),
+      "top-right",
+    );
+    map.addControl(
+      new maplibregl.AttributionControl({
+        compact: false,
+        customAttribution:
+          '<a href="https://btcmap.org" target="_blank" rel="noopener">BTC Map</a>',
+      }),
+      "bottom-right",
+    );
+    localizeMapControls();
+    resetLithuaniaView(0);
+    map.on("style.load", () => {
+      loaded = true;
+      mapFailure = false;
+      $("#map-error").hidden = true;
+      map.addSource("lithuania", { type: "geojson", data: boundary });
+      map.addLayer({
+        id: "lithuania-border",
+        type: "line",
+        source: "lithuania",
+        paint: {
+          "line-color": COUNTRY.regional ? (isDark() ? "#93a2ae" : "#5d6973") : (isDark() ? "#8fb2a1" : "#285845"),
+          "line-width": 1.2,
+          "line-opacity": 0.7,
+        },
+      });
+      renderMerchantMarkers();
+      renderEventMarkers();
+    });
+    let failures = 0;
+    map.on("error", (e) => {
+      console.warn("Map resource:", e.error?.message || "Unknown error");
+      if (++failures >= 3) showMapError();
+    });
+    map.on("idle", () => {
+      if (map.areTilesLoaded()) {
+        mapFailure = false;
+        $("#map-error").hidden = true;
+      }
+    });
+    setTimeout(() => {
+      if (!loaded) showMapError();
+    }, 20000);
+    new ResizeObserver(() => map?.resize()).observe($(".map-pane"));
+  } catch {
+    showMapError();
+  }
+}
+$("#language").onclick = () => {
+  const u = new URL(location.href);
+  u.pathname = lang === "lt" ? "/en/" : "/";
+  u.searchParams.delete("lang");
+  location.assign(u.href);
+};
+
+$(".dialog-close").onclick = () => dialog.close();
+dialog.addEventListener("close", () => {
+  activeEvent = null;
+  const url = new URL(location.href);
+  url.searchParams.delete("event");
+  history.replaceState(null, "", url);
+});
+$("#search").addEventListener("input", renderSearch);
+$("#search").addEventListener("keydown", (e) => {
+  if (e.key === "Escape") $("#search-results").hidden = true;
+  if (e.key === "ArrowDown") $("#search-results button")?.focus();
+});
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".search-wrap")) $("#search-results").hidden = true;
+});
+$("#fit").onclick = () => {
+  popup?.remove();
+  resetLithuaniaView();
+};
+for (const [id, kind] of [
+  ["#toggle-merchants", "merchants"],
+  ["#toggle-events", "events"],
+  ["#toggle-walks", "walks"],
+  ["#toggle-conferences", "conferences"],
+])
+  $(id).onclick = () => {
+    if (kind === "merchants") {
+      merchantsVisible = !merchantsVisible;
+      $(id).setAttribute("aria-pressed", String(merchantsVisible));
+      renderMerchantMarkers();
+    } else if (kind === "conferences") {
+      conferencesVisible = !conferencesVisible;
+      $(id).setAttribute("aria-pressed", String(conferencesVisible));
+      renderEventMarkers();
+    } else if (kind === "walks") {
+      walksVisible = !walksVisible;
+      $(id).setAttribute("aria-pressed", String(walksVisible));
+      renderEventMarkers();
+    } else {
+      eventsVisible = !eventsVisible;
+      $(id).setAttribute("aria-pressed", String(eventsVisible));
+      renderEventMarkers();
+    }
+  };
+
+$("#appearance").onclick = async () => {
+  const b = $("#appearance");
+  b.disabled = true;
+  const dark = !isDark();
+  try {
+    const style = await json(mapStylePath(dark));
+    document.body.classList.toggle("mode-dark", dark);
+    document.body.classList.toggle("mode-light", !dark);
+    const u = new URL(location.href);
+    u.searchParams.set("mode", dark ? "dark" : "light");
+    history.replaceState(null, "", u);
+    updateHomeLink();
+    updateAboutLinks();
+    renderAppearance();
+    popup?.remove();
+    if (map) {
+      loaded = false;
+      map.setStyle(style, { diff: false });
+    } else initMap();
+  } catch {
+    showMapError();
+  } finally {
+    b.disabled = false;
+  }
+};
+
+async function start() {
+  renderLabels();
+  try {
+    [boundary, events, config, paymentMethods] = await Promise.all([
+      json("./" + COUNTRY.boundaryPath),
+      json("./data/events.json"),
+      json("./data/site.json"),
+      json("./data/payment-methods.json").catch(() => ({})),
+    ]);
+    if (!Array.isArray(events)) throw Error("events");
+    renderLabels();
+    const requestedEvent = new URLSearchParams(location.search).get("event");
+    const linkedEvent = events.find((e) => e.id === requestedEvent);
+    if (linkedEvent) showEvent(linkedEvent);
+    initMap();
+    let snapshot;
+    try {
+      snapshot = JSON.parse(
+        localStorage.getItem((COUNTRY.cachePrefix || "lt-btc") + "-places-v1"),
+      );
+    } catch {}
+    if (
+      !snapshot?.fetchedAt ||
+      !Number.isFinite(Date.parse(snapshot.fetchedAt)) ||
+      !Array.isArray(snapshot.places) ||
+      new Date(snapshot.fetchedAt) > new Date()
+    ) {
+      try {
+        snapshot = await json("./data/merchants-snapshot.json");
+      } catch {
+        snapshot = null;
+      }
+    }
+    if (snapshot) {
+      places = filterPlaces(snapshot.places, boundary).map((p) => ({
+        ...p,
+        country: placeCountry(p, boundary),
+      }));
+      fetchedAt = snapshot.fetchedAt;
+      dataMode = "cached";
+      renderStatus();
+      renderMerchantMarkers();
+    }
+    refreshPlaces();
+  } catch {
+    dataMode = "error";
+    dataFailed = true;
+    renderStatus();
+    $("#event-list").replaceChildren(
+      el(
+        "div",
+        "empty-state",
+        lang === "lt"
+          ? "Kalendoriaus įkelti nepavyko."
+          : "Unable to load the calendar.",
+      ),
+    );
+  }
+}
+start();
+
+// Mobile destinations reuse the existing controls and preserve map state.
+function setMobileView(view) {
+  if (!["map", "events", "community"].includes(view)) return;
+  document.body.dataset.mobileView = view;
+  document.querySelectorAll(".mobile-bottom-nav button").forEach((b) => {
+    if (b.dataset.mobileView === view) b.setAttribute("aria-current", "page");
+    else b.removeAttribute("aria-current");
+  });
+  if (view === "map") requestAnimationFrame(() => map?.resize());
+}
+function syncMobileLayout() {
+  const mobile = matchMedia("(max-width:760px)").matches;
+  const target = mobile ? $("#community-links") : $("#main-navigation");
+  target.prepend($("#socials"));
+  if (mobile) target.append($("#add-place"));
+  else $("#socials").after($("#add-place"));
+  $("#socials")
+    .querySelectorAll("details")
+    .forEach((d) => {
+      d.open = mobile;
+      d.querySelector("summary").tabIndex = mobile ? -1 : 0;
+    });
+  const labels =
+    lang === "lt"
+      ? { map: "Žemėlapis", events: "Renginiai", community: "Bendruomenė" }
+      : { map: "Map", events: "Events", community: "Community" };
+  document
+    .querySelectorAll(".mobile-bottom-nav button")
+    .forEach(
+      (b) => (b.lastElementChild.textContent = labels[b.dataset.mobileView]),
+    );
+  $(".mobile-bottom-nav").setAttribute(
+    "aria-label",
+    lang === "lt" ? "Naršymas" : "Navigation",
+  );
+  $("#community-pane").setAttribute("aria-label", labels.community);
+  setMobileView(
+    document.body.dataset.mobileView ||
+      new URLSearchParams(location.search).get("view") ||
+      "map",
+  );
+  requestAnimationFrame(() => map?.resize());
+}
+$(".mobile-bottom-nav").addEventListener("click", (e) => {
+  const b = e.target.closest("button");
+  if (b) setMobileView(b.dataset.mobileView);
+});
+matchMedia("(max-width:760px)").addEventListener("change", syncMobileLayout);
+
+function renderSourceLink() {
+  const root = $("#community-source");
+  root.replaceChildren();
+  const contact = document.createElement("a");
+  contact.href = `mailto:${COUNTRY.contactEmail}`;
+  contact.textContent = COUNTRY.contactEmail;
+  const contactSection = $("#community-contact");
+  contactSection.replaceChildren(el("h3", null, lang === "lt" ? "Susisiekite" : "Contact"), contact);
+  root.append(
+    el(
+      "h3",
+      null,
+      lang === "lt" ? "Pritaikyk savo bendruomenei" : "Make it yours",
+    ),
+    el(
+      "p",
+      null,
+      lang === "lt"
+        ? "Sukurk šios svetainės kopiją ir pritaikyk ją savo regionui ar šaliai."
+        : "Fork this website and adapt it for your region or country.",
+    ),
+  );
+  const source = link("GitHub ↗", COUNTRY.repository);
+  source.className = "source-link";
+  root.append(source);
+}

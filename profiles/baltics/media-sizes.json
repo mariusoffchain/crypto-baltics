@@ -1,0 +1,56 @@
+[
+  {
+    "source": "assets/events/3.jpg",
+    "originalBytes": 134487,
+    "thumbBytes": 25194,
+    "viewBytes": 86266
+  },
+  {
+    "source": "profiles/baltics/media-originals/honeybadger-stage.webp",
+    "originalBytes": 190992,
+    "thumbBytes": 23772,
+    "viewBytes": 176916
+  },
+  {
+    "source": "profiles/baltics/media-originals/tallinn-announcement.jpg",
+    "originalBytes": 41375,
+    "thumbBytes": 15646,
+    "viewBytes": 26666
+  },
+  {
+    "source": "assets/events/alexis-proof-conference-talk.jpeg",
+    "originalBytes": 716473,
+    "thumbBytes": 12902,
+    "viewBytes": 87040
+  },
+  {
+    "source": "profiles/baltics/media-originals/honeybadger-art.webp",
+    "originalBytes": 140586,
+    "thumbBytes": 14634,
+    "viewBytes": 136994
+  },
+  {
+    "source": "assets/events/deco-proof-conference-nostr.jpeg",
+    "originalBytes": 5203894,
+    "thumbBytes": 11894,
+    "viewBytes": 149554
+  },
+  {
+    "source": "assets/events/2.jpg",
+    "originalBytes": 120257,
+    "thumbBytes": 19542,
+    "viewBytes": 76554
+  },
+  {
+    "source": "assets/events/btc-walk-lt3.jpeg",
+    "originalBytes": 75232,
+    "thumbBytes": 28092,
+    "viewBytes": 36580
+  },
+  {
+    "source": "assets/events/4.jpg",
+    "originalBytes": 181340,
+    "thumbBytes": 35422,
+    "viewBytes": 124070
+  }
+]

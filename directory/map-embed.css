@@ -1,0 +1,6 @@
+.directory-embed .navbar{display:none!important}
+.directory-embed body.theme-atlas{--paper:#fff;--paper-deep:#f3f6f8;--paper-raised:#eef3f7;--text:#172833;--accent:#006aa7;--muted:#526570;--header-h:0px;--nav-h:0px}
+.directory-embed body.theme-atlas.mode-dark{--paper:#101d26;--paper-deep:#142530;--paper-raised:#192c38;--text:#f1f6f9;--accent:#72b9eb;--muted:#b2c3ce}
+.directory-embed .theme-atlas .workspace{height:100dvh;max-height:100dvh;margin-top:0;top:0}
+.directory-embed .preview-directory{display:none!important}
+@media(max-width:760px){.directory-embed .theme-atlas .workspace{inset:0 0 var(--bottom-h);height:auto;max-height:none}.directory-embed .mobile-bottom-nav{grid-template-columns:repeat(2,1fr)}.directory-embed [data-mobile-view=community],.directory-embed .mobile-about{display:none!important}}

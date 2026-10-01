@@ -1,0 +1,324 @@
+[
+  {
+    "id": "tallinn-316565528",
+    "country": "EE",
+    "initiative": "mission-liberty",
+    "type": "meetup",
+    "start": "2026-09-22T19:00:00+03:00",
+    "end": "2026-09-22T21:00:00+03:00",
+    "title": {
+      "en": "Bitcoin in Denmark: Building a Community from the Ground Up"
+    },
+    "description": {
+      "en": "A discussion hosted by Mission Liberty Tallinn with guests from Denmark about Bitcoin meetups, publishing and local community building."
+    },
+    "venue": "Vabaduse Tuba",
+    "address": "Pikk 7, Room 11, Tallinn",
+    "url": "https://www.meetup.com/mission-liberty-tallinn/events/316565528/",
+    "sources": [
+      "https://www.meetup.com/mission-liberty-tallinn/events/316565528/"
+    ],
+    "sourceVerifiedAt": "2026-09-30",
+    "lat": 59.437958,
+    "lon": 24.74415,
+    "image": {
+      "src": "assets/event-covers/tallinn-316565528.webp",
+      "source": "https://www.meetup.com/mission-liberty-tallinn/events/316565528/",
+      "original": "https://secure.meetupstatic.com/photos/event/d/a/e/1/600_536156033.jpeg",
+      "width": 600,
+      "height": 337,
+      "kind": "event"
+    }
+  },
+  {
+    "id": "honeybadger-riga-2025",
+    "country": "LV",
+    "initiative": "honeybadger",
+    "type": "conference",
+    "start": "2025-08-09T10:00:00+03:00",
+    "end": "2025-08-10T18:00:00+03:00",
+    "title": {
+      "en": "Baltic Honeybadger 2025"
+    },
+    "description": {
+      "en": "A Bitcoin-only conference in Riga, part of Riga Bitcoin Week. Talks and discussions covered Bitcoin, freedom technology and the people building the ecosystem. This is the archived 2025 edition."
+    },
+    "venue": "Fantadroms",
+    "address": "Riga",
+    "lat": 56.9762199,
+    "lon": 24.1668844,
+    "website": "https://baltichoneybadger.com/",
+    "url": "https://baltichoneybadger.com/",
+    "sources": [
+      "https://baltichoneybadger.com/riga-bitcoin-week",
+      "https://baltichoneybadger.com/location"
+    ],
+    "sourceVerifiedAt": "2026-09-30",
+    "image": {
+      "src": "assets/event-covers/honeybadger-riga-2025.webp",
+      "source": "https://baltichoneybadger.com/",
+      "original": "https://baltichoneybadger.com/og-images/link-preview-twitter.png",
+      "width": 1200,
+      "height": 675,
+      "kind": "event"
+    }
+  },
+  {
+    "id": "btcpp-riga-privacy-2025",
+    "country": "LV",
+    "initiative": "btcpp-riga",
+    "type": "conference",
+    "start": "2025-08-07T10:00:00+03:00",
+    "end": "2025-08-08T18:00:00+03:00",
+    "title": {
+      "en": "bitcoin++ Riga · Privacy edition"
+    },
+    "description": {
+      "en": "A technical Bitcoin conference with talks, workshops and a hackathon exploring privacy and peer-to-peer exchange. Held at the National Library of Latvia during Riga Bitcoin Week. This is the archived 2025 edition."
+    },
+    "venue": "National Library of Latvia",
+    "address": "Riga",
+    "website": "https://btcpp.dev/riga",
+    "url": "https://btcpp.dev/riga",
+    "sources": [
+      "https://btcpp.dev/riga",
+      "https://baltichoneybadger.com/riga-bitcoin-week"
+    ],
+    "sourceVerifiedAt": "2026-09-30",
+    "image": {
+      "src": "assets/event-covers/btcpp-riga-privacy-2025.webp",
+      "source": "https://btcpp.dev/riga",
+      "original": "https://btcpp.dev/social-cards/conference/riga.jpg?v=bd6c2ad08ef0",
+      "width": 1200,
+      "height": 630,
+      "kind": "event"
+    }
+  },
+  {
+    "id": "solana-connect-2026",
+    "country": "LV",
+    "type": "meetup",
+    "initiative": "solana-baltics-LV",
+    "title": {
+      "en": "Solana Connect"
+    },
+    "description": {
+      "en": "A community evening around Solana, stablecoins, payments and onchain finance. Exact venue not announced publicly."
+    },
+    "start": "2026-10-14T19:00:00+03:00",
+    "end": "2026-10-14T22:00:00+03:00",
+    "dateOnly": false,
+    "venue": "Riga",
+    "address": "Riga",
+    "addressUncertain": true,
+    "url": "https://luma.com/6qqwcg3o",
+    "website": "https://luma.com/6qqwcg3o",
+    "sources": [
+      "https://luma.com/6qqwcg3o",
+      "https://www.solanabaltics.com/events/"
+    ],
+    "sourceVerifiedAt": "2026-10-01",
+    "image": {
+      "src": "assets/event-covers/solana-connect-2026.webp",
+      "source": "https://luma.com/6qqwcg3o",
+      "original": "https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=1,anim=false,background=white,quality=75,width=800,height=420/event-social/8u/2439a547-3d9f-4722-8825-bff28d82cb97.png",
+      "width": 800,
+      "height": 420,
+      "kind": "event"
+    }
+  },
+  {
+    "id": "unblock-fintech-2026",
+    "country": "LV",
+    "type": "conference",
+    "initiative": "unblock-LV",
+    "title": {
+      "en": "UN:BLOCK Fintech Forum"
+    },
+    "description": {
+      "en": "Fintech forum with crypto licensing and digital payment sessions. See organiser for final venue and timetable."
+    },
+    "start": "2026-10-15T12:00:00Z",
+    "end": "2026-10-15T23:59:59+03:00",
+    "dateOnly": true,
+    "venue": "Riga",
+    "address": "Riga",
+    "addressUncertain": true,
+    "url": "https://fintech.unblockeurope.com/",
+    "website": "https://fintech.unblockeurope.com/",
+    "sources": [
+      "https://fintech.unblockeurope.com/"
+    ],
+    "sourceVerifiedAt": "2026-10-01",
+    "image": {
+      "src": "assets/event-covers/unblock-fintech-2026.webp",
+      "source": "https://fintech.unblockeurope.com/",
+      "original": "https://fintech.unblockeurope.com/og-image.jpg",
+      "width": 1200,
+      "height": 607,
+      "kind": "event"
+    }
+  },
+  {
+    "id": "unblock-2027",
+    "country": "LV",
+    "type": "conference",
+    "initiative": "unblock-LV",
+    "title": {
+      "en": "UN:BLOCK 2027"
+    },
+    "description": {
+      "en": "Blockchain, digital assets, fintech and AI conference. See organiser for venue and timetable."
+    },
+    "start": "2027-03-10T12:00:00Z",
+    "end": "2027-03-11T23:59:59+03:00",
+    "dateOnly": true,
+    "venue": "Riga",
+    "address": "Riga",
+    "addressUncertain": true,
+    "url": "https://unblockeurope.com/",
+    "website": "https://unblockeurope.com/",
+    "sources": [
+      "https://unblockeurope.com/",
+      "https://lbaa.io/"
+    ],
+    "sourceVerifiedAt": "2026-10-01",
+    "image": {
+      "src": "assets/event-covers/unblock-2027.webp",
+      "source": "https://unblockeurope.com/",
+      "original": "https://cdn.prod.website-files.com/689d84c0d136d6b1dc876d47/6a312b90c035c4d8499ab3da_perfekti.png",
+      "width": 1200,
+      "height": 630,
+      "kind": "event"
+    }
+  },
+  {
+    "id": "solana-vibecheck-2026",
+    "country": "LT",
+    "type": "meetup",
+    "initiative": "solana-baltics-LT",
+    "title": {
+      "en": "Solana Baltics Vibecheck"
+    },
+    "description": {
+      "en": "A gathering of the Baltic Solana community during Startup Fair."
+    },
+    "start": "2026-09-16T12:00:00Z",
+    "end": "2026-09-16T23:59:59+03:00",
+    "dateOnly": true,
+    "venue": "Vilnius",
+    "address": "Vilnius",
+    "addressUncertain": true,
+    "url": "https://www.meetup.com/blockchainlt/",
+    "website": "https://www.meetup.com/blockchainlt/",
+    "sources": [
+      "https://www.meetup.com/blockchainlt/",
+      "https://solana.com/ar/events/archive"
+    ],
+    "sourceVerifiedAt": "2026-10-01",
+    "image": {
+      "src": "assets/event-covers/solana-vibecheck-2026.webp",
+      "source": "https://www.meetup.com/blockchainlt/",
+      "original": "https://secure.meetupstatic.com/photos/event/d/e/600_503040222.jpeg",
+      "width": 600,
+      "height": 338,
+      "kind": "organiser"
+    }
+  },
+  {
+    "id": "unblock-2026",
+    "country": "LV",
+    "type": "conference",
+    "initiative": "unblock-LV",
+    "title": {
+      "en": "UN:BLOCK 2026"
+    },
+    "description": {
+      "en": "The 2026 Riga edition covering blockchain and financial technology."
+    },
+    "start": "2026-04-01T12:00:00Z",
+    "end": "2026-04-02T23:59:59+03:00",
+    "dateOnly": true,
+    "venue": "Riga",
+    "address": "Riga",
+    "addressUncertain": true,
+    "url": "https://unblockeurope.com/about-us",
+    "website": "https://unblockeurope.com/about-us",
+    "sources": [
+      "https://unblockeurope.com/about-us"
+    ],
+    "sourceVerifiedAt": "2026-10-01",
+    "image": {
+      "src": "assets/event-covers/unblock-2026.webp",
+      "source": "https://unblockeurope.com/about-us",
+      "original": "https://unblockeurope.com/about-us",
+      "width": 256,
+      "height": 256,
+      "kind": "organiser"
+    }
+  },
+  {
+    "id": "ethtallinn-2024",
+    "country": "EE",
+    "type": "hackathon",
+    "initiative": "ethtallinn-EE",
+    "title": {
+      "en": "ETHTallinn 2024"
+    },
+    "description": {
+      "en": "A three-day Ethereum and Web3 hackathon."
+    },
+    "start": "2024-04-19T12:00:00Z",
+    "end": "2024-04-21T23:59:59+03:00",
+    "dateOnly": true,
+    "venue": "Tallinn",
+    "address": "Tallinn",
+    "addressUncertain": true,
+    "url": "https://linktr.ee/ethtallinn",
+    "website": "https://linktr.ee/ethtallinn",
+    "sources": [
+      "https://linktr.ee/ethtallinn"
+    ],
+    "sourceVerifiedAt": "2026-10-01",
+    "image": {
+      "src": "assets/event-covers/ethtallinn-2024.webp",
+      "source": "https://linktr.ee/ethtallinn",
+      "original": "https://linktr.ee/ethtallinn",
+      "width": 1200,
+      "height": 630,
+      "kind": "organiser"
+    }
+  },
+  {
+    "id": "web3-vilnius-2023",
+    "country": "LT",
+    "type": "conference",
+    "initiative": "web3-summit-LT",
+    "title": {
+      "en": "Web3 Summit Vilnius 2023"
+    },
+    "description": {
+      "en": "A documented Lithuanian Web3 conference edition."
+    },
+    "start": "2023-11-09T12:00:00Z",
+    "end": "2023-11-09T23:59:59+03:00",
+    "dateOnly": true,
+    "venue": "Vilnius",
+    "address": "Vilnius",
+    "addressUncertain": true,
+    "url": "https://www.litexpo.lt/wp-content/uploads/2023/10/Web_3_one_pager_2.pdf",
+    "website": "https://www.litexpo.lt/wp-content/uploads/2023/10/Web_3_one_pager_2.pdf",
+    "sources": [
+      "https://www.litexpo.lt/wp-content/uploads/2023/10/Web_3_one_pager_2.pdf"
+    ],
+    "sourceVerifiedAt": "2026-10-01",
+    "image": {
+      "src": "assets/event-covers/web3-vilnius-2023.webp",
+      "source": "https://www.litexpo.lt/wp-content/uploads/2023/10/Web_3_one_pager_2.pdf",
+      "original": "https://www.litexpo.lt/wp-content/uploads/2023/10/Web_3_one_pager_2.pdf",
+      "width": 825,
+      "height": 1100,
+      "kind": "event"
+    }
+  }
+]

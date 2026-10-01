@@ -1,0 +1,71 @@
+{
+  "socials": {
+    "nostr": null,
+    "telegram": null,
+    "x": null,
+    "facebook": null
+  },
+  "communityUrl": "https://www.meetup.com/bitcoin-lithuania-meetup/",
+  "timezone": "Europe/Vilnius",
+  "initiatives": [
+    {
+      "id": "meetups",
+      "name": "Meetups",
+      "links": [
+        {
+          "name": "Meetup",
+          "icon": "meetup",
+          "url": "https://www.meetup.com/bitcoin-lithuania-meetup/"
+        },
+        {
+          "name": "Telegram",
+          "icon": "telegram",
+          "url": "https://t.me/+N-CkFXQJmoA4YmQ8"
+        },
+        {
+          "name": "Luma",
+          "icon": "luma",
+          "kind": "event",
+          "url": "https://luma.com/v02li4cb"
+        },
+        {
+          "name": "Facebook",
+          "icon": "facebook",
+          "kind": "event",
+          "url": "https://fb.me/e/86DPMWzhT"
+        },
+        {
+          "name": "Satlantis",
+          "icon": "globe",
+          "kind": "platform",
+          "url": "https://www.satlantis.io/"
+        }
+      ]
+    },
+    {
+      "id": "walks",
+      "name": "Walks",
+      "links": [
+        {
+          "name": "BitcoinWalk Vilnius",
+          "icon": "walk",
+          "url": "https://bitcoinwalk.org/vilnius"
+        },
+        {
+          "name": "Telegram",
+          "icon": "telegram",
+          "url": "https://t.me/+Nb_w6ajjATIxMjhk"
+        },
+        {
+          "name": "Satlantis",
+          "icon": "globe",
+          "kind": "event",
+          "url": "https://www.satlantis.io/events/1822/BitcoinWalk-Vilnius-"
+        }
+      ]
+    }
+  ],
+  "initiativesSource": "https://www.offchain.media/lithuaniabtc/",
+  "initiativesVerifiedAt": "2026-09-30",
+  "gallery": []
+}

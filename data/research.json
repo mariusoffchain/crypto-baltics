@@ -1,0 +1,748 @@
+{
+  "reviewedAt": "2026-10-01",
+  "scope": "Initial, non-exhaustive Baltic ecosystem collection. Listing is not endorsement. Dates without times are not calendar-ready.",
+  "organisations": [
+    {
+      "id": "solana-baltics",
+      "name": "Solana Baltics",
+      "countries": [
+        "EE",
+        "LV",
+        "LT"
+      ],
+      "category": "community",
+      "summary": "Solana Baltics connects builders and hosts meetups across Estonia, Latvia and Lithuania.",
+      "url": "https://www.solanabaltics.com/",
+      "topics": [
+        "Solana"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "",
+      "sources": [
+        "https://www.solanabaltics.com/"
+      ],
+      "links": [
+        {
+          "name": "Telegram",
+          "url": "https://t.me/+2YO9Zh2Wbe9mNWVk"
+        },
+        {
+          "name": "X",
+          "url": "https://x.com/solanabaltics"
+        },
+        {
+          "name": "Calendar",
+          "url": "https://luma.com/baltics"
+        }
+      ]
+    },
+    {
+      "id": "blockchain-lithuania",
+      "name": "Blockchain Lithuania",
+      "countries": [
+        "LT"
+      ],
+      "category": "community",
+      "summary": "Blockchain Lithuania brings together people working with blockchain and Web3, with a public meetup archive.",
+      "url": "https://www.meetup.com/blockchainlt/",
+      "topics": [
+        "Web3",
+        "Ethereum",
+        "Solana"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "September 2026 Solana event listed. Former Blockchain Centre Vilnius links should not create duplicate records.",
+      "sources": [
+        "https://www.meetup.com/blockchainlt/"
+      ],
+      "links": []
+    },
+    {
+      "id": "crypto-economy",
+      "name": "Crypto Economy Organisation",
+      "countries": [
+        "LT"
+      ],
+      "category": "association",
+      "summary": "Crypto Economy Organisation represents the crypto ecosystem and supports education, meetups and the Web3 Summit.",
+      "url": "https://www.cryptoeconomy.world/",
+      "topics": [
+        "Web3"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "",
+      "sources": [
+        "https://www.cryptoeconomy.world/"
+      ],
+      "links": []
+    },
+    {
+      "id": "crypto-hub",
+      "name": "Crypto Hub Lithuania",
+      "countries": [
+        "LT"
+      ],
+      "category": "association",
+      "summary": "Crypto Hub Lithuania promotes crypto, blockchain and DeFi through discussions, research and education.",
+      "url": "https://www.linkedin.com/company/crypto-hub-lithuania/",
+      "topics": [
+        "DeFi",
+        "Web3"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "Organisation profile confirmed; no upcoming meetup independently confirmed.",
+      "sources": [
+        "https://www.linkedin.com/company/crypto-hub-lithuania/"
+      ],
+      "links": [
+        {
+          "name": "Website",
+          "url": "https://cryptohub.lt/"
+        }
+      ]
+    },
+    {
+      "id": "lbaa",
+      "name": "Latvian Blockchain Association",
+      "countries": [
+        "LV"
+      ],
+      "category": "association",
+      "summary": "The Latvian Blockchain Association brings together blockchain businesses and supports the local ecosystem.",
+      "url": "https://lbaa.io/",
+      "topics": [
+        "Web3"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "Different organisation from Baltic Blockchain Association Riga.",
+      "sources": [
+        "https://lbaa.io/"
+      ],
+      "links": []
+    },
+    {
+      "id": "bba-riga",
+      "name": "Baltic Blockchain Association Riga",
+      "countries": [
+        "LV"
+      ],
+      "category": "community",
+      "summary": "Baltic Blockchain Association Riga hosts discussions on distributed ledgers and practical applications.",
+      "url": "https://www.meetup.com/baltic-blockchain-association-riga/",
+      "topics": [
+        "Web3",
+        "Ethereum"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "One past event visible; recurring activity is not established.",
+      "sources": [
+        "https://www.meetup.com/baltic-blockchain-association-riga/"
+      ],
+      "links": []
+    },
+    {
+      "id": "ew3",
+      "name": "Estonian Web3 Chamber",
+      "countries": [
+        "EE"
+      ],
+      "category": "association",
+      "summary": "Estonian Web3 Chamber connects organisations and individuals through education, industry cooperation and community activities.",
+      "url": "https://ew3.ee/",
+      "topics": [
+        "Web3"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "",
+      "sources": [
+        "https://ew3.ee/"
+      ],
+      "links": [
+        {
+          "name": "Community links",
+          "url": "https://linktr.ee/estoniaweb3"
+        }
+      ]
+    },
+    {
+      "id": "blockchain-tallinn",
+      "name": "Blockchain Tallinn",
+      "countries": [
+        "EE"
+      ],
+      "category": "community",
+      "summary": "Blockchain Tallinn is a meetup community previously called Blockchain & Ethereum Tallinn.",
+      "url": "https://www.meetup.com/blockchain-ethereum-tallinn/",
+      "topics": [
+        "Ethereum",
+        "Web3"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "Do not list the former name as a separate group.",
+      "sources": [
+        "https://www.meetup.com/blockchain-ethereum-tallinn/"
+      ],
+      "links": []
+    },
+    {
+      "id": "ethtallinn",
+      "name": "ETHTallinn",
+      "countries": [
+        "EE"
+      ],
+      "category": "community",
+      "summary": "ETHTallinn organised an Ethereum and Web3 hackathon in Tallinn. Its community channels remain a useful starting point.",
+      "url": "https://linktr.ee/ethtallinn",
+      "topics": [
+        "Ethereum"
+      ],
+      "verification": "historical",
+      "reviewedAt": "2026-10-01",
+      "note": "Official page still advertises 19–21 April 2024. No new edition confirmed.",
+      "sources": [
+        "https://linktr.ee/ethtallinn"
+      ],
+      "links": []
+    },
+    {
+      "id": "cryptomondays",
+      "name": "CryptoMondays Vilnius",
+      "countries": [
+        "LT"
+      ],
+      "category": "community",
+      "summary": "CryptoMondays Vilnius hosted local discussions and Ethereum conference recaps.",
+      "url": "https://www.linkedin.com/posts/cryptomondays-vilnius_a-week-from-now-come-listen-to-a-power-pack-activity-7089238455175524352-fqva",
+      "topics": [
+        "Web3",
+        "Ethereum"
+      ],
+      "verification": "historical",
+      "reviewedAt": "2026-10-01",
+      "note": "Evidence is from 2023. Current local activity needs confirmation.",
+      "sources": [
+        "https://www.linkedin.com/posts/cryptomondays-vilnius_a-week-from-now-come-listen-to-a-power-pack-activity-7089238455175524352-fqva"
+      ],
+      "links": []
+    },
+    {
+      "id": "vilnius-blockchain",
+      "name": "Vilnius Blockchain Club",
+      "countries": [
+        "LT"
+      ],
+      "category": "community",
+      "summary": "Vilnius Blockchain Club has an archive of blockchain technology talks and webinars.",
+      "url": "https://www.meetup.com/vilnius-blockchain-club/",
+      "topics": [
+        "Web3",
+        "Ethereum"
+      ],
+      "verification": "historical",
+      "reviewedAt": "2026-10-01",
+      "note": "Most recent event visible in the inspected listing is June 2021.",
+      "sources": [
+        "https://www.meetup.com/vilnius-blockchain-club/"
+      ],
+      "links": []
+    },
+    {
+      "id": "w3b-ida",
+      "name": "W3B LAB IDA",
+      "countries": [
+        "EE"
+      ],
+      "category": "community",
+      "summary": "W3B LAB IDA is a Web3 community initiative whose launch was reported by the Estonian Web3 Chamber.",
+      "url": "https://www.linkedin.com/posts/estonian-web3-chamber_today-our-chambers-president-raido-saar-activity-7238198602106318848-J1E0",
+      "topics": [
+        "Web3"
+      ],
+      "verification": "review",
+      "reviewedAt": "2026-10-01",
+      "note": "Launch evidence only. Direct community channels and current activity need confirmation.",
+      "sources": [
+        "https://www.linkedin.com/posts/estonian-web3-chamber_today-our-chambers-president-raido-saar-activity-7238198602106318848-J1E0"
+      ],
+      "links": []
+    },
+    {
+      "id": "moneropay",
+      "name": "MoneroPay",
+      "countries": [
+        "LT"
+      ],
+      "category": "initiative",
+      "summary": "MoneroPay is an open-source Monero payment backend with a contributor based in Vilnius. It is a software project, not a local meetup community.",
+      "url": "https://moneropay.eu/",
+      "topics": [
+        "Monero",
+        "Open source"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "Regional connection through contributor Laurynas Četyrkinas (@stnby), whose public GitLab profile lists Vilnius and links to MoneroPay. This does not establish a Lithuanian headquarters or a local Monero community.",
+      "sources": [
+        "https://moneropay.eu/",
+        "https://gitlab.com/stnby"
+      ],
+      "links": [
+        {
+          "name": "Matrix",
+          "url": "https://matrix.to/#/#moneropay:kernal.eu"
+        },
+        {
+          "name": "GitLab",
+          "url": "https://gitlab.com/moneropay/moneropay"
+        }
+      ]
+    },
+    {
+      "id": "kernal",
+      "name": "Kernal",
+      "countries": [
+        "LT"
+      ],
+      "category": "initiative",
+      "summary": "Kernal publishes technical work on security, privacy and free software, including MoneroPay.",
+      "url": "https://kernal.eu/",
+      "topics": [
+        "Monero",
+        "Privacy",
+        "Open source"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "Lithuanian connection through contributors; not a dedicated Monero meetup organisation.",
+      "sources": [
+        "https://kernal.eu/",
+        "https://gitlab.com/stnby"
+      ],
+      "links": []
+    },
+    {
+      "id": "coingate",
+      "name": "CoinGate",
+      "countries": [
+        "LT"
+      ],
+      "category": "company",
+      "summary": "CoinGate develops cryptocurrency payment tools for businesses, with roots in Vilnius.",
+      "url": "https://coingate.com/about-us",
+      "topics": [
+        "Payments"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "",
+      "sources": [
+        "https://coingate.com/about-us"
+      ],
+      "links": []
+    },
+    {
+      "id": "superhow",
+      "name": "SUPER HOW?",
+      "countries": [
+        "LT"
+      ],
+      "category": "company",
+      "summary": "SUPER HOW? develops blockchain systems and researches digital infrastructure from Lithuania.",
+      "url": "https://www.superhow.com/our-story",
+      "topics": [
+        "Infrastructure",
+        "Web3"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "",
+      "sources": [
+        "https://www.superhow.com/our-story"
+      ],
+      "links": []
+    },
+    {
+      "id": "swapin",
+      "name": "Swapin",
+      "countries": [
+        "EE"
+      ],
+      "category": "company",
+      "summary": "Swapin provides crypto-to-bank payment services and lists an office in Tallinn.",
+      "url": "https://www.swapin.com/about-us/",
+      "topics": [
+        "Payments"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "",
+      "sources": [
+        "https://www.swapin.com/about-us/"
+      ],
+      "links": []
+    },
+    {
+      "id": "cryptoswift",
+      "name": "CryptoSwift",
+      "countries": [
+        "EE"
+      ],
+      "category": "company",
+      "summary": "CryptoSwift develops Travel Rule compliance software and is based in Tartu.",
+      "url": "https://cryptoswift.eu/contact/",
+      "topics": [
+        "Infrastructure",
+        "Compliance"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "",
+      "sources": [
+        "https://cryptoswift.eu/contact/"
+      ],
+      "links": []
+    },
+    {
+      "id": "gravity",
+      "name": "Gravity Team",
+      "countries": [
+        "LV"
+      ],
+      "category": "company",
+      "summary": "Gravity Team provides crypto market-making and liquidity services, with a team in Riga.",
+      "url": "https://www.gravityteam.co/",
+      "topics": [
+        "Liquidity"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "",
+      "sources": [
+        "https://www.gravityteam.co/",
+        "https://www.gravityteam.co/careers"
+      ],
+      "links": []
+    },
+    {
+      "id": "blockvis",
+      "name": "Blockvis",
+      "countries": [
+        "LV"
+      ],
+      "category": "company",
+      "summary": "Blockvis builds AI and blockchain-related software and is a member of the Latvian Blockchain Association.",
+      "url": "https://blockvis.com/",
+      "topics": [
+        "Infrastructure",
+        "Web3"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "Current website emphasises AI; retain an accurate description rather than presenting it as a crypto-only company.",
+      "sources": [
+        "https://blockvis.com/"
+      ],
+      "links": []
+    },
+    {
+      "id": "unblock",
+      "name": "UN:BLOCK",
+      "countries": [
+        "LV"
+      ],
+      "category": "conference",
+      "summary": "UN:BLOCK hosts a conference in Riga covering blockchain, digital assets and financial technology.",
+      "url": "https://unblockeurope.com/",
+      "topics": [
+        "Web3",
+        "Payments"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "Homepage announces 10–11 March 2027; About retains the 1–2 April 2026 edition. These are separate editions.",
+      "sources": [
+        "https://unblockeurope.com/"
+      ],
+      "links": []
+    },
+    {
+      "id": "w3n",
+      "name": "W3N",
+      "countries": [
+        "EE"
+      ],
+      "category": "conference",
+      "summary": "W3N is a Narva gathering covering Web3 and other emerging technologies.",
+      "url": "https://w3n.ee/",
+      "topics": [
+        "Web3"
+      ],
+      "verification": "review",
+      "reviewedAt": "2026-10-01",
+      "note": "Date conflict on organiser site: title says December 2026, body says January 2027 and January 2026. Confirm with organiser before putting a date in the calendar.",
+      "sources": [
+        "https://w3n.ee/"
+      ],
+      "links": []
+    },
+    {
+      "id": "web3-summit",
+      "name": "Web3 Summit Vilnius",
+      "countries": [
+        "LT"
+      ],
+      "category": "conference",
+      "summary": "Web3 Summit brought blockchain discussions to Vilnius, with Crypto Economy Organisation among the organisers.",
+      "url": "https://www.cryptoeconomy.world/",
+      "topics": [
+        "Web3"
+      ],
+      "verification": "historical",
+      "reviewedAt": "2026-10-01",
+      "note": "A 9 November 2023 edition is documented by LITEXPO. No forthcoming Vilnius edition confirmed.",
+      "sources": [
+        "https://www.cryptoeconomy.world/",
+        "https://www.litexpo.lt/wp-content/uploads/2023/10/Web_3_one_pager_2.pdf"
+      ],
+      "links": []
+    },
+    {
+      "id": "proof",
+      "name": "PROOF",
+      "countries": [
+        "LT"
+      ],
+      "category": "conference",
+      "summary": "PROOF brings together discussions on privacy, decentralised tools and sovereignty in Vilnius.",
+      "url": "https://proofconference.com/",
+      "topics": [
+        "Privacy",
+        "Bitcoin"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "",
+      "sources": [
+        "https://proofconference.com/"
+      ],
+      "links": []
+    },
+    {
+      "id": "honeybadger",
+      "name": "Baltic Honeybadger",
+      "countries": [
+        "LV"
+      ],
+      "category": "conference",
+      "summary": "Baltic Honeybadger is a Bitcoin-focused conference in Riga.",
+      "url": "https://baltichoneybadger.com/",
+      "topics": [
+        "Bitcoin"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "Keep the Bitcoin-only scope explicit; link to Bitcoin Baltics for deeper coverage.",
+      "sources": [
+        "https://baltichoneybadger.com/"
+      ],
+      "links": []
+    },
+    {
+      "id": "zolak",
+      "name": "Zolak / Centralny Crypto Bar",
+      "countries": [
+        "LT"
+      ],
+      "category": "venue",
+      "summary": "Zolak is a Vilnius community venue with a crypto payment page.",
+      "url": "https://bar.zolak.lt/",
+      "topics": [
+        "Payments",
+        "Monero",
+        "Solana",
+        "Bitcoin"
+      ],
+      "verification": "review",
+      "reviewedAt": "2026-10-01",
+      "note": "Different indexed versions use Zolak and Centralny. Confirm current venue name and accepted assets before map integration.",
+      "sources": [
+        "https://bar.zolak.lt/"
+      ],
+      "links": []
+    },
+    {
+      "id": "bitcoin-baltics",
+      "name": "Bitcoin Baltics",
+      "countries": [
+        "EE",
+        "LV",
+        "LT"
+      ],
+      "category": "community",
+      "summary": "Bitcoin Baltics brings together Bitcoin places, meetups and conferences across the three Baltic countries.",
+      "url": "https://bitcoinbaltics.com/",
+      "topics": [
+        "Bitcoin"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "",
+      "sources": [
+        "https://bitcoinbaltics.com/"
+      ],
+      "links": []
+    },
+    {
+      "id": "lithuania-btc",
+      "name": "Lithuania BTC",
+      "countries": [
+        "LT"
+      ],
+      "category": "community",
+      "summary": "Lithuania BTC connects local Bitcoin meetups, walks and merchants in Lithuania.",
+      "url": "https://lithuaniabtc.com/en/",
+      "topics": [
+        "Bitcoin"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "",
+      "sources": [
+        "https://lithuaniabtc.com/en/"
+      ],
+      "links": []
+    }
+  ],
+  "events": [
+    {
+      "id": "solana-connect-2026",
+      "name": "Solana Connect",
+      "country": "LV",
+      "city": "Riga",
+      "category": "meetup",
+      "organiser": "solana-baltics",
+      "start": "2026-10-14T19:00:00+03:00",
+      "end": "2026-10-14T22:00:00+03:00",
+      "url": "https://luma.com/6qqwcg3o",
+      "summary": "A community evening around Solana, stablecoins, payments and onchain finance.",
+      "locationNote": "Exact venue not announced publicly.",
+      "sources": [
+        "https://luma.com/6qqwcg3o",
+        "https://www.solanabaltics.com/events/"
+      ],
+      "reviewedAt": "2026-10-01"
+    },
+    {
+      "id": "unblock-fintech-2026",
+      "name": "UN:BLOCK Fintech Forum",
+      "country": "LV",
+      "city": "Riga",
+      "category": "conference",
+      "organiser": "unblock",
+      "date": "2026-10-15",
+      "url": "https://fintech.unblockeurope.com/",
+      "summary": "Fintech forum with crypto licensing and digital payment sessions.",
+      "locationNote": "See organiser for final venue and timetable.",
+      "sources": [
+        "https://fintech.unblockeurope.com/"
+      ],
+      "reviewedAt": "2026-10-01"
+    },
+    {
+      "id": "unblock-2027",
+      "name": "UN:BLOCK 2027",
+      "country": "LV",
+      "city": "Riga",
+      "category": "conference",
+      "organiser": "unblock",
+      "date": "2027-03-10",
+      "endDate": "2027-03-11",
+      "url": "https://unblockeurope.com/",
+      "summary": "Blockchain, digital assets, fintech and AI conference.",
+      "locationNote": "See organiser for venue and timetable.",
+      "sources": [
+        "https://unblockeurope.com/",
+        "https://lbaa.io/"
+      ],
+      "reviewedAt": "2026-10-01"
+    },
+    {
+      "id": "solana-vibecheck-2026",
+      "name": "Solana Baltics Vibecheck",
+      "country": "LT",
+      "city": "Vilnius",
+      "category": "meetup",
+      "organiser": "solana-baltics",
+      "date": "2026-09-16",
+      "url": "https://www.meetup.com/blockchainlt/",
+      "summary": "A gathering of the Baltic Solana community during Startup Fair.",
+      "sources": [
+        "https://www.meetup.com/blockchainlt/",
+        "https://solana.com/ar/events/archive"
+      ],
+      "reviewedAt": "2026-10-01"
+    },
+    {
+      "id": "unblock-2026",
+      "name": "UN:BLOCK 2026",
+      "country": "LV",
+      "city": "Riga",
+      "category": "conference",
+      "organiser": "unblock",
+      "date": "2026-04-01",
+      "endDate": "2026-04-02",
+      "url": "https://unblockeurope.com/about-us",
+      "summary": "The 2026 Riga edition covering blockchain and financial technology.",
+      "sources": [
+        "https://unblockeurope.com/about-us"
+      ],
+      "reviewedAt": "2026-10-01"
+    },
+    {
+      "id": "ethtallinn-2024",
+      "name": "ETHTallinn 2024",
+      "country": "EE",
+      "city": "Tallinn",
+      "category": "hackathon",
+      "organiser": "ethtallinn",
+      "date": "2024-04-19",
+      "endDate": "2024-04-21",
+      "url": "https://linktr.ee/ethtallinn",
+      "summary": "A three-day Ethereum and Web3 hackathon.",
+      "sources": [
+        "https://linktr.ee/ethtallinn"
+      ],
+      "reviewedAt": "2026-10-01"
+    },
+    {
+      "id": "web3-vilnius-2023",
+      "name": "Web3 Summit Vilnius 2023",
+      "country": "LT",
+      "city": "Vilnius",
+      "category": "conference",
+      "organiser": "web3-summit",
+      "date": "2023-11-09",
+      "url": "https://www.litexpo.lt/wp-content/uploads/2023/10/Web_3_one_pager_2.pdf",
+      "summary": "A documented Lithuanian Web3 conference edition.",
+      "sources": [
+        "https://www.litexpo.lt/wp-content/uploads/2023/10/Web_3_one_pager_2.pdf"
+      ],
+      "reviewedAt": "2026-10-01"
+    }
+  ],
+  "openQuestions": [
+    "No active dedicated Monero meetup confirmed in the three countries.",
+    "W3N dates conflict; no dated event created.",
+    "CryptoMondays Vilnius and ETHTallinn need a current activity check.",
+    "Krüpto Klubi is mentioned by CryptoSwift, but a current official community URL is not confirmed.",
+    "BTC Map supports Bitcoin acceptance only, not other assets."
+  ]
+}

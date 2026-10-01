@@ -1,0 +1,170 @@
+@font-face {
+  font-family: InterIdentity;
+  src: url(/assets/InterVariable.woff2) format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: SpaceIdentity;
+  src: url(/assets/SpaceGrotesk.woff2) format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+}
+body.theme-atlas[data-concept] {
+  --sans: InterIdentity, Arial, sans-serif;
+  --serif: SpaceIdentity, Arial, sans-serif;
+  --rule: color-mix(in srgb, var(--text) 25%, transparent);
+  --rule-soft: color-mix(in srgb, var(--text) 12%, transparent);
+  --muted: color-mix(in srgb, var(--text) 62%, var(--paper));
+  --sidebar-w: 410px;
+}
+body[data-concept="maritime"].mode-dark {
+  --paper: #10212d;
+  --paper-deep: #0b1821;
+  --paper-raised: #1a3242;
+  --text: #e8eef1;
+  --accent: #7fb8df;
+}
+body[data-concept="maritime"].mode-light {
+  --paper: #eaf0f2;
+  --paper-deep: #dce6eb;
+  --paper-raised: #dce7ed;
+  --text: #122d40;
+  --accent: #236a9c;
+}
+body[data-concept] .navbar::after,
+body[data-concept] .calendar-top::after,
+body[data-concept] .list-heading::after,
+body[data-concept] .event-list::after,
+body[data-concept] .sidebar-heading::before,
+body[data-concept] .edition-art,
+body[data-concept] .about-ornament {
+  display: none !important;
+}
+body[data-concept] .wordmark-country,
+body[data-concept] .wordmark-btc {
+  font-family: var(--serif) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.045em !important;
+}
+body[data-concept] .brand-logo {
+  width: 34px;
+  height: 44px;
+  object-fit: contain;
+}
+body[data-concept] .event-copy h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+}
+body[data-concept] .date-badge strong {
+  font-family: var(--sans);
+  font-weight: 350;
+  letter-spacing: -0.06em;
+}
+body[data-concept] .list-heading {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  font-weight: 650;
+}
+body[data-concept] .country-filter option {
+  background: var(--paper);
+  color: var(--text);
+}
+body[data-concept] .marker-place,
+body[data-concept] .legend-place {
+  background: var(--paper) !important;
+  color: var(--text) !important;
+  border-color: var(--accent) !important;
+}
+body[data-concept] .folk-sun {
+  --folk: url(/assets/baltics-sun.svg);
+}
+body[data-concept] .folk-moon {
+  --folk: url(/assets/baltics-moon.svg);
+}
+body[data-concept] .folk-meetup {
+  --folk: url(/assets/baltics-meetup.svg);
+}
+body[data-concept] .folk-walk {
+  --folk: url(/assets/baltics-walk.svg);
+}
+body[data-concept] .pending-date::before {
+  width: 24px;
+  height: 32px;
+  mask-image: url(/assets/baltics-hourglass.svg);
+  -webkit-mask-image: url(/assets/baltics-hourglass.svg);
+}
+
+@media (min-width: 1100px) {
+  body[data-concept] .navbar {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  body[data-concept] .calendar-content {
+    padding-left: 26px;
+    padding-right: 26px;
+  }
+}
+@media (max-width: 760px) {
+  body.theme-atlas[data-concept] {
+    --sidebar-w: 100%;
+  }
+  body[data-concept] .brand-logo {
+    width: 27px;
+    height: 35px;
+  }
+  body[data-concept] .wordmark-country,
+  body[data-concept] .wordmark-btc {
+    font-size: 21px !important;
+  }
+  body[data-concept="signal"] .wordmark-country,
+  body[data-concept="signal"] .wordmark-btc {
+    font-size: 17px !important;
+  }
+}
+
+body[data-concept] .merchant-marker,
+body[data-concept] .legend-place {
+  background: var(--text) !important;
+  color: var(--paper) !important;
+  border-color: var(--accent) !important;
+}
+body[data-concept] .event-marker,
+body[data-concept] .legend-meetup {
+  background: var(--accent) !important;
+  color: var(--paper) !important;
+  border-color: var(--text) !important;
+}
+body[data-concept] .walk-marker,
+body[data-concept] .legend-walk {
+  background: var(--paper) !important;
+  color: var(--text) !important;
+  border-color: var(--text) !important;
+}
+body[data-concept] .maplibregl-ctrl-group {
+  background: var(--paper) !important;
+  border-color: var(--rule) !important;
+}
+body[data-concept="maritime"][data-skin="current"]{--serif:InterIdentity,Arial,sans-serif;--sans:InterIdentity,Arial,sans-serif}
+body[data-skin="current"] .wordmark-country,body[data-skin="current"] .wordmark-btc{font-family:InterIdentity,Arial,sans-serif!important;font-weight:780!important;letter-spacing:-.06em!important}
+body[data-skin="current"] .event-copy h3{font-family:InterIdentity,Arial,sans-serif;font-weight:720;letter-spacing:-.04em}
+body[data-skin="current"] .date-badge strong{font-family:SpaceIdentity,Arial,sans-serif;font-weight:500}
+body[data-skin="current"] .list-heading{letter-spacing:.055em;font-weight:750}
+body[data-skin="current"] .list-heading::after{content:"";display:block!important;position:static;width:30px;height:8px;background:linear-gradient(110deg,transparent 0 25%,var(--accent) 25% 32%,transparent 32% 55%,var(--accent) 55% 62%,transparent 62%);mask:none;opacity:.8}
+body[data-skin] .list-heading::after{-webkit-mask:none!important;mask:none!important}
+body[data-skin="current"] .list-heading::after{width:30px!important;height:8px!important;background:linear-gradient(110deg,transparent 0 25%,var(--accent) 25% 32%,transparent 32% 55%,var(--accent) 55% 62%,transparent 62%)!important}
+/* Keep the selected mosaic readable when more countries add photographs. */
+.theme-atlas.regional-site .gallery-grid {
+  grid-template-columns: repeat(4, minmax(78px, 1fr));
+  grid-auto-columns: 78px;
+}
+
+/* Approved Crypto Baltics palette C. Layout remains shared. */
+body[data-concept="collectif"].mode-dark{--paper:#321f30;--paper-deep:#261724;--paper-raised:#442b40;--text:#fff1e7;--accent:#ff9c88}
+body[data-concept="collectif"].mode-light{--paper:#fff4ef;--paper-deep:#f4e2e0;--paper-raised:#fae7e4;--text:#321f30;--accent:#a53c59}
+body[data-concept="collectif"][data-skin="current"]{--sans:Plex,Arial,sans-serif;--serif:Plex,Arial,sans-serif}
+body[data-concept="collectif"] .wordmark-country,body[data-concept="collectif"] .wordmark-btc{font-family:Plex,Arial,sans-serif!important;font-weight:600!important;letter-spacing:-.035em!important}
+body[data-concept="collectif"] .event-copy h3{font-family:Plex,Arial,sans-serif;font-weight:600}

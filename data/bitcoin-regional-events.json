@@ -1,0 +1,97 @@
+[
+  {
+    "id": "tallinn-316565528",
+    "country": "EE",
+    "initiative": "mission-liberty",
+    "type": "meetup",
+    "start": "2026-09-22T19:00:00+03:00",
+    "end": "2026-09-22T21:00:00+03:00",
+    "title": {
+      "en": "Bitcoin in Denmark: Building a Community from the Ground Up"
+    },
+    "description": {
+      "en": "A discussion hosted by Mission Liberty Tallinn with guests from Denmark about Bitcoin meetups, publishing and local community building."
+    },
+    "venue": "Vabaduse Tuba",
+    "address": "Pikk 7, Room 11, Tallinn",
+    "url": "https://www.meetup.com/mission-liberty-tallinn/events/316565528/",
+    "sources": [
+      "https://www.meetup.com/mission-liberty-tallinn/events/316565528/"
+    ],
+    "sourceVerifiedAt": "2026-09-30",
+    "lat": 59.437958,
+    "lon": 24.74415,
+    "image": {
+      "src": "assets/event-covers/tallinn-316565528.webp",
+      "source": "https://www.meetup.com/mission-liberty-tallinn/events/316565528/",
+      "original": "https://secure.meetupstatic.com/photos/event/d/a/e/1/600_536156033.jpeg",
+      "width": 600,
+      "height": 337,
+      "kind": "event"
+    }
+  },
+  {
+    "id": "honeybadger-riga-2025",
+    "country": "LV",
+    "initiative": "honeybadger",
+    "type": "conference",
+    "start": "2025-08-09T10:00:00+03:00",
+    "end": "2025-08-10T18:00:00+03:00",
+    "title": {
+      "en": "Baltic Honeybadger 2025"
+    },
+    "description": {
+      "en": "A Bitcoin-only conference in Riga, part of Riga Bitcoin Week. Talks and discussions covered Bitcoin, freedom technology and the people building the ecosystem. This is the archived 2025 edition."
+    },
+    "venue": "Fantadroms",
+    "address": "Riga",
+    "lat": 56.9762199,
+    "lon": 24.1668844,
+    "website": "https://baltichoneybadger.com/",
+    "url": "https://baltichoneybadger.com/",
+    "sources": [
+      "https://baltichoneybadger.com/riga-bitcoin-week",
+      "https://baltichoneybadger.com/location"
+    ],
+    "sourceVerifiedAt": "2026-09-30",
+    "image": {
+      "src": "assets/event-covers/honeybadger-riga-2025.webp",
+      "source": "https://baltichoneybadger.com/",
+      "original": "https://baltichoneybadger.com/og-images/link-preview-twitter.png",
+      "width": 1200,
+      "height": 675,
+      "kind": "event"
+    }
+  },
+  {
+    "id": "btcpp-riga-privacy-2025",
+    "country": "LV",
+    "initiative": "btcpp-riga",
+    "type": "conference",
+    "start": "2025-08-07T10:00:00+03:00",
+    "end": "2025-08-08T18:00:00+03:00",
+    "title": {
+      "en": "bitcoin++ Riga · Privacy edition"
+    },
+    "description": {
+      "en": "A technical Bitcoin conference with talks, workshops and a hackathon exploring privacy and peer-to-peer exchange. Held at the National Library of Latvia during Riga Bitcoin Week. This is the archived 2025 edition."
+    },
+    "venue": "National Library of Latvia",
+    "address": "Riga",
+    "website": "https://btcpp.dev/riga",
+    "url": "https://btcpp.dev/riga",
+    "sources": [
+      "https://btcpp.dev/riga",
+      "https://baltichoneybadger.com/riga-bitcoin-week"
+    ],
+    "sourceVerifiedAt": "2026-09-30",
+    "image": {
+      "src": "assets/event-covers/btcpp-riga-privacy-2025.webp",
+      "source": "https://btcpp.dev/riga",
+      "original": "https://btcpp.dev/social-cards/conference/riga.jpg?v=bd6c2ad08ef0",
+      "width": 1200,
+      "height": 630,
+      "kind": "event"
+    }
+  }
+]

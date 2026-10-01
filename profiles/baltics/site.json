@@ -1,0 +1,340 @@
+{
+  "initiatives": [
+    {
+      "id": "solana-baltics-EE",
+      "country": "EE",
+      "name": "Solana Baltics",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://www.solanabaltics.com/"
+        },
+        {
+          "name": "Telegram",
+          "icon": "telegram",
+          "url": "https://t.me/+2YO9Zh2Wbe9mNWVk"
+        },
+        {
+          "name": "X",
+          "icon": "globe",
+          "url": "https://x.com/solanabaltics"
+        },
+        {
+          "name": "Calendar",
+          "icon": "globe",
+          "url": "https://luma.com/baltics"
+        }
+      ]
+    },
+    {
+      "id": "solana-baltics-LV",
+      "country": "LV",
+      "name": "Solana Baltics",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://www.solanabaltics.com/"
+        },
+        {
+          "name": "Telegram",
+          "icon": "telegram",
+          "url": "https://t.me/+2YO9Zh2Wbe9mNWVk"
+        },
+        {
+          "name": "X",
+          "icon": "globe",
+          "url": "https://x.com/solanabaltics"
+        },
+        {
+          "name": "Calendar",
+          "icon": "globe",
+          "url": "https://luma.com/baltics"
+        }
+      ]
+    },
+    {
+      "id": "solana-baltics-LT",
+      "country": "LT",
+      "name": "Solana Baltics",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://www.solanabaltics.com/"
+        },
+        {
+          "name": "Telegram",
+          "icon": "telegram",
+          "url": "https://t.me/+2YO9Zh2Wbe9mNWVk"
+        },
+        {
+          "name": "X",
+          "icon": "globe",
+          "url": "https://x.com/solanabaltics"
+        },
+        {
+          "name": "Calendar",
+          "icon": "globe",
+          "url": "https://luma.com/baltics"
+        }
+      ]
+    },
+    {
+      "id": "blockchain-lithuania",
+      "country": "LT",
+      "name": "Blockchain Lithuania",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://www.meetup.com/blockchainlt/"
+        }
+      ]
+    },
+    {
+      "id": "crypto-economy",
+      "country": "LT",
+      "name": "Crypto Economy Organisation",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://www.cryptoeconomy.world/"
+        }
+      ]
+    },
+    {
+      "id": "crypto-hub",
+      "country": "LT",
+      "name": "Crypto Hub Lithuania",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://www.linkedin.com/company/crypto-hub-lithuania/"
+        },
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://cryptohub.lt/"
+        }
+      ]
+    },
+    {
+      "id": "lbaa",
+      "country": "LV",
+      "name": "Latvian Blockchain Association",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://lbaa.io/"
+        }
+      ]
+    },
+    {
+      "id": "bba-riga",
+      "country": "LV",
+      "name": "Baltic Blockchain Association Riga",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://www.meetup.com/baltic-blockchain-association-riga/"
+        }
+      ]
+    },
+    {
+      "id": "ew3",
+      "country": "EE",
+      "name": "Estonian Web3 Chamber",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://ew3.ee/"
+        },
+        {
+          "name": "Community links",
+          "icon": "globe",
+          "url": "https://linktr.ee/estoniaweb3"
+        }
+      ]
+    },
+    {
+      "id": "blockchain-tallinn",
+      "country": "EE",
+      "name": "Blockchain Tallinn",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://www.meetup.com/blockchain-ethereum-tallinn/"
+        }
+      ]
+    },
+    {
+      "id": "moneropay",
+      "country": "LT",
+      "name": "MoneroPay",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://moneropay.eu/"
+        },
+        {
+          "name": "Matrix",
+          "icon": "globe",
+          "url": "https://matrix.to/#/#moneropay:kernal.eu"
+        },
+        {
+          "name": "GitLab",
+          "icon": "globe",
+          "url": "https://gitlab.com/moneropay/moneropay"
+        }
+      ]
+    },
+    {
+      "id": "kernal",
+      "country": "LT",
+      "name": "Kernal",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://kernal.eu/"
+        }
+      ]
+    },
+    {
+      "id": "bitcoin-baltics-EE",
+      "country": "EE",
+      "name": "Bitcoin Baltics",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://bitcoinbaltics.com/"
+        }
+      ]
+    },
+    {
+      "id": "bitcoin-baltics-LV",
+      "country": "LV",
+      "name": "Bitcoin Baltics",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://bitcoinbaltics.com/"
+        }
+      ]
+    },
+    {
+      "id": "bitcoin-baltics-LT",
+      "country": "LT",
+      "name": "Bitcoin Baltics",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://bitcoinbaltics.com/"
+        }
+      ]
+    },
+    {
+      "id": "lithuania-btc",
+      "country": "LT",
+      "name": "Lithuania BTC",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://lithuaniabtc.com/en/"
+        }
+      ]
+    },
+    {
+      "id": "honeybadger",
+      "name": "Baltic Honeybadger",
+      "country": "LV",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://baltichoneybadger.com/"
+        }
+      ]
+    },
+    {
+      "id": "riga-walks",
+      "name": "BitcoinWalk Riga",
+      "country": "LV",
+      "type": "walk",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "walk",
+          "url": "https://bitcoinwalk.org/riga/"
+        },
+        {
+          "name": "Telegram",
+          "icon": "telegram",
+          "url": "https://t.me/+U4lz-vwkGPplOTc0"
+        }
+      ]
+    },
+    {
+      "id": "mission-liberty",
+      "name": "Mission Liberty Tallinn",
+      "country": "EE",
+      "links": [
+        {
+          "name": "Meetup",
+          "icon": "meetup",
+          "url": "https://www.meetup.com/mission-liberty-tallinn/"
+        }
+      ]
+    },
+    {
+      "id": "btcpp-riga",
+      "name": "bitcoin++ Riga",
+      "country": "LV",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://btcpp.dev/riga"
+        }
+      ]
+    },
+    {
+      "id": "bringin",
+      "name": "Bringin \u00b7 Bitcoin services",
+      "country": "LT",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://bringin.app/about-us"
+        }
+      ]
+    },
+    {
+      "id": "btc2b",
+      "name": "BTC2B \u00b7 Merchant tools",
+      "country": "EE",
+      "links": [
+        {
+          "name": "Website",
+          "icon": "globe",
+          "url": "https://btc2bgroup.com/"
+        }
+      ]
+    }
+  ],
+  "gallery": []
+}

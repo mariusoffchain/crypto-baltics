@@ -1,0 +1,16 @@
+node_modules/
+public-build/
+.wrangler/
+.env
+.env.*
+.dev.vars*
+*.log
+.DS_Store
+designs/share-atlas-*.html
+public-baltics/
+
+identity-preview/
+
+/*preview*.png
+/*-wide.png
+/identity/

@@ -1,0 +1,117 @@
+{
+  "solana-baltics": {
+    "src": "assets/directory-logos/solana-baltics.png",
+    "source": "https://www.solanabaltics.com/",
+    "original": "https://www.solanabaltics.com/logo.png",
+    "treatment": "original"
+  },
+  "lbaa": {
+    "src": "assets/directory-logos/lbaa.svg",
+    "source": "https://lbaa.io/",
+    "original": "https://lbaa.io/wp-content/uploads/2021/11/lbaa-logo.svg",
+    "treatment": "original"
+  },
+  "ew3": {
+    "src": "assets/directory-logos/ew3.png",
+    "source": "https://ew3.ee/",
+    "original": "https://ew3.ee/assets/EW3Logo.png",
+    "treatment": "original"
+  },
+  "coingate": {
+    "src": "assets/directory-logos/coingate.svg",
+    "source": "https://coingate.com/about-us",
+    "original": "https://coingate.com/app/themes/coingate/dist/images/coingate/logo-full.svg",
+    "treatment": "original"
+  },
+  "swapin": {
+    "src": "assets/directory-logos/swapin.svg",
+    "source": "https://www.swapin.com/",
+    "original": "https://www.swapin.com/wp-content/themes/piixpay/images/swapin-logo.svg",
+    "treatment": "original"
+  },
+  "cryptoswift": {
+    "src": "assets/directory-logos/cryptoswift.png",
+    "source": "https://cryptoswift.eu/",
+    "original": "https://cryptoswift.eu/wp-content/uploads/2025/02/CryptoSwift-Logo-1.png",
+    "treatment": "original"
+  },
+  "blockvis": {
+    "src": "assets/directory-logos/blockvis.svg",
+    "source": "https://blockvis.com/",
+    "original": "https://blockvis.com/blockvis-logo.svg",
+    "treatment": "original"
+  },
+  "gravity": {
+    "src": "assets/directory-logos/gravity.svg",
+    "source": "https://lbaa.io/",
+    "original": "https://lbaa.io/wp-content/uploads/2023/03/member-logo-gravity.svg",
+    "treatment": "original"
+  },
+  "honeybadger": {
+    "src": "assets/directory-logos/honeybadger.svg",
+    "source": "https://lbaa.io/",
+    "original": "https://lbaa.io/wp-content/uploads/2023/03/member-logo-Honeybadger.svg",
+    "treatment": "original"
+  },
+  "unblock": {
+    "src": "assets/directory-logos/unblock.png",
+    "source": "https://unblockeurope.com/",
+    "original": "https://cdn.prod.website-files.com/689d84c0d136d6b1dc876d47/68ac9faf72531060dc75a414_ub_50.png",
+    "treatment": "original"
+  },
+  "crypto-economy": {
+    "src": "assets/directory-logos/crypto-economy.png",
+    "source": "https://www.cryptoeconomy.world/",
+    "original": "https://static.wixstatic.com/media/844183_767514992bd94b0e9e0a894e0f8dd8df~mv2.png",
+    "treatment": "original"
+  },
+  "crypto-hub": {
+    "src": "assets/directory-logos/crypto-hub.jpg",
+    "source": "https://www.linkedin.com/company/crypto-hub-lithuania/",
+    "original": "https://media.licdn.com/dms/image/v2/D4D0BAQEiMg38XVUDWg/company-logo_200_200/company-logo_200_200/0/1698223807143/crypto_hub_lithuania_logo?e=2147483647&v=beta&t=Ix1Cui2LMYAy_ziBTIteF2Joto0B966I1Hd4U0XP_UU",
+    "treatment": "original"
+  },
+  "bringin": {
+    "src": "assets/directory-logos/bringin.svg",
+    "source": "https://bringin.app/",
+    "original": "../lithuania-btc-ecosystem-release/assets/ecosystem-bringin.svg",
+    "treatment": "existing approved site asset"
+  },
+  "proof": {
+    "src": "assets/directory-logos/proof.svg",
+    "source": "https://proofconference.com/",
+    "original": "../lithuania-btc-ecosystem-release/assets/ecosystem-proof.svg",
+    "treatment": "existing approved site asset"
+  },
+  "lithuania-btc": {
+    "src": "assets/directory-logos/lithuania-btc.png",
+    "source": "https://lithuaniabtc.com/",
+    "original": "../lithuania-btc-ecosystem-release/assets/logo.png",
+    "treatment": "existing approved site asset"
+  },
+  "walks": {
+    "src": "assets/directory-logos/walks.png",
+    "source": "https://bitcoinwalk.org/vilnius",
+    "original": "https://bitcoinwalk.org/wp-content/uploads/2025/04/cropped-Bitcoin-Walk-Logo-avatar.png"
+  },
+  "btc2b": {
+    "src": "assets/directory-logos/btc2b.png",
+    "source": "https://btc2bgroup.com/",
+    "original": "https://btc2bgroup.com/assets/img/logo-icon.png"
+  },
+  "riga-walks": {
+    "src": "assets/directory-logos/walks.png",
+    "source": "https://bitcoinwalk.org/vilnius",
+    "original": "https://bitcoinwalk.org/wp-content/uploads/2025/04/cropped-Bitcoin-Walk-Logo-avatar.png"
+  },
+  "bitcoin-baltics": {
+    "src": "assets/directory-logos/bitcoin-baltics.svg",
+    "source": "https://bitcoinbaltics.com/",
+    "original": "https://bitcoinbaltics.com/assets/baltics-logo.svg"
+  },
+  "superhow": {
+    "src": "assets/directory-logos/superhow.jpg",
+    "source": "https://www.superhow.com/our-story",
+    "original": "https://static.wixstatic.com/media/1c4554_779409d74ca1401985fa9af1fb5c1309~mv2.jpeg"
+  }
+}
