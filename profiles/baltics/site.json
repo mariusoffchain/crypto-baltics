@@ -114,11 +114,6 @@
           "name": "Website",
           "icon": "globe",
           "url": "https://www.linkedin.com/company/crypto-hub-lithuania/"
-        },
-        {
-          "name": "Website",
-          "icon": "globe",
-          "url": "https://cryptohub.lt/"
         }
       ]
     },
@@ -313,7 +308,7 @@
     },
     {
       "id": "bringin",
-      "name": "Bringin \u00b7 Bitcoin services",
+      "name": "Bringin · Bitcoin services",
       "country": "LT",
       "links": [
         {
@@ -325,7 +320,7 @@
     },
     {
       "id": "btc2b",
-      "name": "BTC2B \u00b7 Merchant tools",
+      "name": "BTC2B · Merchant tools",
       "country": "EE",
       "links": [
         {

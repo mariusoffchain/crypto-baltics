@@ -24,11 +24,19 @@ Open http://127.0.0.1:8777/ for the new homepage. Directory and approach use sep
 
 Research was checked on 2026-10-01 and is non-exhaustive. Historical or uncertain organisations are hidden by default. W3N has conflicting dates and is deliberately absent from the dated calendar. A software project is not evidence of an active local meetup.
 
-## Boundaries
+## Publication and verification
 
-No deployment configuration or new GitHub repository has been set up. Local pages are noindex. Contact address is the previously supplied contact@cryptobaltics.org, pending domain confirmation. Existing production sites were not changed.
+Published at https://cryptobaltics.org with canonical www redirection. The public repository is https://github.com/mariusoffchain/crypto-baltics and is linked in the site footer. Contact and contribution links use contact@cryptobaltics.org.
 
-The inherited BTC Map layer indicates Bitcoin acceptance only. It must not be relabelled as general cryptocurrency acceptance. Logos, social thumbnails, PWA branding, policy text, and other inherited assets still need a Crypto Baltics identity pass before publication. Existing upstream tests contain Bitcoin-specific assumptions and have not been certified for this prototype.
+Run `npm test` to rebuild and check current release metadata, local resources, contact/GitHub links, PNG dimensions, manifest, crawler files, canonical redirection and the shared domain/PWA logic. `npm run test:legacy` retains the inherited Lithuania/Bitcoin Baltics tests for reference; their old content assumptions do not describe this directory.
+
+The share card is `assets/crypto-share.png` (1200×630), application icon `assets/crypto-icon.png` (512×512), and PNG favicon `assets/crypto-favicon.png` (32×32). Editable layouts are in `designs/crypto-share.html` and `designs/crypto-icon.html`; capture at those dimensions after fonts load and export genuine PNG. SVG favicon uses the approved plain map. Generated pages include Open Graph, Twitter card and manifest links.
+
+CoinGate and Bringin retain colour accents with dedicated dark SVG wordmarks. Monochrome logos adapt with CSS; no glow is used. Original sources are recorded in `data/directory-logos.json`.
+
+Browser checks on 2026-10-01 covered 320, 375, 430, 768, 1024 and 1440 px, home/directory/approach/map pages, light/dark company logos, mobile event details and directory filters. These are browser viewport tests, not physical iOS/Android certification.
+
+The BTC Map layer indicates Bitcoin acceptance only. Other cryptocurrency payment claims require separate confirmation.
 
 ## Licensing
 

@@ -2,7 +2,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test scripts/*.test.mjs",
+    "test": "npm run build:crypto && node --test scripts/domain.test.mjs scripts/pwa.test.mjs scripts/crypto-release.test.mjs",
     "build": "node scripts/build-release.mjs",
     "preview": "python3 -m http.server 8767 --bind 127.0.0.1 --directory public-build",
     "refresh:merchants": "node scripts/refresh-snapshot.mjs",
@@ -14,7 +14,8 @@
     "build:crypto": "node scripts/sync-research-events.mjs && SITE_PROFILE=baltics node scripts/build-release.mjs && node scripts/build-research.mjs && node directory/build-directory.mjs",
     "preview:crypto": "python3 scripts/preview.py --directory public-baltics --port 8777",
     "deploy": "wrangler deploy",
-    "deploy:check": "wrangler deploy --dry-run"
+    "deploy:check": "wrangler deploy --dry-run",
+    "test:legacy": "node --test scripts/*.test.mjs"
   },
   "devDependencies": {
     "prettier": "3.9.9",
@@ -22,7 +23,7 @@
   },
   "name": "crypto-baltics",
   "version": "1.0.0",
-  "description": "An open-source Bitcoin community map and events website",
+  "description": "An open-source directory of Baltic communities, events, companies and Bitcoin-friendly places",
   "license": "MIT",
   "engines": {
     "node": ">=22"

@@ -94,16 +94,11 @@
       ],
       "verification": "listed",
       "reviewedAt": "2026-10-01",
-      "note": "Organisation profile confirmed; no upcoming meetup independently confirmed.",
+      "note": "Organisation profile confirmed; no upcoming meetup independently confirmed. Former website cryptohub.lt was unavailable during the 2026-10-01 publication check; use the organisation profile.",
       "sources": [
         "https://www.linkedin.com/company/crypto-hub-lithuania/"
       ],
-      "links": [
-        {
-          "name": "Website",
-          "url": "https://cryptohub.lt/"
-        }
-      ]
+      "links": []
     },
     {
       "id": "lbaa",
