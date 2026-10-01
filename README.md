@@ -13,6 +13,10 @@ npm run preview:crypto
 
 Open http://127.0.0.1:8777/ for the new homepage. Directory and approach use separate routes; `/events-places/` combines the inherited map and event dashboard in a same-origin iframe. `/events/` and `/merchants/` remain compatibility aliases. The inherited interactive map is preserved at `/map/`. Output is generated in `public-baltics/`; edit sources, not generated pages.
 
+## Homepage selection
+
+Edit `data/home-featured.json` to select and order homepage communities and companies by organisation ID. Lithuania BTC remains first in the community selection. The full directory sorts names alphabetically; events retain chronological order. Entries not featured remain in the directory.
+
 ## Content
 
 - `data/research.json` is the canonical research collection with source URLs, verification notes and historical records.

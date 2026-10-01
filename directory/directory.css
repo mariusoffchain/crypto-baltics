@@ -52,3 +52,7 @@ html[data-theme=dark] .organisation-logo[data-logo="bringin"]{content:url('/asse
 html[data-theme=dark] .organisation-logo[data-logo="lbaa"]{filter:brightness(1.9)}
 @media(max-width:380px){.nav{gap:7px;padding-inline:14px}.nav .wordmark{font-size:19px}.nav-tools button{padding:7px}.wrap,.footer{padding-inline:18px}.section-header{flex-wrap:wrap}.hero h1{font-size:38px}.filters select{max-width:100%}}
 @media(display-mode:standalone){.footer{padding-bottom:calc(35px + env(safe-area-inset-bottom))}}
+
+.featured-communities{grid-template-columns:repeat(2,minmax(0,1fr))}
+html[data-theme=dark] .organisation-logo[data-logo="hodlhodl"]{content:url('/assets/directory-logos/hodlhodl-dark.svg')}
+@media(max-width:700px){.featured-communities{grid-template-columns:1fr}.approach-layout aside{display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 10px;padding-bottom:14px;font-size:12px;line-height:1.5}.approach-layout aside .author-name{flex-basis:100%}.approach-layout aside strong{display:inline;font-size:13px}.approach-layout aside p{margin:0}.approach-layout aside .author-origin{display:none}.approach-layout aside small{font-size:11px}}

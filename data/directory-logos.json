@@ -78,10 +78,10 @@
     "treatment": "existing approved site asset"
   },
   "proof": {
-    "src": "assets/directory-logos/proof.svg",
+    "src": "assets/directory-logos/proof-transparent.svg",
     "source": "https://proofconference.com/",
     "original": "../lithuania-btc-ecosystem-release/assets/ecosystem-proof.svg",
-    "treatment": "existing approved site asset"
+    "treatment": "Official favicon wordmark with background removed for theme-aware display"
   },
   "lithuania-btc": {
     "src": "assets/directory-logos/lithuania-btc.png",
@@ -113,5 +113,15 @@
     "src": "assets/directory-logos/superhow.jpg",
     "source": "https://www.superhow.com/our-story",
     "original": "https://static.wixstatic.com/media/1c4554_779409d74ca1401985fa9af1fb5c1309~mv2.jpeg"
+  },
+  "wavespace": {
+    "src": "assets/directory-logos/wavespace.png",
+    "source": "https://www.wave.space/",
+    "original": "https://cdn.prod.website-files.com/667823d9b944eb95404be544/69a5f095608a2c8d68dd0596_WORD%20LOGO%20(Light%20Back).png"
+  },
+  "hodlhodl": {
+    "src": "assets/directory-logos/hodlhodl.svg",
+    "source": "https://hodlhodl.com/",
+    "original": "Official website CSS wordmark"
   }
 }

@@ -614,6 +614,49 @@
         "https://lithuaniabtc.com/en/"
       ],
       "links": []
+    },
+    {
+      "id": "hodlhodl",
+      "name": "Hodl Hodl",
+      "countries": [
+        "LV"
+      ],
+      "category": "company",
+      "summary": "Hodl Hodl provides peer-to-peer Bitcoin trading and lending, with a regional connection through Baltic Honeybadger in Riga.",
+      "url": "https://hodlhodl.com/",
+      "topics": [
+        "Bitcoin"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "Latvia denotes a regional ecosystem connection, not legal incorporation. Hodl Hodl documents its role in Baltic Honeybadger; its current privacy policy identifies Hodlex Ltd in the Marshall Islands.",
+      "sources": [
+        "https://hodlhodl.medium.com/hodl-hodl-two-years-in-making-24ee9a0eaf94",
+        "https://accounts.hodlhodl.com/privacy-policy"
+      ],
+      "links": []
+    },
+    {
+      "id": "wavespace",
+      "name": "Wavespace",
+      "countries": [
+        "LT"
+      ],
+      "category": "company",
+      "summary": "Wavespace develops a Bitcoin app with payments, exchange and card services from Lithuania.",
+      "url": "https://www.wave.space/",
+      "topics": [
+        "Bitcoin",
+        "Payments"
+      ],
+      "verification": "listed",
+      "reviewedAt": "2026-10-01",
+      "note": "Wave Space Exploration UAB is established in Lithuania. Its terms identify Lightspark Payments Europe AS as the provider of regulated financial services.",
+      "sources": [
+        "https://www.wave.space/",
+        "https://www.wave.space/terms-and-conditions"
+      ],
+      "links": []
     }
   ],
   "events": [
