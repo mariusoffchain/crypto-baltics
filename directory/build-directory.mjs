@@ -59,3 +59,6 @@ await writeFile(out+'/robots.txt','User-agent: *\nAllow: /\nDisallow: /identity/
 await writeFile(out+'/sitemap.xml','<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+['/','/directory/','/events-places/','/approach/'].map(route=>'<url><loc>https://cryptobaltics.org'+route+'</loc></url>').join('')+'</urlset>');
 
 await copyFile("assets/crypto-baltics-map.svg",out+"/assets/crypto-baltics-map.svg");
+
+// Local identity experiments are never part of the public release.
+await writeFile(out+"/.assetsignore", "/identity/\n");
