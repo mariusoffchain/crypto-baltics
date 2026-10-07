@@ -77,3 +77,6 @@ html[data-theme=dark] .organisation-logo[data-logo="hodlhodl"]{content:url('/ass
 
 .organisation-logo[data-logo="wavespace"]{display:block;width:210px;max-width:100%;height:auto;flex-shrink:1;min-width:0;filter:none}
 html[data-theme=dark] .organisation-logo[data-logo="wavespace"]{content:url('/assets/directory-logos/wavespace-dark.png');filter:none}
+
+/* Event pages: the image keeps its own proportions (directory/build-directory.mjs sets width and height). */
+.event-page .detail-grid img{height:auto;max-height:none}
