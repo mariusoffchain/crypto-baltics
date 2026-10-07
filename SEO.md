@@ -9,7 +9,9 @@ Crypto Baltics is published at https://cryptobaltics.org/. The public pages are 
 - `/map/` is the embedded map shown in `/events-places/`. It is marked `noindex,nofollow,indexifembedded` with a canonical URL pointing to `/events-places/`, and its build prerenders the event list, so Google may index those events as part of `/events-places/` without listing `/map/` itself.
 - Every page carries JSON-LD: the WebSite, published by Cypher Baltics (`https://cypherbaltics.org/#organization`), and the page itself as a WebPage, or a CollectionPage for `/directory/`. No invented reviews or business identity.
 - The home page and `/directory/` listings are server-rendered HTML; they do not depend on JavaScript to expose their content. Events and places on `/events-places/` live inside the `/map/` embed; only its prerendered events are readable without JavaScript.
-- `/sitemap.xml` lists the 4 canonical pages. `/robots.txt` advertises it and disallows `/identity/`, which is also excluded from the uploaded assets. `/llms.txt` gives a short reading guide to the canonical pages.
+- Every dated event has its own page, `/events/<id>/`, with one H1, the date, place, country, organiser, description, official links and image. Planned events without a date have no page. Event cards on the home page and in the map embed link to these pages; a plain click still opens the event dialog or modal.
+- Events researched for Crypto Baltics (`data/research.json`) are published here: their pages carry Event JSON-LD and appear in the sitemap. Lithuanian events point their canonical to `https://lithuaniabtc.com/en/events/<id>/` and regional Bitcoin events (`data/bitcoin-regional-events.json`) to `https://bitcoinbaltics.com/events/<id>/`; those copies carry no Event JSON-LD.
+- `/sitemap.xml` lists the 4 canonical pages and the event pages published here. `/robots.txt` advertises it and disallows `/identity/`, which is also excluded from the uploaded assets. `/llms.txt` gives a short reading guide to the canonical pages.
 - `worker.mjs` permanently redirects `www` and `http://` to `https://cryptobaltics.org/`, preserving paths and queries.
 - Open Graph and Twitter large-image cards use `assets/crypto-share.png`, 1200 × 630.
 
@@ -19,15 +21,15 @@ These changes help describe and discover the site; they do not guarantee indexin
 
 1. **Search Console, site owner.** Use the domain property `cryptobaltics.org`, submit `https://cryptobaltics.org/sitemap.xml` and inspect the 4 canonical pages after each structural change. Search Console is managed outside this repository.
 2. **Useful ongoing content.** Keep listings sourced and dated in `data/research.json`, add verified events and refresh the merchant snapshot with `npm run refresh:baltics`. Listings are not endorsements; do not create repetitive keyword pages or false future events.
-3. **Next development increment.** Places are not prerendered and events rely on Google indexing the embed. Stable HTML pages per organisation or event, each with its own title, description and accurate structured data (Organization or Event). The current `/events/?event=` links still share the page's server metadata. Do not claim individual listing SEO is implemented.
+3. **Next development increment.** Places and organisations have no page of their own yet; a stable HTML page per organisation, with accurate Organization data, would follow the event pages. After Google has crawled the event pages, check them with the Rich Results Test and in Search Console. Keep event ids stable, and publish a Lithuanian or regional Bitcoin event on its own site first, since the copy here points there.
 4. **Review performance.** After Google has crawled the pages, compare impressions and clicks for queries such as “crypto Baltics”, “Bitcoin Estonia”, “Bitcoin Latvia” and “Bitcoin Lithuania”. Check index coverage and selected canonical URLs, including the legacy aliases.
 
 ## Edit and rebuild
 
-- Page shell, titles, metadata, JSON-LD, sitemap, robots and llms.txt: `directory/build-directory.mjs`.
+- Page shell, titles, metadata, JSON-LD, event pages, sitemap, robots and llms.txt: `directory/build-directory.mjs`. Event facts and Event JSON-LD: `scripts/event-data.mjs`, the same file in all four Baltic site repositories.
 - Directory records and research events: `data/research.json`, `data/home-featured.json`, `data/directory-logos.json`.
 - Regional map data: `profiles/baltics/`.
-- Run `npm test` (it runs `npm run build:crypto`), review desktop and mobile, then `npm run deploy` with the `lithuania-btc` Cloudflare profile. Tests verify canonical URLs, sharing images, JSON-LD, local links, crawler files and redirects.
+- Run `npm test` (it runs `npm run build:crypto`), review desktop and mobile, then `npm run deploy` with the `lithuania-btc` Cloudflare profile. Tests verify canonical URLs, sharing images, JSON-LD, event pages, local links, crawler files and redirects.
 
 Social platforms cache previews independently; already shared URLs may need a re-scrape through the platform's sharing debugger.
 
@@ -37,3 +39,4 @@ Social platforms cache previews independently; already shared URLs may need a re
 - [Google: canonical URLs](https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls)
 - [Google: structured data introduction](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data)
 - [Google: site names](https://developers.google.com/search/docs/appearance/site-names)
+- [Google: Event structured data](https://developers.google.com/search/docs/appearance/structured-data/event)

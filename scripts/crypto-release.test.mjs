@@ -34,7 +34,28 @@ test('map embed lists events before JavaScript and may be indexed only where it 
  const html=readFileSync(root+'/map/index.html','utf8');
  assert.match(html,/<meta name="robots" content="noindex,nofollow,indexifembedded">/);
  assert.match(html,/rel="canonical" href="https:\/\/cryptobaltics.org\/events-places\/"/);
- assert.ok((html.match(/<div class="event-card/g)||[]).length>=3);
+ assert.ok((html.match(/<(?:a|div) class="event-card/g)||[]).length>=3);
+ assert.match(html,/<a class="event-card" href="\/events\/[a-z0-9-]+\/"/);
  assert.equal((html.match(/<h1/g)||[]).length,0);
  assert.match(readFileSync(root+'/index.html','utf8'),/<title>Bitcoin &amp; crypto across the Baltics \| Crypto Baltics<\/title>/);
+});
+test('every dated event has a page; only events researched here carry Event data',()=>{
+ const events=JSON.parse(readFileSync(root+'/data/events.json','utf8')).filter(e=>e.status!=='planned'&&e.start);
+ const lithuanian=new Set(JSON.parse(readFileSync('data/events.json','utf8')).map(e=>e.id));
+ const regional=new Set(JSON.parse(readFileSync('data/bitcoin-regional-events.json','utf8')).map(e=>e.id));
+ const sitemap=readFileSync(root+'/sitemap.xml','utf8'),home=readFileSync(root+'/index.html','utf8');
+ let own=0;
+ for(const e of events){
+  const route=`/events/${e.id}/`,html=readFileSync(root+route+'index.html','utf8');
+  const canonical=lithuanian.has(e.id)?`https://lithuaniabtc.com/en${route}`:regional.has(e.id)?`https://bitcoinbaltics.com${route}`:`https://cryptobaltics.org${route}`;
+  assert.ok(html.includes(`rel="canonical" href="${canonical}"`),e.id);
+  assert.equal((html.match(/<h1>/g)||[]).length,1);
+  const schemas=[...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)].map(m=>JSON.parse(m[1]));
+  const mine=canonical.startsWith('https://cryptobaltics.org/');own+=mine;
+  assert.equal(schemas.length,mine?1:0,e.id);assert.equal(sitemap.includes(`<loc>${canonical}</loc>`),mine);
+  if(mine){assert.equal(schemas[0]['@type'],'Event');assert.equal(schemas[0].url,canonical);assert.ok(schemas[0].startDate);assert.equal(schemas[0].location.address.addressCountry,e.country);assert.ok(schemas[0].organizer.name);}
+  for(const [,url] of html.matchAll(/(?:href|src)="(\/[^"?#]*)(?:[?#][^"]*)?"/g))assert.ok(existsSync(root+url)||existsSync(root+url+'/index.html'),url);
+  if(Date.parse(e.end||e.start)>=Date.now())assert.ok(home.includes(`href="${route}"`),e.id);
+ }
+ assert.ok(own>=3);
 });

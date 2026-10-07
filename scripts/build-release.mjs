@@ -333,6 +333,8 @@ for (const lang of routes) {
     lang: language,
     timezone: COUNTRY.timezone,
     countries: COUNTRY.countries,
+    // Pages written by directory/build-directory.mjs.
+    eventHref: (e) => "/events/" + e.id + "/",
   });
   await writeFile(resolve(out, lang, "index.html"), html);
 }
