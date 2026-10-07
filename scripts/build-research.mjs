@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import {readFile,writeFile,mkdir,copyFile} from 'node:fs/promises';
 const out='public-baltics';
 const data=JSON.parse(await readFile('data/research.json','utf8'));
@@ -38,11 +39,9 @@ for(const file of ['index.html','en/index.html','about/index.html','en/about/ind
 }
 console.log(`Research preview: ${data.organisations.length} organisations, ${data.events.length} events`);
 
-await mkdir(out+"/identity", {recursive:true});
-await copyFile("identity/directions.html", out+"/identity/directions.html");
-
-await copyFile("identity/collectif-logos.html",out+"/identity/collectif-logos.html");
-
-await copyFile("identity/map-c-logos.html",out+"/identity/map-c-logos.html");
-
-await copyFile("identity/currency-map-logos.html",out+"/identity/currency-map-logos.html");
+// Design studies live only in the local identity/ folder, which is ignored by git.
+for (const f of ["directions.html","collectif-logos.html","map-c-logos.html","currency-map-logos.html"]) {
+ if (!existsSync("identity/"+f)) continue;
+ await mkdir(out+"/identity", {recursive:true});
+ await copyFile("identity/"+f, out+"/identity/"+f);
+}
