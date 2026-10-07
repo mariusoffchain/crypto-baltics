@@ -9,6 +9,8 @@ for(const route of ['/','/directory/','/approach/','/events-places/']) test(`${r
  assert.match(html,/summary_large_image/);assert.match(html,/rel="icon"/);
  assert.match(html,/mailto:contact@cryptobaltics.org/);
  assert.match(html,/github.com\/mariusoffchain\/crypto-baltics/);
+ const graph=JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1])['@graph'];
+ assert.equal(graph[0]['@type'],'WebSite');assert.equal(graph[1].url,`https://cryptobaltics.org${route}`);
  for(const [,url] of html.matchAll(/(?:href|src)="(\/[^"?#]*)(?:[?#][^"]*)?"/g)) {
   assert.ok(existsSync(root+url)||existsSync(root+url+'/index.html'),url);
  }
