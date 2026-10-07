@@ -30,3 +30,11 @@ test('www redirects to canonical preserving path and query',async()=>{
  const response=worker.fetch(new Request('https://www.cryptobaltics.org/directory/?category=company'),{});
  assert.equal(response.status,301);assert.equal(response.headers.get('location'),'https://cryptobaltics.org/directory/?category=company');
 });
+test('map embed lists events before JavaScript and may be indexed only where it is embedded',()=>{
+ const html=readFileSync(root+'/map/index.html','utf8');
+ assert.match(html,/<meta name="robots" content="noindex,nofollow,indexifembedded">/);
+ assert.match(html,/rel="canonical" href="https:\/\/cryptobaltics.org\/events-places\/"/);
+ assert.ok((html.match(/<div class="event-card/g)||[]).length>=3);
+ assert.equal((html.match(/<h1/g)||[]).length,0);
+ assert.match(readFileSync(root+'/index.html','utf8'),/<title>Bitcoin &amp; crypto across the Baltics \| Crypto Baltics<\/title>/);
+});

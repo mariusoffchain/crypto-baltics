@@ -11,6 +11,7 @@ import { resolve, dirname } from "node:path";
 import { createHash } from "node:crypto";
 import { buildLLMs } from "./build-llms.mjs";
 import { aboutPage } from "./about-page.mjs";
+import { crawlableHome } from "./home-crawlable.mjs";
 import { COUNTRY as LITHUANIA } from "../country-config.js";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const regional = process.env.SITE_PROFILE === "baltics";
@@ -327,6 +328,12 @@ for (const lang of routes) {
       )
       .replace(">Atverti „BTC Map“<", ">Open BTC Map<");
   await mkdir(resolve(out, lang), { recursive: true });
+  html = crawlableHome(html, {
+    events: builtEvents,
+    lang: language,
+    timezone: COUNTRY.timezone,
+    countries: COUNTRY.countries,
+  });
   await writeFile(resolve(out, lang, "index.html"), html);
 }
 await buildLLMs(regional ? out : root, out, site, COUNTRY);

@@ -46,10 +46,12 @@ await mkdir(out+'/map',{recursive:true});
 let mapHTML=await readFile(out+'/index.html','utf8');
 mapHTML=mapHTML.replace('href="/ecosystem/"','href="/directory/"').replaceAll('Crypto Baltics | Content preview','Events & places | Crypto Baltics').replaceAll('/assets/baltics-share.jpg','/assets/crypto-share.png').replaceAll('/assets/baltics-logo.svg','/assets/crypto-baltics-map.svg').replaceAll('/assets/baltics-icon.png','/assets/crypto-icon.png').replaceAll('Bitcoin Baltics, Bitcoin map and community events in Lithuania, Latvia and Estonia','Crypto Baltics — events and places in Estonia, Latvia and Lithuania');
 mapHTML=mapHTML.replace('</head>','<link rel="stylesheet" href="/map-embed.css"><script defer src="/map-embed.js"></script></head>');
+// Not a page of its own: Google may index its prerendered events as part of /events-places/, which embeds it.
+mapHTML=mapHTML.replace('content="noindex,nofollow"','content="noindex,nofollow,indexifembedded"').replace(/<link rel="canonical" href="[^"]*"/,'<link rel="canonical" href="https://cryptobaltics.org/events-places/"');
 await writeFile(out+'/map/index.html',mapHTML);
 await copyFile('directory/map-embed.css',out+'/map-embed.css');await copyFile('directory/map-embed.js',out+'/map-embed.js');
 const mapPage=`<section class="map-destination"><h1 class="visually-hidden">Events and places across the Baltics</h1><iframe id="regional-map" title="Map of Baltic events and Bitcoin places, with event calendar" src="/map/?embed=1&mode=light"></iframe></section>`;
-const pages=[['events-places',mapPage,'Events & places'],['',home,'Explore'],['directory',directory,'Directory'],['events',eventPage,'Events'],['merchants',places,'Places'],['approach',approach,'Our approach']];
+const pages=[['events-places',mapPage,'Events & places'],['',home,'Bitcoin & crypto across the Baltics'],['directory',directory,'Directory'],['events',eventPage,'Events'],['merchants',places,'Places'],['approach',approach,'Our approach']];
 for(const [route,body,title] of pages){await mkdir(out+'/'+route,{recursive:true});await writeFile(out+'/'+(route?route+'/':'')+'index.html',shell(title,body,'/'+(route?route+'/':'')).replace('<body>',route==='events-places'?'<body class="map-page">':'<body>'));}
 for(const [alias,source] of [['en',''],['about','approach'],['en/about','approach'],['ecosystem','directory'],['events','events-places'],['merchants','events-places']]){await mkdir(out+'/'+alias,{recursive:true});await copyFile(out+'/'+(source?source+'/':'')+'index.html',out+'/'+alias+'/index.html');}
 await cp('assets/directory-logos',out+'/assets/directory-logos',{recursive:true});

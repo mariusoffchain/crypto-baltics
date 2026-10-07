@@ -4,11 +4,11 @@ Crypto Baltics is published at https://cryptobaltics.org/. The public pages are 
 
 ## Implemented
 
-- The site is English only. Canonical pages: `/` (Explore), `/directory/`, `/events-places/` and `/approach/`. Each has its own title, a shared description, a canonical URL and one H1.
+- The site is English only. Canonical pages: `/`, `/directory/`, `/events-places/` and `/approach/`. Each has its own title (home: “Bitcoin & crypto across the Baltics | Crypto Baltics”), a shared description, a canonical URL and one H1.
 - Legacy paths are copies whose canonical URLs point to the right page: `/en/` to `/`, `/about/` and `/en/about/` to `/approach/`, `/ecosystem/` to `/directory/`, `/events/` and `/merchants/` to `/events-places/`.
-- `/map/` is the embedded map shown in `/events-places/`. It is marked `noindex,nofollow`.
+- `/map/` is the embedded map shown in `/events-places/`. It is marked `noindex,nofollow,indexifembedded` with a canonical URL pointing to `/events-places/`, and its build prerenders the event list, so Google may index those events as part of `/events-places/` without listing `/map/` itself.
 - Every page carries JSON-LD: the WebSite, published by Cypher Baltics (`https://cypherbaltics.org/#organization`), and the page itself as a WebPage, or a CollectionPage for `/directory/`. No invented reviews or business identity.
-- The home page and `/directory/` listings are server-rendered HTML; they do not depend on JavaScript to expose their content. Events and places on `/events-places/` live inside the `/map/` embed, so their details are not indexed from that page.
+- The home page and `/directory/` listings are server-rendered HTML; they do not depend on JavaScript to expose their content. Events and places on `/events-places/` live inside the `/map/` embed; only its prerendered events are readable without JavaScript.
 - `/sitemap.xml` lists the 4 canonical pages. `/robots.txt` advertises it and disallows `/identity/`, which is also excluded from the uploaded assets. `/llms.txt` gives a short reading guide to the canonical pages.
 - `worker.mjs` permanently redirects `www` and `http://` to `https://cryptobaltics.org/`, preserving paths and queries.
 - Open Graph and Twitter large-image cards use `assets/crypto-share.png`, 1200 × 630.
@@ -18,10 +18,9 @@ These changes help describe and discover the site; they do not guarantee indexin
 ## Next actions
 
 1. **Search Console, site owner.** Use the domain property `cryptobaltics.org`, submit `https://cryptobaltics.org/sitemap.xml` and inspect the 4 canonical pages after each structural change. Search Console is managed outside this repository.
-2. **Home page title.** The home title is “Explore | Crypto Baltics”. A more descriptive title, such as one naming Bitcoin, crypto and the three countries, would better match searches. Change it in the `pages` list of `directory/build-directory.mjs`.
-3. **Useful ongoing content.** Keep listings sourced and dated in `data/research.json`, add verified events and refresh the merchant snapshot with `npm run refresh:baltics`. Listings are not endorsements; do not create repetitive keyword pages or false future events.
-4. **Next development increment.** Events and places are only indexable through the featured events on the home page. Stable HTML pages per organisation or event, each with its own title, description and accurate structured data (Organization or Event). The current `/events/?event=` links still share the page's server metadata. Do not claim individual listing SEO is implemented.
-5. **Review performance.** After Google has crawled the pages, compare impressions and clicks for queries such as “crypto Baltics”, “Bitcoin Estonia”, “Bitcoin Latvia” and “Bitcoin Lithuania”. Check index coverage and selected canonical URLs, including the legacy aliases.
+2. **Useful ongoing content.** Keep listings sourced and dated in `data/research.json`, add verified events and refresh the merchant snapshot with `npm run refresh:baltics`. Listings are not endorsements; do not create repetitive keyword pages or false future events.
+3. **Next development increment.** Places are not prerendered and events rely on Google indexing the embed. Stable HTML pages per organisation or event, each with its own title, description and accurate structured data (Organization or Event). The current `/events/?event=` links still share the page's server metadata. Do not claim individual listing SEO is implemented.
+4. **Review performance.** After Google has crawled the pages, compare impressions and clicks for queries such as “crypto Baltics”, “Bitcoin Estonia”, “Bitcoin Latvia” and “Bitcoin Lithuania”. Check index coverage and selected canonical URLs, including the legacy aliases.
 
 ## Edit and rebuild
 
