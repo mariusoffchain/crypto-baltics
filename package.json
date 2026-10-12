@@ -11,7 +11,7 @@
     "build:baltics": "SITE_PROFILE=baltics node scripts/build-release.mjs",
     "preview:baltics": "python3 scripts/preview.py --directory public-baltics --port 8775",
     "refresh:baltics": "SITE_PROFILE=baltics node scripts/refresh-snapshot.mjs",
-    "build:crypto": "node scripts/sync-research-events.mjs && SITE_PROFILE=baltics node scripts/build-release.mjs && node scripts/build-research.mjs && node directory/build-directory.mjs",
+    "build:crypto": "node scripts/sync-research-events.mjs && SITE_PROFILE=baltics node scripts/build-release.mjs && node scripts/build-research.mjs && node directory/build-directory.mjs && node scripts/sitemap-lastmod.mjs public-baltics",
     "preview:crypto": "python3 scripts/preview.py --directory public-baltics --port 8777",
     "deploy": "wrangler deploy",
     "deploy:check": "wrangler deploy --dry-run",
