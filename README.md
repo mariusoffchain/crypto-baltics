@@ -17,6 +17,24 @@ Open http://127.0.0.1:8777/ for the new homepage. Directory and approach use sep
 
 Edit `data/home-featured.json` to select and order homepage communities and companies by organisation ID. Lithuania BTC remains first in the community selection. The full directory sorts names alphabetically; events retain chronological order. Entries not featured remain in the directory.
 
+## Event freshness
+
+`event-status.js` supplies the same grouping rule to the homepage, calendar and event badges. A timed event remains upcoming through its inclusive end instant, or its start instant when no end is given. Timed records must include an explicit UTC offset. Events in progress remain in the upcoming group, matching the existing calendar convention.
+
+A `dateOnly` record (including the legacy placeholder timestamps), or a plain `YYYY-MM-DD` start, remains upcoming through the final calendar day in `Europe/Vilnius`. The end date is inclusive; the start day is used when no end is supplied. This respects Baltic daylight saving changes and does not depend on the visitor's timezone. Undated, explicitly planned, invalid or reversed ranges remain in the dates-to-be-announced group and do not inflate the homepage count.
+
+`home-events.js` renders both the list and its count from one selection. The build supplies the initial HTML; `worker.mjs` replaces it at each homepage request, including the `/en/` alias, using the event data bundled from `public-baltics/data/events.json`. Build before running or packaging the Worker. Homepage responses use `Cache-Control: no-store` and omit the static asset validators, so a cached build cannot freeze the count. Other routes and event detail pages are preserved.
+
+In the browser, the homepage and calendar recheck the same rule every 30 seconds and on focus, visibility return and page restoration. This also refreshes a page kept open across midnight. Background timers can be throttled; client refresh depends on the device clock. A static-only preview has the build-time HTML until JavaScript runs; offline or JavaScript-disabled cached pages cannot contact the Worker.
+
+```sh
+npm ci
+npm test
+npm run preview:worker
+```
+
+The Worker preview uses http://127.0.0.1:8789/. Its explicit localhost host avoids the production HTTP-to-HTTPS redirect in Wrangler's local proxy. `npm test` includes unit tests for date boundaries and a workerd integration test that changes the clock across requests without rebuilding. The runtime test uses the Miniflare and esbuild versions bundled with the pinned Wrangler dependency, and needs permission to open local sockets. No production credentials are needed.
+
 ## Content
 
 - `data/research.json` is the canonical research collection with source URLs, verification notes and historical records.

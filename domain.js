@@ -49,19 +49,7 @@ export function dateKey(date) {
     day: "2-digit",
   }).format(new Date(date));
 }
-export function eventGroups(events, now = new Date()) {
-  return {
-    planned: events.filter((e) => e.status === "planned"),
-    upcoming: events
-      .filter(
-        (e) => e.status !== "planned" && new Date(e.end || e.start) >= now,
-      )
-      .sort((a, b) => new Date(a.start) - new Date(b.start)),
-    past: events
-      .filter((e) => e.status !== "planned" && new Date(e.end || e.start) < now)
-      .sort((a, b) => new Date(b.start) - new Date(a.start)),
-  };
-}
+export { eventGroups } from "./event-status.js";
 export function safeURL(value) {
   try {
     const u = new URL(value);

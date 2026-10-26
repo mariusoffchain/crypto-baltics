@@ -1,3 +1,5 @@
+import { homeEvents } from "./home-events.js";
+import { watchEventDates } from "./event-refresh.js";
 (() => {
   const params = new URLSearchParams(location.search);
   const root = document.documentElement;
@@ -32,6 +34,18 @@
     form.addEventListener('input', filter); form.addEventListener('change', filter); filter();
   }
   const { events, initiatives } = JSON.parse(document.querySelector('#event-data').textContent);
+  const homeList = document.querySelector('.home-events');
+  if (homeList) {
+    let previous;
+    watchEventDates(() => {
+      const schedule = homeEvents(events);
+      if (schedule.html === previous) return;
+      previous = schedule.html;
+      homeList.innerHTML = schedule.html;
+      document.querySelector('#upcoming-count').textContent = schedule.count;
+      document.querySelector('#upcoming-label').textContent = schedule.label;
+    });
+  }
   const dialog = document.querySelector('#event-dialog');
   const detail = document.querySelector('#event-detail');
   let opener;

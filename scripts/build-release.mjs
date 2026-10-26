@@ -33,6 +33,8 @@ const files = [
   "pwa.js",
   "atlas-app.js",
   "domain.js",
+  "event-status.js",
+  "event-refresh.js",
   "site.css",
   "templates.css",
   "atlas-editions.css",

@@ -1,3 +1,4 @@
+import { eventGroups, eventStatus } from "../event-status.js";
 // Server-rendered first paint for crawlers and visitors without JavaScript.
 // atlas-app.js replaces the event list as soon as its own data has loaded.
 const esc = (s) =>
@@ -20,19 +21,11 @@ export function crawlableHome(
     new Intl.DateTimeFormat(locale, { timeZone: timezone, ...opts }).format(
       new Date(d),
     );
-  const now = new Date();
-  const planned = events.filter((e) => e.status === "planned");
-  const dated = events.filter((e) => e.status !== "planned" && e.start);
-  const upcoming = dated
-    .filter((e) => new Date(e.end || e.start) >= now)
-    .sort((a, b) => new Date(a.start) - new Date(b.start));
-  const past = dated
-    .filter((e) => new Date(e.end || e.start) < now)
-    .sort((a, b) => new Date(b.start) - new Date(a.start));
+  const { upcoming, past, planned } = eventGroups(events);
   const country = (code) => countries?.find((c) => c.code === code)?.name;
   const card = (e) => {
     const title = esc(e.title[lang] || e.title.en);
-    if (e.status === "planned")
+    if (eventStatus(e) === "planned")
       return `<div class="event-card planned-event"><div class="date-badge pending-date" aria-hidden="true"></div><div class="event-copy"><h3>${title}</h3><p>${lang === "lt" ? "Data bus paskelbta" : "Date to be announced"}</p></div></div>`;
     const place = [e.venue, country(e.country)]
       .filter(Boolean)

@@ -1,3 +1,5 @@
+import { eventStatus } from "./event-status.js";
+import { watchEventDates } from "./event-refresh.js";
 import { renderInitiatives, countryIcon } from "./navigation.js";
 import { COUNTRY } from "./country-config.js";
 import {
@@ -636,7 +638,7 @@ const eventPagePath = (e) =>
       "/"
     : null;
 function eventCard(e) {
-  if (e.status === "planned") {
+  if (eventStatus(e) === "planned") {
     const b = button("", () => showEvent(e), "event-card planned-event");
     const copy = el("div", "event-copy");
     copy.append(
@@ -680,7 +682,7 @@ function eventCard(e) {
       null,
       fmt(e.start, { year: "numeric" }) +
         " · " +
-        t(new Date(e.end) < new Date() ? "pastEvent" : "upcomingEvent"),
+        t(eventStatus(e) === "past" ? "pastEvent" : "upcomingEvent"),
     ),
   );
   if (COUNTRY.regional) copy.append(countryLine(e, "p", "event-location"));
@@ -822,11 +824,11 @@ function showEvent(e) {
     el(
       "span",
       "badge",
-      e.status === "planned"
+      eventStatus(e) === "planned"
         ? lang === "lt"
           ? "Artėjantis renginys"
           : "Upcoming event"
-        : t(new Date(e.end) < new Date() ? "pastEvent" : "upcomingEvent"),
+        : t(eventStatus(e) === "past" ? "pastEvent" : "upcomingEvent"),
     ),
     h,
   );
@@ -837,7 +839,7 @@ function showEvent(e) {
     target.append(site);
   }
   const meta = el("div", "detail-meta");
-  if (e.status === "planned")
+  if (eventStatus(e) === "planned")
     meta.append(
       el(
         "span",
@@ -1437,6 +1439,19 @@ async function start() {
       json("./data/payment-methods.json").catch(() => ({})),
     ]);
     if (!Array.isArray(events)) throw Error("events");
+    let previousStatuses;
+    watchEventDates(() => {
+      const now = Date.now();
+      const statuses = events.map(e => eventStatus(e, now)).join(",");
+      if (statuses === previousStatuses) return;
+      const changed = previousStatuses !== undefined;
+      previousStatuses = statuses;
+      if (changed) {
+        renderCalendar();
+        if (map && loaded) renderEventMarkers();
+        if (activeEvent && dialog.open) showEvent(activeEvent);
+      }
+    });
     renderLabels();
     const requestedEvent = new URLSearchParams(location.search).get("event");
     const linkedEvent = events.find((e) => e.id === requestedEvent);
