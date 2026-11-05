@@ -40,7 +40,8 @@ test("country filtering keeps merchants and events in the chosen scope", () => {
     [...snapshot.places, ...snapshot.places],
     boundary,
   ).map((p) => ({ ...p, country: placeCountry(p, boundary) }));
-  assert.equal(places.length, snapshot.places.length);
+  assert.equal(places.length, 14);
+  assert.ok(places.every(p => p.name && !/unnamed|Fun Casino/i.test(p.name)));
   for (const c of config.countries)
     assert.ok(places.filter((p) => inScope(p, c.code)).length > 0);
   assert.equal(inScope({ country: "LT" }, "LV"), false);

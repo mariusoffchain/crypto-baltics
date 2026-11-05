@@ -1,46 +1,46 @@
 {
   "https://cryptobaltics.org/": {
-    "sha256": "9f7b9cd385facfd7a8b199afc1a2323e6242bd18e07ffba0515d09eaf4b75e00",
-    "lastmod": "2026-10-26"
+    "sha256": "07eec0c6087d7db73cfeddb8b04e5f129253b263acbca2f0489f0ddba1415752",
+    "lastmod": "2026-11-05"
   },
   "https://cryptobaltics.org/directory/": {
-    "sha256": "9df6d566cc4c4c63c93f037c200bc8c8b6466ed9472cd8be9738d9e3870292cc",
-    "lastmod": "2026-10-26"
+    "sha256": "eb80f998038fd21fad616055a608153464c33c5e03e8f2438a583398dca55d86",
+    "lastmod": "2026-11-05"
   },
   "https://cryptobaltics.org/events-places/": {
-    "sha256": "7dde99f145556f18876491ff5358081025f7d3fc3aa7b3041ee2370e4cba45a6",
-    "lastmod": "2026-10-26"
+    "sha256": "363fbc2f48a486f39c3f460869da3c49b624cc5560985b52fc3d72bf3c8f37f2",
+    "lastmod": "2026-11-05"
   },
   "https://cryptobaltics.org/approach/": {
-    "sha256": "3635dad57887305d3da507639f217503b45cff7209ee7d2d019c45fbde690255",
-    "lastmod": "2026-10-26"
+    "sha256": "6dd5f1f2018ac3759dec316389274b2c774f6679447e9dac9aefe4b740446fe7",
+    "lastmod": "2026-11-05"
   },
   "https://cryptobaltics.org/events/solana-connect-2026/": {
-    "sha256": "ba572bf420af190cb2e4c52fe8704206a81b16d119eab36428e9f44a174abd44",
-    "lastmod": "2026-10-26"
+    "sha256": "90e7d9112206d0997be92f36a8b551fcb6f61781d2e85d57867ce767dab610e7",
+    "lastmod": "2026-11-05"
   },
   "https://cryptobaltics.org/events/unblock-fintech-2026/": {
-    "sha256": "ab2e8dfecafc4e7b108a47f0f7ee330f42dd84a348e652b0b7f5aa15cdb501f9",
-    "lastmod": "2026-10-26"
+    "sha256": "077b0fccb4b58088d7736d37b66f95ebe774ea39c9dd5b4b7b78356cab1010a4",
+    "lastmod": "2026-11-05"
   },
   "https://cryptobaltics.org/events/unblock-2027/": {
-    "sha256": "ea8917a10dcda28c6b98f511c2757c80c9d2be6f3abb28604891e43d33ce37cb",
-    "lastmod": "2026-10-26"
+    "sha256": "e9a0218bf2c5699bee8e30260d68c03fce0721a2342a58fa5cfe18676d0f6f62",
+    "lastmod": "2026-11-05"
   },
   "https://cryptobaltics.org/events/solana-vibecheck-2026/": {
-    "sha256": "d2e7db3a51442add0ab72f1916b1a6da951b0ea50eff99c8e390c852aee7dcef",
-    "lastmod": "2026-10-26"
+    "sha256": "c530e45f57b16175367d73235c58d38667fafaac3323f6290a05c9a729e57da8",
+    "lastmod": "2026-11-05"
   },
   "https://cryptobaltics.org/events/unblock-2026/": {
-    "sha256": "6d7f10b3b151c026c08443490030a154df95f7d4b1d71cb7de469d99239d634b",
-    "lastmod": "2026-10-26"
+    "sha256": "8b27381abd4534f367639e26a9abc7130577403545c80f56358f198e10c2af8c",
+    "lastmod": "2026-11-05"
   },
   "https://cryptobaltics.org/events/ethtallinn-2024/": {
-    "sha256": "a8f33c7e6b80c1261a80a9c3ab419e598c041613274206ae50e1bc6431a3781b",
-    "lastmod": "2026-10-26"
+    "sha256": "13b8f8fcbac58eddb8ead76a825ac8956ec014b564f9611103bd81d5e05887ac",
+    "lastmod": "2026-11-05"
   },
   "https://cryptobaltics.org/events/web3-vilnius-2023/": {
-    "sha256": "01fdeb887dcc4637b01f509022dc7bb65a09f4258d188f22e9271175d7140f39",
-    "lastmod": "2026-10-26"
+    "sha256": "844151ff13a6ab58a90edb7356fff0f6c8cfc99d83e6195277d84a8bab7d4918",
+    "lastmod": "2026-11-05"
   }
 }

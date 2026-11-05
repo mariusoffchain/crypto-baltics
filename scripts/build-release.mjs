@@ -33,6 +33,7 @@ const files = [
   "pwa.js",
   "atlas-app.js",
   "domain.js",
+  "calendar.js",
   "event-status.js",
   "event-refresh.js",
   "site.css",
@@ -411,3 +412,10 @@ await writeFile(
     .replace("__VERSION__", version)
     .replace("__PRECACHE__", JSON.stringify(precache)),
 );
+
+const { filterPlaces: visiblePlaces } = await import('../domain.js');
+const snapshotPath = resolve(out, 'data/merchants-snapshot.json');
+const publishedSnapshot = JSON.parse(await readFile(snapshotPath, 'utf8'));
+const publishedBoundary = JSON.parse(await readFile(resolve(out, COUNTRY.boundaryPath), 'utf8'));
+publishedSnapshot.places = visiblePlaces(publishedSnapshot.places, publishedBoundary);
+await writeFile(snapshotPath, JSON.stringify(publishedSnapshot, null, 2)+'\n');

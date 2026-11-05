@@ -7,3 +7,9 @@ if(new URLSearchParams(location.search).get('embed')==='1'){
  });
  document.querySelectorAll('a[href="/directory/"],a[data-about-link]').forEach(a=>a.target='_parent');
 }
+
+if(parent!==window){
+ window.addEventListener('atlas-state',()=>parent.postMessage({type:'crypto-map-state',query:location.search},location.origin));
+ // Contribution drafts belong to the full page, outside the map frame.
+ document.addEventListener('click',event=>{const link=event.target.closest('a[href^="/contribute/"]');if(link)link.target='_parent';});
+}

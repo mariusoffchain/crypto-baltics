@@ -2,7 +2,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "npm run build:crypto && node --test scripts/domain.test.mjs scripts/pwa.test.mjs scripts/crypto-release.test.mjs scripts/event-status.test.mjs scripts/worker-events.test.mjs",
+    "test": "npm run build:crypto && node --test scripts/domain.test.mjs scripts/pwa.test.mjs scripts/crypto-release.test.mjs scripts/event-status.test.mjs scripts/worker-events.test.mjs scripts/visitor.test.mjs",
     "build": "node scripts/build-release.mjs",
     "preview": "python3 -m http.server 8767 --bind 127.0.0.1 --directory public-build",
     "refresh:merchants": "node scripts/refresh-snapshot.mjs",
@@ -11,7 +11,7 @@
     "build:baltics": "SITE_PROFILE=baltics node scripts/build-release.mjs",
     "preview:baltics": "python3 scripts/preview.py --directory public-baltics --port 8775",
     "refresh:baltics": "SITE_PROFILE=baltics node scripts/refresh-snapshot.mjs",
-    "build:crypto": "node scripts/sync-research-events.mjs && SITE_PROFILE=baltics node scripts/build-release.mjs && node scripts/build-research.mjs && node directory/build-directory.mjs && node scripts/sitemap-lastmod.mjs public-baltics",
+    "build:crypto": "node scripts/sync-research-events.mjs && SITE_PROFILE=baltics node scripts/build-release.mjs && node scripts/build-research.mjs && node directory/build-directory.mjs && node scripts/sitemap-lastmod.mjs public-baltics && node scripts/build-contribute.mjs public-baltics \"Crypto Baltics\" contact@cryptobaltics.org",
     "preview:crypto": "python3 scripts/preview.py --directory public-baltics --port 8777",
     "deploy": "wrangler deploy",
     "deploy:check": "wrangler deploy --dry-run",

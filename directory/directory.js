@@ -10,28 +10,63 @@ import { watchEventDates } from "./event-refresh.js";
   const labelTheme = () => theme.setAttribute('aria-label', `Switch to ${root.dataset.theme === 'light' ? 'dark' : 'light'} mode`);
   labelTheme();
   const mapFrame=document.querySelector('#regional-map');
-  if(mapFrame){const u=new URL(mapFrame.src);u.searchParams.set('mode',root.dataset.theme);mapFrame.src=u.href;}
+  if(mapFrame){
+    const u=new URL(mapFrame.src);
+    u.searchParams.set('mode',root.dataset.theme);
+    for(const key of ['country','q','event','view']) if(params.has(key))u.searchParams.set(key,params.get(key));
+    mapFrame.src=u.href;
+    window.addEventListener('popstate',()=>{
+      const params=new URLSearchParams(location.search),url=new URL(mapFrame.src);
+      for(const key of ['country','q','event','view'])params.has(key)?url.searchParams.set(key,params.get(key)):url.searchParams.delete(key);
+      mapFrame.src=url.href;
+    });
+    window.addEventListener('message',event=>{
+      if(event.origin!==location.origin||event.source!==mapFrame.contentWindow||event.data?.type!=='crypto-map-state'||typeof event.data.query!=='string')return;
+      const incoming=new URLSearchParams(event.data.query),url=new URL(location.href);
+      for(const key of ['country','q','event','view'])incoming.has(key)?url.searchParams.set(key,incoming.get(key)):url.searchParams.delete(key);
+      history.replaceState(null,'',url);
+    });
+  }
   theme.addEventListener('click', () => { root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light'; labelTheme(); if(mapFrame) mapFrame.contentWindow.postMessage({type:'crypto-theme',mode:root.dataset.theme},location.origin); try { localStorage.setItem('crypto-directory-theme', root.dataset.theme); } catch {} });
   const form = document.querySelector('.filters');
   if (form) {
     const entries = [...document.querySelectorAll('[data-entry]')];
     const country = document.querySelector('#country');
-    const category=document.querySelector('#kind');if(category && [...category.options].some(o=>o.value===params.get('category')))category.value=params.get('category');
-    if ([...country.options].some(o => o.value === params.get('country'))) country.value = params.get('country');
-    function filter() {
-      const q = document.querySelector('#q').value.toLocaleLowerCase().trim();
-      const kind = document.querySelector('#kind')?.value;
-      const history = document.querySelector('#historical')?.checked;
+    const category = document.querySelector('#kind');
+    const query = document.querySelector('#q');
+    const historical = document.querySelector('#historical');
+    const normalize = value => value.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().trim();
+    function readURL() {
+      const params = new URLSearchParams(location.search);
+      query.value = params.get('q') || '';
+      for (const [field, key] of [[country, 'country'], [category, 'category']]) {
+        if (field) field.value = [...field.options].some(o => o.value === params.get(key)) ? params.get(key) : '';
+      }
+      if (historical) historical.checked = params.get('historical') === '1';
+    }
+    function filter(updateURL = true) {
+      const words = normalize(query.value).split(/\s+/).filter(Boolean);
       let count = 0;
       for (const item of entries) {
-        const show = (!q || item.textContent.toLocaleLowerCase().includes(q)) && (!country.value || item.dataset.country.split(' ').includes(country.value)) && (!kind || item.dataset.kind === kind) && (!item.dataset.state || item.dataset.state === 'listed' || history);
-        item.hidden = !show; if (show) count++;
+        const text = normalize(item.textContent + ' ' + (item.dataset.name || '') + ' ' + (item.dataset.kind || ''));
+        const show = words.every(word => text.includes(word)) && (!country.value || item.dataset.country.split(' ').includes(country.value)) && (!category?.value || item.dataset.kind === category.value) && (!item.dataset.state || ['listed','review'].includes(item.dataset.state) || historical?.checked);
+        item.hidden = !show;
+        if (show) count++;
       }
       document.querySelector('#result-count').textContent = `${count} ${count === 1 ? 'entry' : 'entries'}`;
       document.querySelector('#empty').hidden = count !== 0;
       document.querySelectorAll('.event-group').forEach(group => group.hidden = ![...group.querySelectorAll('[data-entry]')].some(e => !e.hidden));
+      if (updateURL) {
+        const url = new URL(location.href);
+        for (const [key, value] of [['q',query.value.trim()],['country',country.value],['category',category?.value],['historical',historical?.checked?'1':'']]) value ? url.searchParams.set(key,value) : url.searchParams.delete(key);
+        history.replaceState(null,'',url);
+      }
     }
-    form.addEventListener('input', filter); form.addEventListener('change', filter); filter();
+    form.addEventListener('submit', event => event.preventDefault());
+    form.addEventListener('input', () => filter());
+    form.addEventListener('change', () => filter());
+    addEventListener('popstate', () => { readURL(); filter(false); });
+    readURL(); filter(false);
   }
   const { events, initiatives } = JSON.parse(document.querySelector('#event-data').textContent);
   const homeList = document.querySelector('.home-events');
@@ -80,6 +115,7 @@ import { watchEventDates } from "./event-refresh.js";
       const calendar=node('button','Add to calendar');calendar.className='calendar-link';
       calendar.addEventListener('click',async()=>{const {ics}=await import('/domain.js');const url=URL.createObjectURL(new Blob([ics(e)],{type:'text/calendar;charset=utf-8'}));const a=node('a');a.href=url;a.download=e.id+'.ics';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});actions.append(calendar);
     }
+    const correction=node('a','Suggest a correction');correction.href='/contribute/?event='+encodeURIComponent(e.id);actions.append(correction);
     detail.append(actions);
     const u = new URL(location.href); u.searchParams.set('event',id); history.replaceState(null,'',u);
     if (!dialog.open) dialog.showModal();

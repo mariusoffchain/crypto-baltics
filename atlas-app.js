@@ -5,6 +5,8 @@ import { COUNTRY } from "./country-config.js";
 import {
   API,
   filterPlaces,
+  matchesPlace,
+  groupNearbyPlaces,
   placeCountry,
   inScope,
   countryAddress,
@@ -16,7 +18,7 @@ import {
 const $ = (s) => document.querySelector(s);
 const TXT = {
   en: {
-    search: "Search a place…",
+    search: "Place, city or category…",
     lithuania: "Lithuania",
     merchants: "Accepting Bitcoin",
     events: "Events",
@@ -44,7 +46,7 @@ const TXT = {
     website: "Website",
     hours: "Opening hours",
     btcmap: "View on BTC Map",
-    acceptance: "Listed on BTC Map. Confirm payment options with the venue.",
+    acceptance: "Listed on BTC Map for Bitcoin. Stablecoin and other cryptocurrency payments are not verified. Confirm payment options with the venue.",
     mapUnavailable:
       "The basemap could not load. Check your connection and reload.",
     socialPending: "Community link not yet available",
@@ -61,7 +63,7 @@ const TXT = {
     openLocation: "Open location (new window)",
   },
   lt: {
-    search: "Ieškoti vietos...",
+    search: "Vieta, miestas ar kategorija...",
     lithuania: "Lietuva",
     merchants: "Priima Bitcoin",
     events: "Renginiai",
@@ -225,6 +227,7 @@ function renderCountryFilters() {
         ? url.searchParams.set("country", countryFilter)
         : url.searchParams.delete("country");
       history.replaceState(null, "", url);
+      window.dispatchEvent(new Event("atlas-state"));
       selected = null;
       popup?.remove();
       document
@@ -728,6 +731,7 @@ function renderPlacesList(list) {
   const items = scopedPlaces().slice().sort((a,b) => placeName(a).localeCompare(placeName(b), locale()));
   const section = el("section", "sidebar-places");
   section.append(el("p", "sidebar-place-count", t("merchants") + " · " + items.length));
+  section.append(el("p", "community-help", lang === "lt" ? "Duomenys atnaujinami iš BTC Map. Jei ryšio nėra, rodoma išsaugota kopija. Naujos vietos pridėjimo terminas negarantuojamas; patikrink nurodytą duomenų datą." : "Places refresh from BTC Map. Offline, the saved snapshot is shown. There is no guaranteed listing delay; check the displayed data date."));
   if (!items.length) section.append(el("p", "empty-state", t("noMatch")));
   for (const p of items) {
     const card = button("", () => {
@@ -770,6 +774,14 @@ function renderCalendar() {
   const groups = eventGroups(scopedEvents()),
     list = $("#event-list");
   list.replaceChildren();
+  const help = el("div", "community-help");
+  const contribute = el("a", null, lang === "lt" ? "Siūlyti renginį ar pataisymą" : "Submit an event or correction");
+  contribute.href = "/contribute/?lang=" + lang;
+  help.append(contribute);
+  for (const initiative of (config.initiatives || []).filter(i => (!i.country || !countryFilter || i.country === countryFilter) && (i.id === "meetups" || i.id === "riga-walks" || i.id === "mission-liberty"))) {
+    for (const channel of initiative.links.filter(l => l.kind !== "event")) help.append(link(initiative.name + " · " + channel.name, channel.url));
+  }
+  list.append(help);
   renderCountryFilters();
   if (sidebarView === "places") { renderPlacesList(list); return; }
   const upcoming = el("section", "upcoming-events");
@@ -815,6 +827,7 @@ function showEvent(e) {
   const pageURL = new URL(location.href);
   pageURL.searchParams.set("event", e.id);
   history.replaceState(null, "", pageURL);
+  window.dispatchEvent(new Event("atlas-state"));
   activeEvent = e;
   const target = $("#event-detail");
   target.replaceChildren();
@@ -1024,6 +1037,9 @@ function showEvent(e) {
         "action-button",
       ),
     );
+  const correction = el("a", null, lang === "lt" ? "Siūlyti pataisymą" : "Suggest a correction");
+  correction.href = "/contribute/?event=" + encodeURIComponent(e.id) + "&lang=" + lang;
+  actions.append(correction);
   if (downloadURL) URL.revokeObjectURL(downloadURL);
   if (e.status !== "planned" && e.start && !e.dateOnly) {
     downloadURL = URL.createObjectURL(
@@ -1089,26 +1105,46 @@ function showEvent(e) {
 
   if (!dialog.open) dialog.showModal();
 }
+let placeDialog;
+function showPlaceSheet(content) {
+  if (!placeDialog) {
+    placeDialog = el("dialog", "place-dialog");
+    placeDialog.setAttribute("aria-labelledby", "place-title");
+    document.body.append(placeDialog);
+    placeDialog.addEventListener("click", event => {
+      if (event.target !== placeDialog) return;
+      const r = placeDialog.getBoundingClientRect();
+      if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) placeDialog.close();
+    });
+  }
+  const close = button("×", () => placeDialog.close(), "place-close");
+  close.setAttribute("aria-label", lang === "lt" ? "Uždaryti" : "Close");
+  content.querySelector("h2").id = "place-title";
+  placeDialog.replaceChildren(close, content);
+  if (!placeDialog.open) placeDialog.showModal();
+}
 function renderMerchantMarkers() {
-  merchantMarkers.forEach((m) => m.remove());
+  merchantMarkers.forEach(marker => marker.remove());
   merchantMarkers = [];
   if (!map || !loaded || !merchantsVisible) return;
-  for (const p of scopedPlaces()) {
-    const b = button(
-      "₿",
-      (ev) => {
-        ev.stopPropagation();
-        openPlace(p);
-      },
-      "merchant-marker",
-    );
-    b.setAttribute("aria-label", placeName(p));
-    b.title = placeName(p);
-    merchantMarkers.push(
-      new maplibregl.Marker({ element: b })
-        .setLngLat([p.lon, p.lat])
-        .addTo(map),
-    );
+  for (const group of groupNearbyPlaces(scopedPlaces(), coordinates => map.project(coordinates))) {
+    const p = group[0];
+    const marker = button(group.length > 1 ? String(group.length) : "₿", event => {
+      event.stopPropagation();
+      if (group.length === 1) { openPlace(p); return; }
+      popup?.remove();
+      const content = el("div");
+      content.append(el("h2", null, t("results") + " · " + group.length));
+      for (const item of group) {
+        const choice = button("", () => { placeDialog.close(); openPlace(item); }, "search-result");
+        choice.append(el("strong", null, placeName(item)), el("span", null, item.address || ""));
+        content.append(choice);
+      }
+      showPlaceSheet(content);
+    }, "merchant-marker" + (group.length > 1 ? " merchant-cluster" : ""));
+    marker.setAttribute("aria-label", group.map(placeName).join(" · "));
+    marker.title = group.map(placeName).join(" · ");
+    merchantMarkers.push(new maplibregl.Marker({element: marker}).setLngLat([p.lon, p.lat]).addTo(map));
   }
 }
 function renderEventMarkers() {
@@ -1156,7 +1192,6 @@ function renderEventMarkers() {
   }
 }
 function openPlace(p) {
-  if (!map) return;
   if (popup) popup.remove();
   const root = el("div", "merchant-popup");
   root.append(el("span", "badge", "BTC Map"), el("h2", null, placeName(p)));
@@ -1172,6 +1207,8 @@ function openPlace(p) {
   );
   if (p.opening_hours)
     root.append(el("p", null, t("hours") + " · " + p.opening_hours));
+  const payment = paymentMethods[p.osm_id];
+  if (payment?.lightning === true) root.append(el("p", "badge", "Lightning · OpenStreetMap" + (payment.checkedAt ? " · " + fmt(payment.checkedAt, {dateStyle: "medium"}) : "")));
   root.append(el("p", "muted", t("acceptance")));
   const actions = el("div", "detail-actions");
   if (safeURL(p.website)) actions.append(link(t("website"), p.website));
@@ -1181,7 +1218,9 @@ function openPlace(p) {
       "https://btcmap.org/merchant/" + encodeURIComponent(p.osm_id || p.id),
     ),
   );
+  actions.append(link(lang === "lt" ? "Maršrutas" : "Directions", "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(p.lat + "," + p.lon)));
   root.append(actions);
+  if (matchMedia("(max-width:760px)").matches || !map) { showPlaceSheet(root); return; }
   popup = new maplibregl.Popup({ maxWidth: "300px", offset: 20 })
     .setLngLat([p.lon, p.lat])
     .setDOMContent(root)
@@ -1191,25 +1230,29 @@ function openPlace(p) {
     close.setAttribute("aria-label", lang === "lt" ? "Uždaryti" : "Close");
 }
 function renderSearch() {
-  const q = $("#search").value.trim().toLocaleLowerCase();
+  const q = $("#search").value.trim();
+  const searchURL = new URL(location.href);
+  q ? searchURL.searchParams.set("q", q) : searchURL.searchParams.delete("q");
+  history.replaceState(null, "", searchURL);
+  window.dispatchEvent(new Event("atlas-state"));
   const results = $("#search-results");
   results.replaceChildren();
   results.hidden = !q;
   if (!q) return;
   const matches = scopedPlaces()
-    .filter((p) =>
-      ((p.name || "") + " " + (p.address || ""))
-        .toLocaleLowerCase()
-        .includes(q),
-    )
+    .filter((p) => matchesPlace(p, q))
     .slice(0, 12);
-  if (!matches.length) results.append(el("p", "search-empty", t("noMatch")));
+  if (!matches.length) {
+    const empty = el("p", "search-empty", lang === "lt" ? "Vietų nerasta. Pabandyk kitą miestą ar vietos tipą arba pridėk vietą į BTC Map." : "No matching places. Try another city or category, or add a place to BTC Map.");
+    empty.append(link(t("addPlace"), "https://btcmap.org/add-location"));
+    results.append(empty);
+  }
   for (const p of matches) {
     const b = button(
       "",
       () => {
         results.hidden = true;
-        $("#search").value = "";
+        // Keep the query so the URL can reproduce these results.
         if (!merchantsVisible) {
           merchantsVisible = true;
           $("#toggle-merchants").setAttribute("aria-pressed", "true");
@@ -1333,6 +1376,7 @@ async function initMap() {
       renderEventMarkers();
     });
     let failures = 0;
+    map.on("moveend", renderMerchantMarkers);
     map.on("error", (e) => {
       console.warn("Map resource:", e.error?.message || "Unknown error");
       if (++failures >= 3) showMapError();
@@ -1364,6 +1408,7 @@ dialog.addEventListener("close", () => {
   const url = new URL(location.href);
   url.searchParams.delete("event");
   history.replaceState(null, "", url);
+  window.dispatchEvent(new Event("atlas-state"));
 });
 $("#search").addEventListener("input", renderSearch);
 $("#search").addEventListener("keydown", (e) => {
@@ -1414,6 +1459,7 @@ $("#appearance").onclick = async () => {
     const u = new URL(location.href);
     u.searchParams.set("mode", dark ? "dark" : "light");
     history.replaceState(null, "", u);
+    window.dispatchEvent(new Event("atlas-state"));
     updateHomeLink();
     updateAboutLinks();
     renderAppearance();
@@ -1430,6 +1476,7 @@ $("#appearance").onclick = async () => {
 };
 
 async function start() {
+  $("#search").value = new URLSearchParams(location.search).get("q") || "";
   renderLabels();
   try {
     [boundary, events, config, paymentMethods] = await Promise.all([
@@ -1484,6 +1531,7 @@ async function start() {
       dataMode = "cached";
       renderStatus();
       renderMerchantMarkers();
+      renderSearch();
     }
     refreshPlaces();
   } catch {
@@ -1578,3 +1626,14 @@ function renderSourceLink() {
   source.className = "source-link";
   root.append(source);
 }
+
+window.addEventListener("popstate", () => {
+  const params = new URLSearchParams(location.search);
+  countryFilter = (COUNTRY.countries || []).some(country => country.code === params.get("country")) ? params.get("country") : "";
+  document.querySelectorAll(".country-filter").forEach(select => { select.value = countryFilter; decorateCountryFilter(select); });
+  renderCalendar();
+  renderMerchantMarkers();
+  renderEventMarkers();
+  $("#search").value = params.get("q") || "";
+  renderSearch();
+});

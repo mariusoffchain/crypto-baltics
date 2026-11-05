@@ -67,3 +67,16 @@ Code retains its upstream MIT license. Third-party logos, photography, map data 
 ## Deployment
 
 Run `npm ci`, `npm run build:crypto`, then `npm run deploy:check` and `npm run deploy` after authenticating to the configured Cloudflare account. This Mac uses the named profile `lithuania-btc` with `--profile lithuania-btc`. Never use the default account for production. The `www` host redirects to the canonical domain. Public output is `public-baltics/`. Code is MIT; third-party photos and logos retain their respective rights and sources.
+
+
+## Visitor navigation changes (2026-11-05)
+
+Local work on `fix/visitor-navigation`; no deployment is included. The existing build command also generates `/contribute/`. Its English/Lithuanian form only prepares a message in the browser. It has no submission endpoint, stays disabled without JavaScript, and exposes copying and an explicit email-draft link. No message is sent automatically. Correction links carry the existing event or listing reference.
+
+Merchant search normalizes accents and indexes the name, address, city, category, icon and description. `?q=` preserves the query. Nearby screen coordinates form selectable groups, including identical coordinates. Mobile place details use a native dialog above the map, with coordinate-based directions and dated Lightning information when present in the existing source data.
+
+`filterPlaces` excludes empty/unnamed records and the specific Fun Casino listing from the generated snapshot, cached records and live responses. Imported source JSON is preserved. `calendar.js` escapes and folds ICS text, handles date-only events, and leaves the end unset when no end is known. The usual meetup cadence is descriptive, not a confirmed next event.
+
+The directory restores and updates `q`, `country`, `category` and `historical` in the URL. The embedded map forwards its query state to the parent page after same-origin checks. Review records such as Zolak remain visible with their uncertainty label. Homepage coverage counts assign each listed record to one country or to the multi-country bucket. The existing date-refresh Worker fix is preserved. The readable overview is generated from the Crypto directory data.
+
+Validation includes the repository tests and separate DOM interaction tests. The latter simulate responsive branches with map geometry mocked; they do not establish the rendered layout, tile loading or behaviour on physical phones. A real desktop/mobile visual review is still required before release. No complete new Lithuanian landing-page translation is claimed.
