@@ -1,13 +1,16 @@
 import { homeEvents } from "./home-events.js";
 import { watchEventDates } from "./event-refresh.js";
 (() => {
+  const lang=document.documentElement.lang === "lt" ? "lt" : "en";
+  const labels = {"Event": "Renginys", "Venue to be confirmed": "Vieta tikslinama", "See the official event page for details.": "Išsamesnė informacija pateikiama oficialiame renginio puslapyje.", "Event visual · ": "Renginio vaizdas · ", "Source ↗": "Šaltinis ↗", "Official event ↗": "Oficialus renginio puslapis ↗", "Additional source ↗": "Papildomas šaltinis ↗", "Add to calendar": "Įtraukti į kalendorių", "Suggest a correction": "Siūlyti pataisymą"};
+  const t = text => lang === "lt" ? (labels[text] || text) : text;
   const params = new URLSearchParams(location.search);
   const root = document.documentElement;
   let saved; try { saved = localStorage.getItem('crypto-directory-theme'); } catch {}
   root.dataset.theme = (['light','dark'].includes(params.get('mode')) ? params.get('mode') : saved) || 'light';
   if(['light','dark'].includes(params.get('mode')))try{localStorage.setItem('crypto-directory-theme',root.dataset.theme)}catch{}
   const theme = document.querySelector('#theme');
-  const labelTheme = () => theme.setAttribute('aria-label', `Switch to ${root.dataset.theme === 'light' ? 'dark' : 'light'} mode`);
+  const labelTheme = () => theme.setAttribute('aria-label', lang === 'lt' ? (root.dataset.theme === 'light' ? 'Tamsus režimas' : 'Šviesus režimas') : `Switch to ${root.dataset.theme === 'light' ? 'dark' : 'light'} mode`);
   labelTheme();
   const mapFrame=document.querySelector('#regional-map');
   if(mapFrame){
@@ -53,7 +56,7 @@ import { watchEventDates } from "./event-refresh.js";
         item.hidden = !show;
         if (show) count++;
       }
-      document.querySelector('#result-count').textContent = `${count} ${count === 1 ? 'entry' : 'entries'}`;
+      document.querySelector('#result-count').textContent = lang === 'lt' ? `Rasta įrašų – ${count}` : `${count} ${count === 1 ? 'entry' : 'entries'}`;
       document.querySelector('#empty').hidden = count !== 0;
       document.querySelectorAll('.event-group').forEach(group => group.hidden = ![...group.querySelectorAll('[data-entry]')].some(e => !e.hidden));
       if (updateURL) {
@@ -73,7 +76,7 @@ import { watchEventDates } from "./event-refresh.js";
   if (homeList) {
     let previous;
     watchEventDates(() => {
-      const schedule = homeEvents(events);
+      const schedule = homeEvents(events, Date.now(), lang);
       if (schedule.html === previous) return;
       previous = schedule.html;
       homeList.innerHTML = schedule.html;
@@ -86,36 +89,36 @@ import { watchEventDates } from "./event-refresh.js";
   let opener;
   const node = (tag, text, cls) => { const el = document.createElement(tag); if (text) el.textContent = text; if (cls) el.className = cls; return el; };
   const link = (url, text) => { try { const u = new URL(url); if (!['https:', 'http:'].includes(u.protocol)) return null; const a = node('a', text); a.href = u.href; a.target = '_blank'; a.rel = 'noopener noreferrer'; return a; } catch { return null; } };
-  const date = d => new Intl.DateTimeFormat('en-GB', { day:'numeric',month:'long',year:'numeric',timeZone:'Europe/Vilnius' }).format(new Date(d));
+  const date = d => new Intl.DateTimeFormat(lang==='lt'?'lt-LT':'en-GB', { day:'numeric',month:'long',year:'numeric',timeZone:'Europe/Vilnius' }).format(new Date(d));
   function openEvent(id, trigger) {
     const e = events.find(e => e.id === id); if (!e) return;
     opener = trigger; detail.replaceChildren();
     const heading = node('header', null, 'detail-heading');
-    heading.append(node('div', e.type || 'Event', 'eyebrow'));
-    const title = node('h2', e.title.en); title.id = 'event-title'; heading.append(title); detail.append(heading);
+    heading.append(node('div', e.type || t('Event'), 'eyebrow'));
+    const title = node('h2', (e.title[lang] || e.title.en)); title.id = 'event-title'; heading.append(title); detail.append(heading);
     const grid = node('div', null, 'detail-grid'); const info = node('div');
-    let when = e.start ? date(e.start) : 'Date to be announced';
-    if (e.end && date(e.end) !== date(e.start)) when += ' – ' + date(e.end);
-    if (e.start && !e.dateOnly) when += ' · ' + new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Vilnius',timeZoneName:'short'}).format(new Date(e.start));
+    let when = e.dateUncertain ? (lang==='lt'?'Data tikslinama':'Dates require confirmation') : e.start ? date(e.start) : (lang==='lt'?'Data bus paskelbta':'Date to be announced');
+    if (!e.dateUncertain && e.end && date(e.end) !== date(e.start)) when += ' – ' + date(e.end);
+    if (e.start && !e.dateOnly && !e.dateUncertain) when += ' · ' + new Intl.DateTimeFormat(lang==='lt'?'lt-LT':'en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Vilnius',timeZoneName:'short'}).format(new Date(e.start));
     info.append(node('p', when, 'detail-meta'));
-    info.append(node('p', [...new Set([e.venue, e.address].filter(Boolean))].join(' · ') || 'Venue to be confirmed'));
-    info.append(node('p', e.description?.en || 'See the official event page for details.'));
+    info.append(node('p', [...new Set([e.venue, e.address].filter(Boolean))].join(' · ') || t('Venue to be confirmed')));
+    info.append(node('p', e.description?.[lang] || e.description?.en || t('See the official event page for details.')));
     grid.append(info);
     if (e.image?.src && /^\/?assets\//.test(e.image.src)) {
-      const fig = node('figure'); const img = node('img'); img.src = '/' + e.image.src.replace(/^\//,''); img.alt = e.title.en; fig.append(img);
-      const caption = node('figcaption', 'Event visual · '); const source = link(e.image.source, 'Source ↗'); if (source) caption.append(source); fig.append(caption); grid.append(fig);
+      const fig = node('figure'); const img = node('img'); img.src = '/' + e.image.src.replace(/^\//,''); img.alt = (e.title[lang] || e.title.en); fig.append(img);
+      const caption = node('figcaption', t('Event visual · ')); const source = link(e.image.source, t('Source ↗')); if (source) caption.append(source); fig.append(caption); grid.append(fig);
     } else grid.classList.add('no-image');
     detail.append(grid);
     const actions = node('div', null, 'detail-actions');
     const urls = [...new Set([e.url,e.website,...(e.sources||[])].filter(u=>typeof u==='string'))];
-    urls.forEach((url,i) => { const a = link(url,i===0?'Official event ↗':'Additional source ↗'); if(a) actions.append(a); });
+    urls.forEach((url,i) => { const a = link(url,i===0?t('Official event ↗'):t('Additional source ↗')); if(a) actions.append(a); });
     const community = initiatives?.find(i=>i.id===(e.initiative || (e.type?.toLowerCase()==='walk'?'walks':'meetups')));
     if (!e.start && community) for (const l of community.links.filter(l=>l.kind!=='event')) { const a=link(l.url,l.name+' ↗'); if(a) actions.append(a); }
-    if (e.start && !e.dateOnly) {
-      const calendar=node('button','Add to calendar');calendar.className='calendar-link';
-      calendar.addEventListener('click',async()=>{const {ics}=await import('/domain.js');const url=URL.createObjectURL(new Blob([ics(e)],{type:'text/calendar;charset=utf-8'}));const a=node('a');a.href=url;a.download=e.id+'.ics';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});actions.append(calendar);
+    if (e.start && !e.dateOnly && !e.dateUncertain) {
+      const calendar=node('button',t('Add to calendar'));calendar.className='calendar-link';
+      calendar.addEventListener('click',async()=>{const {ics}=await import('/domain.js');const url=URL.createObjectURL(new Blob([ics(e,lang)],{type:'text/calendar;charset=utf-8'}));const a=node('a');a.href=url;a.download=e.id+'.ics';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});actions.append(calendar);
     }
-    const correction=node('a','Suggest a correction');correction.href='/contribute/?event='+encodeURIComponent(e.id);actions.append(correction);
+    const correction=node('a',t('Suggest a correction'));correction.href='/contribute/?lang='+lang+'&event='+encodeURIComponent(e.id);actions.append(correction);
     detail.append(actions);
     const u = new URL(location.href); u.searchParams.set('event',id); history.replaceState(null,'',u);
     if (!dialog.open) dialog.showModal();

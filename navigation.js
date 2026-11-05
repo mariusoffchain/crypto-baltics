@@ -46,7 +46,7 @@ export function renderInitiatives(config, lang) {
   const initiatives = COUNTRY.regional
     ? (COUNTRY.countries || []).map((c) => ({
         id: c.code,
-        name: c.name,
+        name: lang === "lt" ? ({LT:"Lietuva",LV:"Latvija",EE:"Estija"}[c.code] || c.name) : c.name,
         countryGroup: true,
         links: (config.initiatives || [])
           .filter((i) => i.country === c.code)

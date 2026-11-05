@@ -75,19 +75,20 @@ test("undated, planned, invalid and ambiguous dates never inflate the count or d
   assert.equal(groups.upcoming.length, 0);
   assert.equal(groups.past.length, 0);
 });
-test("real data keeps October events in archives and only UN:BLOCK 2027 upcoming on 26 October", () => {
+test("real data keeps October events in archives and conflicting UN:BLOCK dates unconfirmed", () => {
   const events = JSON.parse(readFileSync("public-baltics/data/events.json"));
   const now = at("2026-10-26T12:00Z");
   const groups = eventGroups(events, now),
     home = homeEvents(events, now);
   assert.deepEqual(
     groups.upcoming.map((e) => e.id),
-    ["unblock-2027"],
+    [],
   );
   assert.ok(groups.past.some((e) => e.id === "solana-connect-2026"));
   assert.ok(groups.past.some((e) => e.id === "unblock-fintech-2026"));
-  assert.equal(home.count, 1);
-  assert.equal(home.label, "upcoming event");
+  assert.equal(home.count, 0);
+  assert.equal(home.label, "upcoming events");
+  assert.ok(groups.planned.some(e=>e.id === "unblock-2027"));
   assert.equal(
     (home.html.match(/class="event-entry"/g) || []).length,
     home.count,

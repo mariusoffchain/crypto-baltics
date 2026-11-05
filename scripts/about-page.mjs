@@ -23,8 +23,8 @@ export function aboutPage({
   regional = false,
 }) {
   const en = lang === "en",
-    home = en && !regional ? "/en/" : "/",
-    path = en && !regional ? "/en/about/" : "/about/";
+    home = regional ? (en ? "/" : "/lt/") : (en ? "/en/" : "/"),
+    path = home + "about/";
   let head = homeHTML.slice(0, homeHTML.indexOf("</head>"));
   head = head
     .replace(/<title>[^<]*<\/title>/, `<title>${escape(copy.title)}</title>`)

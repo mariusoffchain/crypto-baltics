@@ -80,3 +80,5 @@ html[data-theme=dark] .organisation-logo[data-logo="wavespace"]{content:url('/as
 
 /* Event pages: the image keeps its own proportions (directory/build-directory.mjs sets width and height). */
 .event-page .detail-grid img{height:auto;max-height:none}
+
+@media(max-width:700px){.nav{gap:10px}.nav>.language-switch{padding:0;font-size:12px}.nav-tools{margin-left:auto;gap:4px}.nav .mobile-menu{margin-left:0}.nav .wordmark{font-size:clamp(17px,5vw,23px)}.hero .cta{flex-wrap:wrap}.hero .button{white-space:normal}}

@@ -7,10 +7,12 @@
     "start": "2026-09-22T19:00:00+03:00",
     "end": "2026-09-22T21:00:00+03:00",
     "title": {
-      "en": "Bitcoin in Denmark: Building a Community from the Ground Up"
+      "en": "Bitcoin in Denmark: Building a Community from the Ground Up",
+      "lt": "Bitcoin Danijoje. Bendruomenės kūrimas nuo pradžių"
     },
     "description": {
-      "en": "A discussion hosted by Mission Liberty Tallinn with guests from Denmark about Bitcoin meetups, publishing and local community building."
+      "en": "A discussion hosted by Mission Liberty Tallinn with guests from Denmark about Bitcoin meetups, publishing and local community building.",
+      "lt": "„Mission Liberty Tallinn“ surengta diskusija su svečiais iš Danijos apie Bitcoin susitikimus, leidybą ir vietos bendruomenių kūrimą."
     },
     "venue": "Vabaduse Tuba",
     "address": "Pikk 7, Room 11, Tallinn",
@@ -38,10 +40,12 @@
     "start": "2025-08-09T10:00:00+03:00",
     "end": "2025-08-10T18:00:00+03:00",
     "title": {
-      "en": "Baltic Honeybadger 2025"
+      "en": "Baltic Honeybadger 2025",
+      "lt": "Baltic Honeybadger 2025"
     },
     "description": {
-      "en": "A Bitcoin-only conference in Riga, part of Riga Bitcoin Week. Talks and discussions covered Bitcoin, freedom technology and the people building the ecosystem. This is the archived 2025 edition."
+      "en": "A Bitcoin-only conference in Riga, part of Riga Bitcoin Week. Talks and discussions covered Bitcoin, freedom technology and the people building the ecosystem. This is the archived 2025 edition.",
+      "lt": "Tik Bitcoin skirta konferencija Rygoje, „Riga Bitcoin Week“ dalis. Pranešimai ir diskusijos apie Bitcoin, laisvę palaikančias technologijas ir jų kūrėjus. Tai 2025 m. renginio archyvas."
     },
     "venue": "Fantadroms",
     "address": "Riga",
@@ -71,10 +75,12 @@
     "start": "2025-08-07T10:00:00+03:00",
     "end": "2025-08-08T18:00:00+03:00",
     "title": {
-      "en": "bitcoin++ Riga · Privacy edition"
+      "en": "bitcoin++ Riga · Privacy edition",
+      "lt": "bitcoin++ Riga · privatumo renginys"
     },
     "description": {
-      "en": "A technical Bitcoin conference with talks, workshops and a hackathon exploring privacy and peer-to-peer exchange. Held at the National Library of Latvia during Riga Bitcoin Week. This is the archived 2025 edition."
+      "en": "A technical Bitcoin conference with talks, workshops and a hackathon exploring privacy and peer-to-peer exchange. Held at the National Library of Latvia during Riga Bitcoin Week. This is the archived 2025 edition.",
+      "lt": "Techninė Bitcoin konferencija su pranešimais, dirbtuvėmis ir hakatonu apie privatumą bei tiesioginius mainus tarp dalyvių. Vyko Latvijos nacionalinėje bibliotekoje per „Riga Bitcoin Week“. Tai 2025 m. renginio archyvas."
     },
     "venue": "National Library of Latvia",
     "address": "Riga",
@@ -100,11 +106,14 @@
     "type": "meetup",
     "initiative": "solana-baltics-LV",
     "title": {
-      "en": "Solana Connect"
+      "en": "Solana Connect",
+      "lt": "Solana Connect"
     },
     "description": {
-      "en": "A community evening around Solana, stablecoins, payments and onchain finance. Exact venue not announced publicly."
+      "en": "A community evening around Solana, stablecoins, payments and onchain finance. Exact venue not announced publicly.",
+      "lt": "Bendruomenės vakaras apie Solana, stabilios vertės kriptovaliutas, mokėjimus ir finansines paslaugas blokų grandinėje. Tiksli vieta viešai nepaskelbta."
     },
+    "dateUncertain": false,
     "start": "2026-10-14T19:00:00+03:00",
     "end": "2026-10-14T22:00:00+03:00",
     "dateOnly": false,
@@ -133,11 +142,14 @@
     "type": "conference",
     "initiative": "unblock-LV",
     "title": {
-      "en": "UN:BLOCK Fintech Forum"
+      "en": "UN:BLOCK Fintech Forum",
+      "lt": "UN:BLOCK Fintech Forum"
     },
     "description": {
-      "en": "Fintech forum with crypto licensing and digital payment sessions. See organiser for final venue and timetable."
+      "en": "Fintech forum with crypto licensing and digital payment sessions. See organiser for final venue and timetable.",
+      "lt": "Finansinių technologijų forumas su sesijomis apie kriptovaliutų veiklos licencijavimą ir skaitmeninius mokėjimus. Tikslią vietą ir programą nurodo organizatorius."
     },
+    "dateUncertain": false,
     "start": "2026-10-15T12:00:00Z",
     "end": "2026-10-15T23:59:59+03:00",
     "dateOnly": true,
@@ -165,13 +177,16 @@
     "type": "conference",
     "initiative": "unblock-LV",
     "title": {
-      "en": "UN:BLOCK 2027"
+      "en": "UN:BLOCK 2027",
+      "lt": "UN:BLOCK 2027"
     },
     "description": {
-      "en": "Blockchain, digital assets, fintech and AI conference. See organiser for venue and timetable."
+      "en": "Blockchain, digital assets, fintech and AI conference. The organiser’s homepage says 7–8 April 2027, while its LinkedIn page still says 10–11 March. Confirm the date with the organiser before planning travel.",
+      "lt": "Konferencija apie blokų grandines, skaitmeninį turtą, finansines technologijas ir dirbtinį intelektą. Organizatoriaus pagrindinis puslapis skelbia 2027 m. balandžio 7–8 d., o jo LinkedIn puslapyje tebenurodoma kovo 10–11 d. Prieš planuojant kelionę būtina patvirtinti datą su organizatoriumi."
     },
-    "start": "2027-03-10T12:00:00Z",
-    "end": "2027-03-11T23:59:59+03:00",
+    "dateUncertain": true,
+    "start": "2027-04-07T12:00:00Z",
+    "end": "2027-04-08T23:59:59+03:00",
     "dateOnly": true,
     "venue": "Riga",
     "address": "Riga",
@@ -180,9 +195,10 @@
     "website": "https://unblockeurope.com/",
     "sources": [
       "https://unblockeurope.com/",
-      "https://lbaa.io/"
+      "https://lbaa.io/",
+      "https://www.linkedin.com/company/unblockeu"
     ],
-    "sourceVerifiedAt": "2026-10-01",
+    "sourceVerifiedAt": "2026-11-05",
     "image": {
       "src": "assets/event-covers/unblock-2027.webp",
       "source": "https://unblockeurope.com/",
@@ -198,11 +214,14 @@
     "type": "meetup",
     "initiative": "solana-baltics-LT",
     "title": {
-      "en": "Solana Baltics Vibecheck"
+      "en": "Solana Baltics Vibecheck",
+      "lt": "Solana Baltics Vibecheck"
     },
     "description": {
-      "en": "A gathering of the Baltic Solana community during Startup Fair."
+      "en": "A gathering of the Baltic Solana community during Startup Fair.",
+      "lt": "Baltijos šalių Solana bendruomenės susitikimas per „Startup Fair“."
     },
+    "dateUncertain": false,
     "start": "2026-09-16T12:00:00Z",
     "end": "2026-09-16T23:59:59+03:00",
     "dateOnly": true,
@@ -231,11 +250,14 @@
     "type": "conference",
     "initiative": "unblock-LV",
     "title": {
-      "en": "UN:BLOCK 2026"
+      "en": "UN:BLOCK 2026",
+      "lt": "UN:BLOCK 2026"
     },
     "description": {
-      "en": "The 2026 Riga edition covering blockchain and financial technology."
+      "en": "The 2026 Riga edition covering blockchain and financial technology.",
+      "lt": "2026 m. Rygoje vykęs renginys apie blokų grandines ir finansines technologijas."
     },
+    "dateUncertain": false,
     "start": "2026-04-01T12:00:00Z",
     "end": "2026-04-02T23:59:59+03:00",
     "dateOnly": true,
@@ -263,11 +285,14 @@
     "type": "hackathon",
     "initiative": "ethtallinn-EE",
     "title": {
-      "en": "ETHTallinn 2024"
+      "en": "ETHTallinn 2024",
+      "lt": "ETHTallinn 2024"
     },
     "description": {
-      "en": "A three-day Ethereum and Web3 hackathon."
+      "en": "A three-day Ethereum and Web3 hackathon.",
+      "lt": "3 dienų Ethereum ir Web3 hakatonas."
     },
+    "dateUncertain": false,
     "start": "2024-04-19T12:00:00Z",
     "end": "2024-04-21T23:59:59+03:00",
     "dateOnly": true,
@@ -295,11 +320,14 @@
     "type": "conference",
     "initiative": "web3-summit-LT",
     "title": {
-      "en": "Web3 Summit Vilnius 2023"
+      "en": "Web3 Summit Vilnius 2023",
+      "lt": "Web3 Summit Vilnius 2023"
     },
     "description": {
-      "en": "A documented Lithuanian Web3 conference edition."
+      "en": "A documented Lithuanian Web3 conference edition.",
+      "lt": "Šaltiniuose užfiksuota 2023 m. Web3 konferencija Lietuvoje."
     },
+    "dateUncertain": false,
     "start": "2023-11-09T12:00:00Z",
     "end": "2023-11-09T23:59:59+03:00",
     "dateOnly": true,

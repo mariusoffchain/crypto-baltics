@@ -461,8 +461,8 @@
         "Payments"
       ],
       "verification": "listed",
-      "reviewedAt": "2026-10-01",
-      "note": "Homepage announces 10–11 March 2027; About retains the 1–2 April 2026 edition. These are separate editions.",
+      "reviewedAt": "2026-11-05",
+      "note": "The organiser’s homepage says 7–8 April 2027, while its LinkedIn page still says 10–11 March. Confirm the date with the organiser before planning travel.",
       "sources": [
         "https://unblockeurope.com/"
       ],
@@ -680,16 +680,18 @@
       "city": "Riga",
       "category": "conference",
       "organiser": "unblock",
-      "date": "2027-03-10",
-      "endDate": "2027-03-11",
+      "date": "2027-04-07",
+      "endDate": "2027-04-08",
       "url": "https://unblockeurope.com/",
       "summary": "Blockchain, digital assets, fintech and AI conference.",
-      "locationNote": "See organiser for venue and timetable.",
+      "locationNote": "The organiser’s homepage says 7–8 April 2027, while its LinkedIn page still says 10–11 March. Confirm the date with the organiser before planning travel.",
       "sources": [
         "https://unblockeurope.com/",
-        "https://lbaa.io/"
+        "https://lbaa.io/",
+        "https://www.linkedin.com/company/unblockeu"
       ],
-      "reviewedAt": "2026-10-01"
+      "reviewedAt": "2026-11-05",
+      "dateUncertain": true
     },
     {
       "id": "solana-vibecheck-2026",

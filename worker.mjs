@@ -19,7 +19,7 @@ async function currentHome(request, env) {
     !asset.headers.get("content-type")?.includes("text/html")
   )
     return asset;
-  const schedule = homeEvents(events);
+  const schedule = homeEvents(events, Date.now(), new URL(request.url).pathname.startsWith("/lt") ? "lt" : "en");
   const response = new Response(asset.body, asset);
   response.headers.set("Cache-Control", "no-store");
   for (const name of ["etag", "last-modified", "content-length"])
@@ -51,7 +51,7 @@ export default {
     }
     if (
       ["GET", "HEAD"].includes(request.method) &&
-      ["/", "/index.html", "/en", "/en/", "/en/index.html"].includes(
+      ["/lt", "/lt/", "/lt/index.html", "/", "/index.html", "/en", "/en/", "/en/index.html"].includes(
         url.pathname,
       )
     )

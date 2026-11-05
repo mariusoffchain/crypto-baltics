@@ -1,9 +1,11 @@
 import { readFile, writeFile } from "node:fs/promises";
 const research = JSON.parse(await readFile("data/research.json", "utf8"));
+const translations = JSON.parse(await readFile("data/event-translations-lt.json", "utf8"));
 const events = research.events.map(e => ({
   id: e.id, country: e.country, type: e.category,
   initiative: `${e.organiser}-${e.country}`,
-  title: { en: e.name }, description: { en: [e.summary, e.locationNote].filter(Boolean).join(" ") },
+  title: { en: e.name, lt: translations[e.id]?.[0] || e.name }, description: { en: [e.summary, e.locationNote].filter(Boolean).join(" "), lt: translations[e.id]?.[1] },
+  dateUncertain: Boolean(e.dateUncertain),
   // Noon UTC is a stable display anchor for Baltic date-only records; it is not an event time.
   start: e.start || `${e.date}T12:00:00Z`,
   end: e.end || `${e.endDate || e.date}T23:59:59+03:00`,

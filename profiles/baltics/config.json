@@ -79,9 +79,13 @@
   "description": "Explore crypto communities, conferences and companies in Estonia, Latvia and Lithuania.",
   "defaultLanguage": "en",
   "languages": [
-    "en"
+    "en",
+    "lt"
   ],
   "cachePrefix": "crypto-baltics-preview",
   "regional": true,
-  "contactEmail": "contact@cryptobaltics.org"
+  "contactEmail": "contact@cryptobaltics.org",
+  "pageTitleLT": "Crypto Baltics | Renginiai ir Bitcoin vietos",
+  "taglineLT": "Bendruomenės ir renginiai Baltijos šalyse",
+  "descriptionLT": "Bitcoin vietos ir renginiai Lietuvoje, Latvijoje ir Estijoje."
 }

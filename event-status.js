@@ -25,7 +25,7 @@ function instant(value) {
     : NaN;
 }
 export function eventStatus(event, now = Date.now()) {
-  if (event.status === "planned" || !event.start) return "planned";
+  if (event.status === "planned" || event.dateUncertain || !event.start) return "planned";
   if (event.dateOnly || /^\d{4}-\d{2}-\d{2}$/.test(event.start)) {
     // Legacy dateOnly timestamps are display anchors, not confirmed hours.
     const start = validDay(event.start),

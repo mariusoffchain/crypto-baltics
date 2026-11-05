@@ -74,13 +74,13 @@ test("Worker replaces stale build HTML on successive dates, handles aliases and 
     return list;
   };
   try {
-    await check("2026-10-13T12:00Z", 3);
-    const current = await check("2026-10-26T12:00Z", 1);
+    await check("2026-10-13T12:00Z", 2);
+    const current = await check("2026-10-26T12:00Z", 0);
     assert.doesNotMatch(current, /solana-connect-2026|unblock-fintech-2026/);
-    for (const path of ["/en/", "/index.html", "/en/index.html", "/?mode=dark"])
-      await check("2026-10-26T12:00Z", 1, path);
-    await check("2027-03-11T21:59:59.999Z", 1);
-    const empty = await check("2027-03-11T22:00Z", 0);
+    for (const path of ["/en/", "/index.html", "/en/index.html", "/?mode=dark", "/lt/", "/lt/index.html"])
+      await check("2026-10-26T12:00Z", 0, path);
+    await check("2026-10-15T20:59:59.999Z", 1);
+    const empty = await check("2026-10-15T21:00Z", 0);
     assert.match(empty, /No upcoming events/);
     const head = await mf.dispatchFetch("https://cryptobaltics.org/", {
       method: "HEAD",
