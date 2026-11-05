@@ -774,19 +774,6 @@ function renderCalendar() {
   const groups = eventGroups(scopedEvents()),
     list = $("#event-list");
   list.replaceChildren();
-  const help = el("div", "community-help");
-  const contribute = el("a", null, lang === "lt" ? "Siūlyti renginį ar pataisymą" : "Submit an event or correction");
-  contribute.href = "/contribute/?lang=" + lang;
-  help.append(contribute);
-  const resourceBase = COUNTRY.regional ? (lang === "lt" ? "/lt/" : "/") : (lang === "en" ? "/en/" : "/");
-  for (const [path, en, lt] of [["learn", "Start here", "Pradėti"], ["accept-bitcoin", "For merchants", "Verslui"], ["press", "Press", "Žiniasklaidai"], ["partners", "Partners", "Bendradarbiavimas"]]) {
-    const a = el("a", null, lang === "lt" ? lt : en); a.href = resourceBase + path + "/"; help.append(a);
-  }
-
-  for (const initiative of (config.initiatives || []).filter(i => (!i.country || !countryFilter || i.country === countryFilter) && (i.id === "meetups" || i.id === "riga-walks" || i.id === "mission-liberty"))) {
-    for (const channel of initiative.links.filter(l => l.kind !== "event")) help.append(link(initiative.name + " · " + channel.name, channel.url));
-  }
-  list.append(help);
   renderCountryFilters();
   if (sidebarView === "places") { renderPlacesList(list); return; }
   const upcoming = el("section", "upcoming-events");
@@ -803,6 +790,13 @@ function renderCalendar() {
   );
   if (!groups.upcoming.length && !groups.planned.length)
     upcoming.append(el("p", "empty-state", t("noUpcoming")));
+  const nextYear = Number(dateKey(new Date()).slice(0, 4)) + 1;
+  if (!scopedEvents().some(event => event.start && Number(event.start.slice(0,4)) <= nextYear && Number((event.end || event.start).slice(0,4)) >= nextYear)) {
+    upcoming.append(el("p", "calendar-outlook", lang === "lt" ? `Patvirtintų ${nextYear} m. renginių datų kol kas nėra. Naujienas sek organizatorių kanalais.` : `No confirmed ${nextYear} dates yet. Check the organisers’ channels for announcements.`));
+  }
+  const contribute = el("a", "calendar-contribute", lang === "lt" ? "Siūlyti renginį" : "Suggest an event");
+  contribute.href = "/contribute/?lang=" + lang;
+  upcoming.append(contribute);
   list.append(upcoming);
   const gallery = el("div");
   gallery.id = "desktop-gallery";
