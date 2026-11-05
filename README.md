@@ -71,7 +71,7 @@ Run `npm ci`, `npm run build:crypto`, then `npm run deploy:check` and `npm run d
 
 ## Visitor navigation changes (2026-11-05)
 
-Local work on `fix/visitor-navigation`; no deployment is included. The existing build command also generates `/contribute/`. Its English/Lithuanian form only prepares a message in the browser. It has no submission endpoint, stays disabled without JavaScript, and exposes copying and an explicit email-draft link. No message is sent automatically. Correction links carry the existing event or listing reference.
+Published on 2026-11-06. The build also generates `/contribute/`. Its English/Lithuanian form only prepares a message in the browser. It has no submission endpoint, stays disabled without JavaScript, and exposes copying and an explicit email-draft link. No message is sent automatically. Correction links carry the existing event or listing reference.
 
 Merchant search normalizes accents and indexes the name, address, city, category, icon and description. `?q=` preserves the query. Nearby screen coordinates form selectable groups, including identical coordinates. Mobile place details use a native dialog above the map, with coordinate-based directions and dated Lightning information when present in the existing source data.
 
@@ -79,4 +79,4 @@ Merchant search normalizes accents and indexes the name, address, city, category
 
 The directory restores and updates `q`, `country`, `category` and `historical` in the URL. The embedded map forwards its query state to the parent page after same-origin checks. Review records such as Zolak remain visible with their uncertainty label. Homepage coverage counts assign each listed record to one country or to the multi-country bucket. The existing date-refresh Worker fix is preserved. The readable overview is generated from the Crypto directory data.
 
-Validation includes the repository tests and separate DOM interaction tests. The latter simulate responsive branches with map geometry mocked; they do not establish the rendered layout, tile loading or behaviour on physical phones. A real desktop/mobile visual review is still required before release. No complete new Lithuanian landing-page translation is claimed.
+Repository tests and cross-site interaction checks passed before publication. Browser review covered desktop and mobile viewports (320, 390 and 1440 px), including the live sites after deployment. Physical phones were not tested. English and Lithuanian pages are available; resource pages use each site’s typography, colours and theme.
